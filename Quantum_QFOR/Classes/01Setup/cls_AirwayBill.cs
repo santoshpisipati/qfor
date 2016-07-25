@@ -28,7 +28,6 @@ namespace Quantum_QFOR
 {
     public class clsAirwayBill : CommonFeatures
     {
-        //Santosh Modified The Page
         private int pageSize = 5;
         int _current;
         public int currentfrom
