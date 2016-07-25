@@ -1,0 +1,807 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F0B3C3E9-0B75-4D0E-9EA9-0DCF7011ADF3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Quantum_QFOR</RootNamespace>
+    <AssemblyName>Quantum_QFOR</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.Shared.1.0.0\lib\CrystalDecisions.Shared.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.1.2.3\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.1.2.3\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.1.2.3\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.1.2.3\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=1.2.3.246, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.1.2.3\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=1.2.3.490, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.1.2.3\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64" />
+    <Reference Include="SendGrid, Version=7.0.2.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.7.0.2\lib\SendGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.CSharp.HTTP.Client, Version=2.0.4.0, Culture=neutral, PublicKeyToken=79219bf4e5ecaaca, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.CSharp.HTTP.Client.2.0.4\lib\SendGrid.CSharp.HTTP.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.0.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_Commission_Details.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_DOCUMENT_MST_TBL.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_EcommGateWay.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_FinGeneration.cs" />
+    <Compile Include="Classes\02OrgSetup\Cls_MsgFolderDefinition.cs" />
+    <Compile Include="Classes\02OrgSetup\Cls_StorageFolderDefinition.cs" />
+    <Compile Include="Classes\24CommonForm\cls_BBCargoCalculator.cs" />
+    <Compile Include="Classes\24CommonForm\cls_bl_MultiSelect.cs" />
+    <Compile Include="Classes\24CommonForm\cls_Csv.cs" />
+    <Compile Include="Classes\24CommonForm\cls_Enhance_Search.cs" />
+    <Compile Include="Classes\24CommonForm\cls_MultipleEnhanceSearch.cs" />
+    <Compile Include="Classes\24CommonForm\cls_PrintManager.cs" />
+    <Compile Include="Classes\01Setup\clsFREIGHT_ELEMENT_MST_TBL.cs" />
+    <Compile Include="Classes\03Security\clsUser_Mst_Tbl.cs" />
+    <Compile Include="Classes\06BookingExports\cls_Acknowledgement.cs" />
+    <Compile Include="Classes\11Booking\cls_ActiveBasis.cs" />
+    <Compile Include="Classes\11Booking\cls_ActiveContainers.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_ActiveContainersCommon.cs" />
+    <Compile Include="Classes\03Security\cls_Admin_DashBoard.cs" />
+    <Compile Include="Classes\MISReports\cls_AgeingReport.cs" />
+    <Compile Include="Classes\Recievables\cls_AgentCollection.cs" />
+    <Compile Include="Classes\Recievables\cls_AgentCollectionlist.cs" />
+    <Compile Include="Classes\Payables\cls_AgentSettelment.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_Agent_Definition.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_Agent_Details.cs" />
+    <Compile Include="Classes\11Booking\cls_AirBookingEntry.cs" />
+    <Compile Include="Classes\11Booking\cls_AirBookingList.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_AirCustomerContract.cs" />
+    <Compile Include="Classes\06BookingExports\cls_AirEnquiry.cs" />
+    <Compile Include="Classes\01Setup\cls_AirFreightSlabs.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_AirlineContract.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_AirlineContractListing.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_AirlineRFQEntry.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_AirlineRFQSpotRate.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_AirlineRFQSpotRate_Listing.cs" />
+    <Compile Include="Classes\01Setup\cls_AirlineSchedule.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_AirlineTariffEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_AirLineTariffUpload.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_AirlineTarif_Listing.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_Airline_Definition.cs" />
+    <Compile Include="Classes\01Setup\cls_AirwayBill.cs" />
+    <Compile Include="Classes\03Security\cls_Announcement.cs" />
+    <Compile Include="Classes\QFSI\cls_ApplicationSetup.cs" />
+    <Compile Include="Classes\03Security\cls_ApprovalRequests.cs" />
+    <Compile Include="Classes\01Setup\cls_AreaMaster.cs" />
+    <Compile Include="Classes\07Reports\Cls_Arrival_Notice.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_AssignAddress.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_Attachfile.cs" />
+    <Compile Include="Classes\Documentation\cls_AttachJobCard.cs" />
+    <Compile Include="Classes\01Setup\cls_AuditTrailsSetup.cs" />
+    <Compile Include="Classes\01Setup\cls_AuditTrail_Log.cs" />
+    <Compile Include="Classes\01Setup\cls_BANK_DETAILS.cs" />
+    <Compile Include="Classes\01Setup\cls_BarcodeManager.cs" />
+    <Compile Include="Classes\Documentation\cls_BBHBL_Entry.cs" />
+    <Compile Include="Classes\Recievables\cls_BBInvoiceDetails.cs" />
+    <Compile Include="Classes\Documentation\cls_BBJobCardSeaImp.cs" />
+    <Compile Include="Classes\Documentation\cls_BBJobCardView.cs" />
+    <Compile Include="Classes\Documentation\cls_BBMBL_Entry.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_BBQuotationForBookingSea.cs" />
+    <Compile Include="Classes\06BookingExports\cls_BBSeaBookingEntry.cs" />
+    <Compile Include="Classes\01Setup\cls_BLClause.cs" />
+    <Compile Include="Classes\Documentation\cls_BlClauseHblMbl.cs" />
+    <Compile Include="Classes\06BookingExports\cls_BookingEnquiry.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_BookingEntry.cs" />
+    <Compile Include="Classes\06BookingExports\cls_BookingRollOver.cs" />
+    <Compile Include="Classes\Documentation\cls_BOOKING_CONTAINER_MOVES.cs" />
+    <Compile Include="Classes\11Booking\cls_BOOKING_RESTRICTION_TRN.cs" />
+    <Compile Include="Classes\11Booking\cls_BOOKING_RESTR_PORT_TRN.cs" />
+    <Compile Include="Classes\06BookingExports\cls_Booking_sea.cs" />
+    <Compile Include="Classes\Documentation\cls_CAN.cs" />
+    <Compile Include="Classes\11Booking\cls_CargoDetails.cs" />
+    <Compile Include="Classes\01Setup\Cls_Cargo_Move_Mst_Tbl.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_CBJCPendingForDocReceive.cs" />
+    <Compile Include="Classes\01Setup\cls_ChargeGroup.cs" />
+    <Compile Include="Classes\Recievables\cls_Collection.cs" />
+    <Compile Include="Classes\Recievables\cls_Collectionlist.cs" />
+    <Compile Include="Classes\Recievables\cls_CollectionReconciliation.cs" />
+    <Compile Include="Classes\Recievables\cls_Collections.cs" />
+    <Compile Include="Classes\Documentation\cls_Commission.cs" />
+    <Compile Include="Classes\01Setup\cls_Commodity_Group_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\cls_Commodity_Mst_Tbl.cs" />
+    <Compile Include="Classes\Recievables\cls_ConsolidatedInvoices.cs" />
+    <Compile Include="Classes\Recievables\cls_Consolidatedlist.cs" />
+    <Compile Include="Classes\Documentation\cls_Consolidation.cs" />
+    <Compile Include="Classes\Recievables\cls_ContainerInvoiceDetail.cs" />
+    <Compile Include="Classes\Documentation\cls_ContainerOnHireListing.cs" />
+    <Compile Include="Classes\01Setup\cls_Container_Type_Mst_Tbl.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_ContractAirListing.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_ContractSeaListing.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_Corporate_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\cls_Cost_Element_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\Cls_CountryVATSettings.cs" />
+    <Compile Include="Classes\01Setup\cls_Country_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\Cls_CreditCntlMngr.cs" />
+    <Compile Include="Classes\Documentation\cls_CreditNodeToAgentEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_CreditNodeToAgentList.cs" />
+    <Compile Include="Classes\Payables\cls_CreditNote.cs" />
+    <Compile Include="Classes\Documentation\cls_CreditNoteToAgentAirEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_CreditNoteToAgentAirImpEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_CreditNoteToAgentAirList.cs" />
+    <Compile Include="Classes\Documentation\cls_CreditNoteToAgentEntry.cs" />
+    <Compile Include="Classes\01Setup\Cls_CreditPolicy.cs" />
+    <Compile Include="Classes\Documentation\cls_CrNoteCustomerEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_CrNoteCustomerEntryAir.cs" />
+    <Compile Include="Classes\Documentation\cls_CrNoteCustomerListImp.cs" />
+    <Compile Include="Classes\Documentation\cls_CrNoteToAgentAirImpList.cs" />
+    <Compile Include="Classes\Documentation\cls_CrNoteToAgentSeaEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_CrNoteToAgentSeaImpList.cs" />
+    <Compile Include="Classes\Documentation\cls_CSVInterfaceSAGEAir.cs" />
+    <Compile Include="Classes\Documentation\cls_CSVInterfaceSAGESea.cs" />
+    <Compile Include="Classes\01Setup\cls_Currency_Type_Mst_Tbl.cs" />
+    <Compile Include="Classes\Documentation\cls_CustCreditInwFromSage.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_CustomerProfile.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_CustomerReconciliation.cs" />
+    <Compile Include="Classes\18Customer Service\cls_CustomerService.cs" />
+    <Compile Include="Classes\01Setup\cls_Customer_Category.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_Customer_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\cls_CUSTOMER_TYPE_MST_TBL.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_CustomsBrokerage.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_CustomsBrokeragelisting.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_CustomsTrasporterNote.cs" />
+    <Compile Include="Classes\01Setup\cls_CUSTOMS_STATUS_MST_TBL.cs" />
+    <Compile Include="Classes\MISReports\cls_daily_booking.cs" />
+    <Compile Include="Classes\Recievables\cls_DaysCollection.cs" />
+    <Compile Include="Classes\Documentation\cls_DeliveryOrder.cs" />
+    <Compile Include="Classes\Documentation\cls_DemurrageCalculation.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_DemurrageSlab.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_DemurrageSlabListing.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_DemurrageTariff.cs" />
+    <Compile Include="Classes\01Setup\cls_Department_Mst_Tbl.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_DepotDefinition.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_DepotDefinitionDTL.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_Depot_Contract_Entry.cs" />
+    <Compile Include="Classes\01Setup\cls_DEPOT_MST_TBL.cs" />
+    <Compile Include="Classes\01Setup\cls_DEPT_DESIG_TRN.cs" />
+    <Compile Include="Classes\01Setup\cls_DESIGNATION_MST_TBL.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_DetDemCalculation.cs" />
+    <Compile Include="Classes\Documentation\cls_DetentionCalculation.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_DetentionMaster.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_DetentionSlabListing.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_DetentionTariff.cs" />
+    <Compile Include="Classes\01Setup\cls_DocumentFlowDefinition.cs" />
+    <Compile Include="Classes\Documentation\cls_EDI.cs" />
+    <Compile Include="Classes\Documentation\cls_EDItoCustomsImport.cs" />
+    <Compile Include="Classes\QUserActivity\cls_EmailTracking.cs" />
+    <Compile Include="Classes\03Security\cls_Employee_Mst_Table.cs" />
+    <Compile Include="Classes\01Setup\cls_Exchange_Rate.cs" />
+    <Compile Include="Classes\Documentation\cls_ExpFreightManifest.cs" />
+    <Compile Include="Classes\Documentation\cls_ExportPreAlertsAir.cs" />
+    <Compile Include="Classes\Documentation\cls_ExportPreAlertsSEA.cs" />
+    <Compile Include="Classes\18Customer Service\cls_SalesLead.cs" />
+    <Compile Include="Classes\18Customer Service\cls_SALESPLAN.cs" />
+    <Compile Include="Classes\18Customer Service\cls_SalesPlanReport.cs" />
+    <Compile Include="Classes\Documentation\cls_SalesReport.cs" />
+    <Compile Include="Classes\01Setup\cls_Sales_Call_Type_Mst_Tbl.cs" />
+    <Compile Include="Classes\11Booking\cls_SeaBookingList.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_SeaCustomerContract.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_SelectActiveContainers.cs" />
+    <Compile Include="Classes\Recievables\cls_ShipmentDetailPopUp.cs" />
+    <Compile Include="Classes\Documentation\Cls_SplitBL.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_SRRCustToAirListing.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_SRRCustToOprListing.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_SRRSeaApproval.cs" />
+    <Compile Include="Classes\Payables\Cls_Supplier_Invoice_List.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_Surcharge.cs" />
+    <Compile Include="Classes\Removals\cls_SurveyEntry.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_TARIFF.cs" />
+    <Compile Include="Classes\01Setup\Cls_Taskalotment.cs" />
+    <Compile Include="Classes\03Security\Cls_TasksMiddle.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_THC_LOCAL.cs" />
+    <Compile Include="Classes\MISReports\cls_TopCustomer.cs" />
+    <Compile Include="Classes\01Setup\Cls_TradeContracts.cs" />
+    <Compile Include="Classes\01Setup\cls_Trade_Sur_Tbl.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_TransporterCntctFCL.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_TransporterDefinition.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_Transporter_Details.cs" />
+    <Compile Include="Classes\01Setup\cls_UOM_MST_TBL.cs" />
+    <Compile Include="Classes\01Setup\cls_User_DocMessaging.cs" />
+    <Compile Include="Classes\03Security\cls_USER_MESSAGE_TRN.cs" />
+    <Compile Include="Classes\03Security\cls_User_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\cls_user_task.cs" />
+    <Compile Include="Classes\Utilities\cls_Util_ExportTransaction_AP.cs" />
+    <Compile Include="Classes\Utilities\cls_Util_ExportWizard.cs" />
+    <Compile Include="Classes\Utilities\cls_Util_ExportWizard_Transaction.cs" />
+    <Compile Include="Classes\01Setup\Cls_VATMaster.cs" />
+    <Compile Include="Classes\01Setup\cls_VENDOR_TYPE_MST_TBL.cs" />
+    <Compile Include="Classes\01Setup\Cls_wfmgrruleconfig.cs" />
+    <Compile Include="Classes\MISReports\cls_WorkFlow.cs" />
+    <Compile Include="Classes\01Setup\Cls_WorkflowRulesEntry.cs" />
+    <Compile Include="Classes\01Setup\Cls_WorkflowRulesListing.cs" />
+    <Compile Include="Classes\03Security\cls_WORKFLOW_RULES_TRN.cs" />
+    <Compile Include="Classes\01Setup\cls_WriteOff.cs" />
+    <Compile Include="Classes\Mail\cls_ExternalMail.cs" />
+    <Compile Include="Classes\Recievables\cls_FACInvoice.cs" />
+    <Compile Include="Classes\QFSI\cls_FinMasters.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_FlatRateFreights.cs" />
+    <Compile Include="Classes\MISReports\cls_FlexiReport.cs" />
+    <Compile Include="Classes\07Reports\Cls_FMCBL.cs" />
+    <Compile Include="Classes\03Security\cls_ForgotPwd.cs" />
+    <Compile Include="Classes\Documentation\Cls_Freight_Corrector_Notice.cs" />
+    <Compile Include="Classes\01Setup\cls_FREIGHT_ELEMENT_MST_TBL.cs" />
+    <Compile Include="Classes\06BookingExports\cls_Freight_Merge_Split_Booking.cs" />
+    <Compile Include="Classes\MISReports\cls_FrieghtOutstanding.cs" />
+    <Compile Include="Classes\Documentation\cls_HAWBentry.cs" />
+    <Compile Include="Classes\Documentation\cls_HAWBListing.cs" />
+    <Compile Include="Classes\Documentation\cls_HBL_Entry.cs" />
+    <Compile Include="Classes\Documentation\cls_HBL_List.cs" />
+    <Compile Include="Classes\06BookingExports\cls_HeaderandFooter.cs" />
+    <Compile Include="Classes\Documentation\cls_ImportFreightControl_Sea_Air.cs" />
+    <Compile Include="Classes\Documentation\cls_ImportManifestControl_Sea_Air.cs" />
+    <Compile Include="Classes\01Setup\cls_INCOTerms.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentEntryAir.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentImpEntryAir.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentListAir.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentListAirImp.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentSea.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentSeaEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentSeaImpEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceAgentSeaImpList.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceEntryAir.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceEntrySea.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceListAir.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceListSea.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceListSeaImp.cs" />
+    <Compile Include="Classes\Documentation\cls_InvoiceToAgentApproval.cs" />
+    <Compile Include="Classes\MISReports\Cls_JCProfit.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCard.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCardAirExport.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCardAirImport.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCardDeatails.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCardSeaImp.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCardSearch.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCardSearchAir.cs" />
+    <Compile Include="Classes\Documentation\cls_JobCardView.cs" />
+    <Compile Include="Classes\Documentation\cls_JobManagement.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_LoadReport.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_Location_Bank_Trn.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_Location_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\cls_Location_Type_Mst_Tbl.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_Location_Working_Ports_Trn.cs" />
+    <Compile Include="Classes\Documentation\cls_MAWBListing.cs" />
+    <Compile Include="Classes\Documentation\cls_MBL_Entry.cs" />
+    <Compile Include="Classes\Documentation\cls_MBL_List.cs" />
+    <Compile Include="Classes\Documentation\cls_MBL_Listings.cs" />
+    <Compile Include="Classes\03Security\cls_MENU_MST_TBL.cs" />
+    <Compile Include="Classes\06BookingExports\cls_Merge_Split_Booking.cs" />
+    <Compile Include="Classes\01Setup\cls_MOTHER_VSL_MST_TBL.cs" />
+    <Compile Include="Classes\01Setup\cls_MOVECODE_MST_TBL.cs" />
+    <Compile Include="Classes\01Setup\cls_MOVECODE_SETTING_MST_TBL.cs" />
+    <Compile Include="Classes\Documentation\cls_MstCostDetailsAir.cs" />
+    <Compile Include="Classes\Documentation\cls_MstCostDetailsSea.cs" />
+    <Compile Include="Classes\Documentation\cls_MSTJobCardAir.cs" />
+    <Compile Include="Classes\Documentation\cls_MSTJobCardAirImp.cs" />
+    <Compile Include="Classes\Documentation\cls_MSTJobCardSea.cs" />
+    <Compile Include="Classes\Documentation\cls_MSTJobCardSeaImp.cs" />
+    <Compile Include="Classes\01Setup\cls_MstTariffGroup.cs" />
+    <Compile Include="Classes\03Security\Cls_MultiSelect.cs" />
+    <Compile Include="Classes\01Setup\cls_Multi_Lingual_setting.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_OperatorRFQSpotRate.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_OperatorRFQSpotRate_Listing.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_OperatorTarif_Listing.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_Operator_Contract.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_Operator_Definition.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_Operator_Details.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_Operator_Tariff_Entry.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_Opr_Contract_List.cs" />
+    <Compile Include="Classes\MISReports\cls_OTC.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_OtherCharges.cs" />
+    <Compile Include="Classes\01Setup\cls_Pack_Type_Mst_Tbl.cs" />
+    <Compile Include="Classes\01Setup\Cls_Parameters_TBL.cs" />
+    <Compile Include="Classes\Payables\cls_PayableEntry.cs" />
+    <Compile Include="Classes\Payables\cls_PayableList.cs" />
+    <Compile Include="Classes\07Reports\Cls_Payment_Requisition.cs" />
+    <Compile Include="Classes\01Setup\Cls_PlaceMST.cs" />
+    <Compile Include="Classes\MISReports\cls_PLReport.cs" />
+    <Compile Include="Classes\01Setup\cls_PortGroup_Mst.cs" />
+    <Compile Include="Classes\01Setup\cls_PortofCall.cs" />
+    <Compile Include="Classes\01Setup\cls_Port_Mst_Tbl.cs" />
+    <Compile Include="Classes\18Customer Service\cls_ProfitPerCustomer_SalesPerson.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_Protocol_Mst_Tbl.cs" />
+    <Compile Include="Classes\ValidateLicense\cls_Qcore_ValidateLicense.cs" />
+    <Compile Include="Classes\Documentation\cls_QuickEntry.cs" />
+    <Compile Include="Classes\Documentation\cls_QuickEntryAir.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_Quotation.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_QuotationAirListing.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_QuotationForBookingAir.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_QuotationForBookingSea.cs" />
+    <Compile Include="Classes\MISReports\cls_QuotationReport.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_QuotationSeaListing.cs" />
+    <Compile Include="Classes\06BookingExports\Cls_QuotationStatusRpt.cs" />
+    <Compile Include="Classes\01Setup\cls_RegionDetails.cs" />
+    <Compile Include="Classes\01Setup\cls_Region_Mst_Tbl.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_ReimbursableClaim.cs" />
+    <Compile Include="Classes\Removals\cls_RemovalConsolidatedInvoices.cs" />
+    <Compile Include="Classes\Removals\cls_RemovalConsolidatedlist.cs" />
+    <Compile Include="Classes\Removals\Cls_RemovalCreditNote.cs" />
+    <Compile Include="Classes\Removals\Cls_RemovalEnquiry.cs" />
+    <Compile Include="Classes\Removals\cls_RemovalsCollection.cs" />
+    <Compile Include="Classes\Removals\cls_RemovalsCollectionlist.cs" />
+    <Compile Include="Classes\Removals\cls_RemovalsTransportNoteInstruction.cs" />
+    <Compile Include="Classes\Removals\cls_Removal_Job_Card.cs" />
+    <Compile Include="Classes\Removals\Cls_Removal_PayablesEntry.cs" />
+    <Compile Include="Classes\Removals\Cls_Removal_Supplier_Invoice_List.cs" />
+    <Compile Include="Classes\Removals\Cls_Rem_Quotation.cs" />
+    <Compile Include="Classes\Removals\Cls_Rem_Track_n_trace.cs" />
+    <Compile Include="Classes\01Setup\cls_Restriction.cs" />
+    <Compile Include="Classes\11Booking\cls_RESTRICTION_LOG_TRN.cs" />
+    <Compile Include="Classes\MISReports\cls_RevenueReport.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_RFQListingAir.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_RFQ_Listings.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_RFQ_Others.cs" />
+    <Compile Include="Classes\03Security\cls_ROLE_MST_TBL.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_RoutingandTransit.cs" />
+    <Compile Include="Classes\03Security\cls_RPT_AUDIT_TRAIL_REPORT.cs" />
+    <Compile Include="Classes\18Customer Service\cls_SALES_CALL_TRN.cs" />
+    <Compile Include="Classes\01Setup\cls_SAL_CAL_REASON_MST_TBL.cs" />
+    <Compile Include="Classes\QFSI\cls_Scheduler.cs" />
+    <Compile Include="Classes\11Booking\cls_SeaBookingEntry.cs" />
+    <Compile Include="Classes\01Setup\cls_SECTOR_MST_TBL.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_SRRAirContract.cs" />
+    <Compile Include="Classes\05RatingandTariff\Cls_SRRSeaContract.cs" />
+    <Compile Include="Classes\Payables\Cls_StatementOfAccountsVendor.cs" />
+    <Compile Include="Classes\CLS_STATUS.cs" />
+    <Compile Include="Classes\01Setup\cls_S_Call_Fail_Rsn_Mst_Tbl.cs" />
+    <Compile Include="Classes\05RatingandTariff\cls_THC_PHC.cs" />
+    <Compile Include="Classes\11Booking\cls_TrackAndTrace.cs" />
+    <Compile Include="Classes\01Setup\cls_TRADE_MST_TBL.cs" />
+    <Compile Include="Classes\CustomsBrokerage\cls_TransporterNote.cs" />
+    <Compile Include="Classes\04VendorManagement\Cls_Transporter_Contract.cs" />
+    <Compile Include="Classes\CLS_UserAccountVariable.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Classes\QUserActivity\cls_UserActivity.cs" />
+    <Compile Include="Classes\03Security\cls_User_Entry_Trn.cs" />
+    <Compile Include="Classes\03Security\cls_User_Preference_Mst_Tbl.cs" />
+    <Compile Include="Classes\cls_ValidateLicense.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Classes\04VendorManagement\cls_VendorDetails.cs" />
+    <Compile Include="Classes\04VendorManagement\cls_VendorListing.cs" />
+    <Compile Include="Classes\01Setup\cls_Vessel_Voyage_Entry.cs" />
+    <Compile Include="Classes\01Setup\cls_Vessel_Voyage_Listing.cs" />
+    <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\CommonFeatures.cs" />
+    <Compile Include="Classes\CommonSearch.cs" />
+    <Compile Include="Classes\frmMSTLocation.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Classes\Mail\clsMail.cs" />
+    <Compile Include="Classes\Documentation\cls_MAWBEntry.cs" />
+    <Compile Include="Classes\07Reports\Cls_activate_deactivate custrpt.cs" />
+    <Compile Include="Classes\07Reports\cls_ActiveRates.cs" />
+    <Compile Include="Classes\07Reports\Cls_Airline_Delivery_Note.cs" />
+    <Compile Include="Classes\07Reports\cls_ApprovedVouchersAwaitingPayment.cs" />
+    <Compile Include="Classes\07Reports\Cls_BookingLoadConfirm.cs" />
+    <Compile Include="Classes\07Reports\Cls_BookingStatus.cs" />
+    <Compile Include="Classes\07Reports\Cls_DocsFilling.cs" />
+    <Compile Include="Classes\07Reports\Cls_ExpiringReportWithAgeing.cs" />
+    <Compile Include="Classes\07Reports\Cls_Exp_Certificate.cs" />
+    <Compile Include="Classes\07Reports\Cls_GenerateListofPayment.cs" />
+    <Compile Include="Classes\07Reports\Cls_JCinvoiceGenerationReport.cs" />
+    <Compile Include="Classes\07Reports\Cls_JcPendingForDo.cs" />
+    <Compile Include="Classes\07Reports\Cls_Jobcard_closed.cs" />
+    <Compile Include="Classes\07Reports\Cls_Label_Generation.cs" />
+    <Compile Include="Classes\07Reports\Cls_ListInvoicePendingApprovalReport.cs" />
+    <Compile Include="Classes\07Reports\Cls_ListInvoicePendingCollectionReport.cs" />
+    <Compile Include="Classes\07Reports\cls_ListOfPendingHbls.cs" />
+    <Compile Include="Classes\07Reports\cls_MJC_JCPendingForCAN.cs" />
+    <Compile Include="Classes\07Reports\Cls_PendingBkgForStuffing.cs" />
+    <Compile Include="Classes\07Reports\cls_PendingVouchersForApproval.cs" />
+    <Compile Include="Classes\07Reports\Cls_PotentialvsActulaReport.cs" />
+    <Compile Include="Classes\07Reports\cls_QuotationExpiryReport.cs" />
+    <Compile Include="Classes\07Reports\Cls_Release_Note.cs" />
+    <Compile Include="Classes\07Reports\cls_Rpt_Audit_Trail_Report.cs" />
+    <Compile Include="Classes\07Reports\Cls_SeaCargoManifest.cs" />
+    <Compile Include="Classes\07Reports\Cls_StatementOfAccountsSupp.cs" />
+    <Compile Include="Classes\07Reports\Cls_SupplierSalesReport.cs" />
+    <Compile Include="Classes\07Reports\Cls_TransportNoteListing.cs" />
+    <Compile Include="Classes\07Reports\Cls_Transport_Note.cs" />
+    <Compile Include="Classes\07Reports\cls_VenderAgeingReport.cs" />
+    <Compile Include="Classes\07Reports\Cls_Workflow_Mgr_Report.cs" />
+    <Compile Include="Common\WorkFlow.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdministratorController.cs" />
+    <Compile Include="Classes\02OrgSetup\cls_Location_Departments_Trn.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RandomController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MenuItems.cs" />
+    <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Credentials.cs" />
+    <Compile Include="Models\CustomerProfileModel.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Database1.mdf" />
+    <Content Include="App_Data\Database1_log.ldf">
+      <DependentUpon>Database1.mdf</DependentUpon>
+    </Content>
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\ai.0.15.0-build58334.js" />
+    <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
+    <Content Include="apiapp.json" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\01_AdministratorSetup\Corporate_Profile_Setup.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3467</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3467/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:3467/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
