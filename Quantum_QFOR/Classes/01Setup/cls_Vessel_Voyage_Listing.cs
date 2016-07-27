@@ -515,7 +515,7 @@ namespace Quantum_QFOR
                 _with3.Add("LOOKUP_VALUE_IN", strReq).Direction = ParameterDirection.Input;
                 _with3.Add("LOCATION_IN", (!string.IsNullOrEmpty(strLoc) ? strLoc : "")).Direction = ParameterDirection.Input;
                 _with3.Add("OPRPK_IN", (!string.IsNullOrEmpty(stroprpk) ? stroprpk : "")).Direction = ParameterDirection.Input;
-                _with3.Add("RETURN_VALUE", System.Data.OracleClient.OracleType.Clob).Direction = ParameterDirection.Output;
+                _with3.Add("RETURN_VALUE", OracleDbType.Clob).Direction = ParameterDirection.Output;
                 selectCommand.Parameters["RETURN_VALUE"].SourceVersion = DataRowVersion.Current;
                 selectCommand.ExecuteNonQuery();
                 OracleClob clob = null;
@@ -917,7 +917,7 @@ namespace Quantum_QFOR
                 _with9.Add("Process_IN", (!string.IsNullOrEmpty(Process_IN) ? Process_IN : "")).Direction = ParameterDirection.Input;
                 _with9.Add("Agent_IN", (!string.IsNullOrEmpty(Agent_IN) ? Agent_IN : "")).Direction = ParameterDirection.Input;
                 //.Add("VOYAGE_PK_IN", IIf(lblVoyagePK <> "", lblVoyagePK, "")).Direction = ParameterDirection.Input
-                _with9.Add("RETURN_VALUE", System.Data.OracleClient.OracleType.Clob).Direction = ParameterDirection.Output;
+                _with9.Add("RETURN_VALUE", OracleDbType.Clob).Direction = ParameterDirection.Output;
                 selectCommand.Parameters["RETURN_VALUE"].SourceVersion = DataRowVersion.Current;
                 selectCommand.ExecuteNonQuery();
                 OracleClob clob = null;

@@ -1335,7 +1335,7 @@ namespace Quantum_QFOR
         {
             WorkFlow obJWk = new WorkFlow();
             OracleTransaction oraTran = null;
-            System.Data.OracleClient.OracleCommand delCommand = new System.Data.OracleClient.OracleCommand();
+            OracleCommand delCommand = new OracleCommand();
             string strReturn = null;
             string[] arrRowDetail = null;
             Int32 i = default(Int32);

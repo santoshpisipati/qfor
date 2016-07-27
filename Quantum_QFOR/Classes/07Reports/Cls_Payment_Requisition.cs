@@ -452,7 +452,7 @@ namespace Quantum_QFOR
                 _with1.Add("BUSINESS_TYPE_IN", strBizType).Direction = ParameterDirection.Input;
                 _with1.Add("PROCESS_TYPE_IN", strProcessType).Direction = ParameterDirection.Input;
                 _with1.Add("LOC_FK_IN", strLoc).Direction = ParameterDirection.Input;
-                _with1.Add("RETURN_VALUE", System.Data.OracleClient.OracleType.Clob).Direction = ParameterDirection.Output;
+                _with1.Add("RETURN_VALUE", OracleDbType.Clob).Direction = ParameterDirection.Output;
                 selectCommand.Parameters["RETURN_VALUE"].SourceVersion = DataRowVersion.Current;
                 selectCommand.ExecuteNonQuery();
                 OracleClob clob = null;

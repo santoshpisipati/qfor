@@ -118,7 +118,7 @@ namespace Quantum_QFOR
                 objWF.MyCommand.Parameters.Clear();
                 var _with1 = objWF.MyCommand.Parameters;
                 _with1.Add("VENDOR_MST_FK_IN", VendorPk).Direction = ParameterDirection.Input;
-                _with1.Add("VENDOR_CUR", System.Data.OracleClient.OracleType.Cursor).Direction = ParameterDirection.Output;
+                _with1.Add("VENDOR_CUR", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 dt = objWF.GetDataTable("VENDOR_MST_TBL_PKG", "FETCH_DATA");
                 ds.Tables.Add(dt);
                 return ds;
