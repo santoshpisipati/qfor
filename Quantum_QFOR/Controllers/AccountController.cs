@@ -20,7 +20,7 @@
 #endregion "Comments"
 
 using Newtonsoft.Json;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using Quantum_QFOR.Models;
 using System;
 using System.Collections;
@@ -270,11 +270,11 @@ namespace Quantum_QFOR.Controllers
         }
 
         [AcceptVerbs("GET","POST")]
-        public object Login([FromBody]Credentials X)
+        public object Login([FromBody]Credentials userName)
         {
-            if (X == null) return new object();
-            string Username = X.Username;
-            string Password = X.Password;
+            if (userName == null) return new object();
+            string Username = userName.Username;
+            string Password = userName.Password;
             Common cmnClass = new Common();
             LoginModel loginModel = new LoginModel();
             string json = string.Empty;

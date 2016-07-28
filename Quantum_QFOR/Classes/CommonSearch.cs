@@ -20,7 +20,7 @@
 #endregion "Comments"
 
 using Newtonsoft.Json;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
 using System.Text;
@@ -700,7 +700,7 @@ namespace Quantum_QFOR
         public string FecthFreightElement(string strCond)
         {
             WorkFlow objWF = new WorkFlow();
-            Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+            Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
             DataSet objds = new DataSet();
             int Int_I = 0;
             string strReturn = "";
@@ -1322,7 +1322,7 @@ namespace Quantum_QFOR
         //public string FetchCOMMONDATA(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -1469,7 +1469,7 @@ namespace Quantum_QFOR
         //public string FetchCOMMONNEWDATA(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -1662,7 +1662,7 @@ namespace Quantum_QFOR
         //public string FetchMultipleES(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -1794,7 +1794,7 @@ namespace Quantum_QFOR
         //public string FetchCOMMONDATANew(string strCond, string strChk = "", bool EXD = false)
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -1967,7 +1967,7 @@ namespace Quantum_QFOR
         //public string FetchCOMMONDATAExpiry(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -2098,7 +2098,7 @@ namespace Quantum_QFOR
         //public string FetchGenCommonSearch(string strSearchFlag, string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -2218,7 +2218,7 @@ namespace Quantum_QFOR
         //public string FetchGETENCOMMON_DOCUMENTPKG(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -2760,7 +2760,7 @@ namespace Quantum_QFOR
         //public string FetchCOMMONCustomsBrokerage(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -4671,7 +4671,7 @@ namespace Quantum_QFOR
         //public string FetchEnCommonSearch(string strCond = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -4782,7 +4782,7 @@ namespace Quantum_QFOR
         public string FetchCOMMONDATAAdminModule(string strCond, string strChk = "")
         {
             WorkFlow objWF = new WorkFlow();
-            Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+            Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
             string strReturn = null;
             Array arr = null;
             string strSERACH_IN = null;
@@ -4925,8 +4925,8 @@ namespace Quantum_QFOR
                 _with10.Add("RETURN_VALUE", OracleDbType.Clob).Direction = ParameterDirection.Output;
                 selectCommand.Parameters["RETURN_VALUE"].SourceVersion = DataRowVersion.Current;
                 selectCommand.ExecuteNonQuery();
-                Oracle.DataAccess.Types.OracleClob clob = default(Oracle.DataAccess.Types.OracleClob);
-                clob = (Oracle.DataAccess.Types.OracleClob)selectCommand.Parameters["RETURN_VALUE"].Value;
+                Oracle.ManagedDataAccess.Types.OracleClob clob = default(Oracle.ManagedDataAccess.Types.OracleClob);
+                clob = (Oracle.ManagedDataAccess.Types.OracleClob)selectCommand.Parameters["RETURN_VALUE"].Value;
                 System.IO.StreamReader strReader = new System.IO.StreamReader(clob, Encoding.Unicode);
                 strReturn = strReader.ReadToEnd();
                 return strReturn;
@@ -4953,7 +4953,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_Rating(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -5106,7 +5106,7 @@ namespace Quantum_QFOR
         //public string FetchCommonCBJCReports(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -5279,7 +5279,7 @@ namespace Quantum_QFOR
         //public string FetchCommonEDIReports(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -5452,7 +5452,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_MIS(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -5646,7 +5646,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_SUPPLIERMGMT(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -5799,7 +5799,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_Receivables(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -5962,7 +5962,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_Payables(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -6115,7 +6115,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_PrintExpDocs(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -6268,7 +6268,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_PrintImpDocs(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -6421,7 +6421,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_OrderMgmt(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;
@@ -6627,7 +6627,7 @@ namespace Quantum_QFOR
         //public string FetchCommonData_Reports(string strCond, string strChk = "")
         //{
         //    WorkFlow objWF = new WorkFlow();
-        //    Oracle.DataAccess.Client.OracleCommand selectCommand = new Oracle.DataAccess.Client.OracleCommand();
+        //    Oracle.ManagedDataAccess.Client.OracleCommand selectCommand = new Oracle.ManagedDataAccess.Client.OracleCommand();
         //    string strReturn = null;
         //    Array arr = null;
         //    string strSERACH_IN = null;

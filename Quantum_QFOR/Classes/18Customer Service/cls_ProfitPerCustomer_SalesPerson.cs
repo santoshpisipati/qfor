@@ -22,7 +22,7 @@
 
 using System;
 using System.Data;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System.Web;
 
 namespace Quantum_QFOR

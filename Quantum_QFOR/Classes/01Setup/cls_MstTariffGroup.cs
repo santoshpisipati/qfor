@@ -21,7 +21,7 @@
 using System;
 using System.Collections;
 using System.Data;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Quantum_QFOR
 {

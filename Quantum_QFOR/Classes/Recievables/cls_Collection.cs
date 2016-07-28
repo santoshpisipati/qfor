@@ -22,7 +22,7 @@
 //Option Strict On
 // ERROR: Not supported in C#: OptionDeclaration
 
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
 using System.Configuration;

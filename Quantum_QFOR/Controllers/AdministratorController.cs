@@ -20,7 +20,8 @@
 #endregion "Comments"
 
 using Newtonsoft.Json;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
+using Quantum_QFOR.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -363,6 +364,31 @@ namespace Quantum_QFOR.Controllers
         {
             cls_Protocol_Mst_Tbl cs = new cls_Protocol_Mst_Tbl();
             string value = cs.FetchProtocol();
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public object FetchCommodity([FromBody]Commodity commodity)
+        {
+            if (commodity == null) return "";
+            string commodityId = commodity.P_Commodity_Id;
+            string commodityName = commodity.P_Commodity_Name;
+            string P_Imdg_Class_Code = commodity.P_Imdg_Class_Code;
+            string P_Commodity_Group_Desc = commodity.P_Commodity_Group_Desc;
+            string P_Imdg_Code_Page = commodity.P_Imdg_Code_Page;
+            string P_Un_No = commodity.P_Un_No;
+            string SearchType = commodity.SearchType;
+            bool IsActive = commodity.IsActive;
+            int flag = commodity.flag;
+            cls_Commodity_Mst_Tbl cs = new cls_Commodity_Mst_Tbl();
+            string value = cs.FetchAll(commodityId, commodityName, P_Imdg_Class_Code, P_Imdg_Code_Page, P_Un_No, 0, "C", "COMMODITY_ID", 0, 0, "COMMODITY_ID", 1, true, 1);
+            return JsonConvert.DeserializeObject(value);
+        }
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAllCommodities()
+        {
+            cls_Commodity_Group_Mst_Tbl cs = new cls_Commodity_Group_Mst_Tbl();
+            string value = cs.FetchAllcomodity();
             return JsonConvert.DeserializeObject(value);
         }
     }

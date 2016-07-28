@@ -19,7 +19,8 @@
 
 #endregion "Comments"
 
-using Oracle.DataAccess.Client;
+using Newtonsoft.Json;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
 using System.Data;
@@ -118,17 +119,9 @@ namespace Quantum_QFOR
         /// <param name="SelectAll">if set to <c>true</c> [select all].</param>
         public cls_Commodity_Group_Mst_Tbl(bool SelectAll)
         {
+            WorkFlow objWF = new WorkFlow();
             string Sql = null;
-            //'modified by latha
-            //Dim strSelect As String = "All"
-            //If SelectAll Then
-            //    strSelect = "ALL"     'Commented by rabbani no need to pass ALL and Select in comm Grp on 17/11/06
-            //End If
-            //Sql = "SELECT 0 COMMODITY_GROUP_PK, COMMODITY_GROUP_CODE, COMMODITY_GROUP_DESC,0 VERSION_NO "
-            //Sql &= vbCrLf & " FROM DUAL "
-            //Sql &= vbCrLf & " UNION "
-
-            //Gopi  ****************************** For "<ALL>" ****************
+                      //Gopi  ****************************** For "<ALL>" ****************
             if (SelectAll)
             {
                 Sql += " SELECT COMMODITY_GROUP_PK,COMMODITY_GROUP_CODE,COMMODITY_GROUP_DESC,VERSION_NO";
@@ -136,10 +129,6 @@ namespace Quantum_QFOR
                 Sql += " '<ALL>' COMMODITY_GROUP_CODE, ";
                 Sql += " ' ' COMMODITY_GROUP_DESC, ";
                 Sql += " 0 VERSION_NO,0 PREFERENCE from dual UNION ";
-                //Else
-                //    Sql &= vbCrLf & " SELECT 0 COMMODITY_GROUP_PK, "
-                //    Sql &= vbCrLf & " '' COMMODITY_GROUP_CODE,'' as PREFERENCE,0 "
-                //    Sql &= vbCrLf & " FROM dual UNION "
             }
             else
             {
@@ -157,7 +146,7 @@ namespace Quantum_QFOR
             Sql += " ORDER BY PREFERENCE ";
             try
             {
-                M_DataSet = (new WorkFlow()).GetDataSet(Sql);
+                M_DataSet = objWF.GetDataSet(Sql);
             }
             catch (OracleException OraExp)
             {
@@ -167,6 +156,10 @@ namespace Quantum_QFOR
             {
                 throw ex;
             }
+        }
+        public cls_Commodity_Group_Mst_Tbl()
+        {
+                
         }
 
         #endregion "Constructor"
@@ -188,7 +181,7 @@ namespace Quantum_QFOR
         /// <param name="blnSortAscending">if set to <c>true</c> [BLN sort ascending].</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataSet FetchAll(Int16 P_Commodity_Group_Pk = 0, string P_Commodity_Group_Code = "", string P_Commodity_Group_Desc = "", string SearchType = "", string strColumnName = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 SortCol = 2, Int16 isActive = -1, bool blnSortAscending = false,
+        public string FetchAll(Int16 P_Commodity_Group_Pk = 0, string P_Commodity_Group_Code = "", string P_Commodity_Group_Desc = "", string SearchType = "", string strColumnName = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 SortCol = 2, Int16 isActive = -1, bool blnSortAscending = false,
         Int32 flag = 0)
         {
             Int32 last = default(Int32);
@@ -208,7 +201,7 @@ namespace Quantum_QFOR
                 strCondition = strCondition + "AND COMMODITY_GROUP_PK= " + P_Commodity_Group_Pk;
             }
 
-            if (P_Commodity_Group_Code.Trim().Length > 0)
+            if (!string.IsNullOrEmpty(P_Commodity_Group_Desc) && P_Commodity_Group_Code.Trim().Length > 0)
             {
                 if (SearchType.ToString().Trim().Length > 0)
                 {
@@ -227,7 +220,7 @@ namespace Quantum_QFOR
                 }
             }
 
-            if (P_Commodity_Group_Desc.Trim().Length > 0)
+            if (!string.IsNullOrEmpty(P_Commodity_Group_Desc) && P_Commodity_Group_Desc.Trim().Length > 0)
             {
                 if (SearchType.ToString().Trim().Length > 0)
                 {
@@ -294,11 +287,12 @@ namespace Quantum_QFOR
                 SQLQuery += " DESC";
             }
 
-            SQLQuery = SQLQuery + " )q ) WHERE SR_NO  Between " + start + " and " + last;
+            SQLQuery = SQLQuery + " )q ) WHERE SR_NO  Between " + 1 + " and " + 30;
 
             try
             {
-                return objWF.GetDataSet(SQLQuery);
+                DataSet getDs = objWF.GetDataSet(SQLQuery);
+                return JsonConvert.SerializeObject(getDs, Formatting.Indented);
                 //Modified by Manjunath  PTS ID:Sep-02  13/09/2011
             }
             catch (OracleException sqlExp)
@@ -448,21 +442,11 @@ namespace Quantum_QFOR
         /// Fetches the allcomodity.
         /// </summary>
         /// <returns></returns>
-        public object FetchAllcomodity()
+        public string FetchAllcomodity()
         {
             WorkFlow objWF = new WorkFlow();
             string Sql = null;
-            //'modified by latha
-            //Dim strSelect As String = "All"
-            //If SelectAll Then
-            //    strSelect = "ALL"     'Commented by rabbani no need to pass ALL and Select in comm Grp on 17/11/06
-            //End If
-            //Sql = "SELECT 0 COMMODITY_GROUP_PK, COMMODITY_GROUP_CODE, COMMODITY_GROUP_DESC,0 VERSION_NO "
-            //Sql &= vbCrLf & " FROM DUAL "
-            //Sql &= vbCrLf & " UNION "
-
             //Gopi  ****************************** For "<ALL>" ****************
-
             Sql += " SELECT COMMODITY_GROUP_PK,COMMODITY_GROUP_CODE,COMMODITY_GROUP_DESC,VERSION_NO";
             Sql += " FROM (select 0 COMMODITY_GROUP_PK,";
             Sql += " '<ALL>' COMMODITY_GROUP_CODE, ";
@@ -475,8 +459,9 @@ namespace Quantum_QFOR
             Sql += " ORDER BY PREFERENCE ";
             try
             {
-                return objWF.GetDataSet(Sql);
-                //Modified by Manjunath  PTS ID:Sep-02  13/09/2011
+
+                DataSet getDs = objWF.GetDataSet(Sql);
+                return JsonConvert.SerializeObject(getDs, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {

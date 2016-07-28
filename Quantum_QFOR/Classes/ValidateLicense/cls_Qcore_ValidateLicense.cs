@@ -21,7 +21,7 @@
 
 
 using Newtonsoft.Json;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.IO;
 using System.Security.Cryptography;

@@ -19,7 +19,8 @@
 
 #endregion "Comments"
 
-using Oracle.DataAccess.Client;
+using Newtonsoft.Json;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
 using System.Data;
@@ -96,6 +97,11 @@ namespace Quantum_QFOR
             }
         }
 
+        public cls_Commodity_Mst_Tbl()
+        {
+
+        }
+
         #endregion "Constructors"
 
         #region " FetchCommodity Function "
@@ -163,7 +169,7 @@ namespace Quantum_QFOR
         /// <param name="blnSortAscending">if set to <c>true</c> [BLN sort ascending].</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataSet FetchAll(string P_Commodity_Id, string P_Commodity_Name, string P_Imdg_Class_Code, string P_Imdg_Code_Page, string P_Un_No, Int32 P_Commodity_Group_Mst_Fk, string SearchType = "", string SortExpression = "", Int32 CurrentPage = 0, Int32 TotalPage = 0,
+        public string FetchAll(string P_Commodity_Id, string P_Commodity_Name, string P_Imdg_Class_Code, string P_Imdg_Code_Page, string P_Un_No, Int32 P_Commodity_Group_Mst_Fk, string SearchType = "", string SortExpression = "", Int32 CurrentPage = 0, Int32 TotalPage = 0,
         string strColumnName = "", Int16 IsActive = 0, bool blnSortAscending = false, Int32 flag = 0)
         {
             Int32 last = default(Int32);
@@ -178,7 +184,7 @@ namespace Quantum_QFOR
                 strCondition += " AND 1=2";
             }
 
-            if (P_Commodity_Id.ToString().Trim().Length > 0)
+            if (!string.IsNullOrEmpty(P_Commodity_Id) && P_Commodity_Id.Trim().Length > 0)
             {
                 if (SearchType == "C")
                 {
@@ -192,7 +198,7 @@ namespace Quantum_QFOR
             else
             {
             }
-            if (P_Commodity_Name.ToString().Trim().Length > 0)
+            if (!string.IsNullOrEmpty(P_Commodity_Name) && P_Commodity_Name.Trim().Length > 0)
             {
                 if (SearchType == "C")
                 {
@@ -204,7 +210,7 @@ namespace Quantum_QFOR
                 }
             }
 
-            if (P_Imdg_Class_Code.ToString().Trim().Length > 0)
+            if (!string.IsNullOrEmpty(P_Imdg_Class_Code) && P_Imdg_Class_Code.Trim().Length > 0)
             {
                 if (SearchType == "C")
                 {
@@ -216,7 +222,7 @@ namespace Quantum_QFOR
                 }
             }
 
-            if (P_Imdg_Code_Page.ToString().Trim().Length > 0)
+            if (!string.IsNullOrEmpty(P_Imdg_Code_Page) && P_Imdg_Code_Page.Trim().Length > 0)
             {
                 if (SearchType == "C")
                 {
@@ -227,8 +233,7 @@ namespace Quantum_QFOR
                     strCondition = strCondition + " And upper(Imdg_Code_Page) like '" + P_Imdg_Code_Page.Replace("'", "''").ToUpper() + "%' ";
                 }
             }
-
-            if (P_Un_No.ToString().Trim().Length > 0)
+            if (!string.IsNullOrEmpty(P_Un_No) && P_Un_No.Trim().Length > 0)
             {
                 if (SearchType == "C")
                 {
@@ -300,10 +305,11 @@ namespace Quantum_QFOR
             {
                 SQLQuery += " DESC";
             }
-            SQLQuery += " )q) WHERE SR_NO  Between " + start + " and " + last;
+            SQLQuery += " )q) WHERE SR_NO  Between " + 1 + " and " + 30;
             try
             {
-                return objWF.GetDataSet(SQLQuery);
+                DataSet getDs = objWF.GetDataSet(SQLQuery);
+                return JsonConvert.SerializeObject(getDs, Formatting.Indented);
             }
             catch (OracleException DBExp)
             {
