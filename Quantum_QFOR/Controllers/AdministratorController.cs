@@ -387,8 +387,8 @@ namespace Quantum_QFOR.Controllers
         [AcceptVerbs("GET", "POST")]
         public object FetchAllCommodities()
         {
-            cls_Commodity_Group_Mst_Tbl cs = new cls_Commodity_Group_Mst_Tbl();
-            string value = cs.FetchAllcomodity();
+            cls_Commodity_Mst_Tbl cs = new cls_Commodity_Mst_Tbl();
+            string value = cs.FetchAll("", "", "", "", "", 0, "C", "COMMODITY_ID", 0, 0, "COMMODITY_ID", 1, true, 1);
             return JsonConvert.DeserializeObject(value);
         }
     }
