@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -244,7 +245,7 @@ namespace Quantum_QFOR
         /// <param name="blnSortAscending">if set to <c>true</c> [BLN sort ascending].</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataSet FetchAll(string UserID, string UserName, string BranchID, string BranchName, bool ActiveOnly, string SearchType, string strColumnName, Int32 CurrentPage, Int32 TotalPage, bool blnSortAscending, Int32 flag)
+        public string FetchAll(string UserID, string UserName, string BranchID, string BranchName, bool ActiveOnly, string SearchType, string strColumnName, Int32 CurrentPage, Int32 TotalPage, bool blnSortAscending, Int32 flag)
         {
             Int32 last = default(Int32);
             Int32 start = default(Int32);
@@ -372,7 +373,7 @@ namespace Quantum_QFOR
             strSQL += " Order By SR_NO ";
             try
             {
-                return objWF.GetDataSet(strSQL);
+                return JsonConvert.SerializeObject(objWF.GetDataSet(strSQL), Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {

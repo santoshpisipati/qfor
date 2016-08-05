@@ -701,6 +701,12 @@
     <Compile Include="Models\Print Export Docs\AirUserExport.cs" />
     <Compile Include="Models\Print Export Docs\FMCSeaUserExport.cs" />
     <Compile Include="Models\Print Export Docs\PaymentRequisition.cs" />
+    <Compile Include="Models\Security\AuditTrail.cs" />
+    <Compile Include="Models\Security\AuditTrailLog.cs" />
+    <Compile Include="Models\Security\Employee.cs" />
+    <Compile Include="Models\Security\UserAccess.cs" />
+    <Compile Include="Models\Security\UserDefination.cs" />
+    <Compile Include="Models\Security\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -386,81 +387,105 @@ namespace Quantum_QFOR
 			}
 		}
 
-		public DataSet RoleListingSearch(string Str, string strDesc, string Searchtype, string strColumnName = "", bool blnSortAscending = false, Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 ActFlag = 0)
-		{
+        public string RoleListingSearch(string Str, string strDesc, string Searchtype, string strColumnName = "", bool blnSortAscending = false, Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 ActFlag = 0)
+        {
 
-			Int32 last = default(Int32);
-			Int32 start = default(Int32);
-			string strSQL = null;
-			string strCondition = null;
-			Int32 TotalRecords = default(Int32);
-			WorkFlow objWF = new WorkFlow();
-			if (flag == 0) {
-				strCondition += " AND 1=2";
-			}
-			if (Searchtype == "S") {
-				if (Str.Length > 0) {
-					strCondition = strCondition + "  and upper(role_mst_tbl.role_id) like '" + Str.ToUpper().Replace("'", "''") + "%'";
-				}
-			} else {
-				if (Str.Length > 0) {
-					strCondition = strCondition + " and upper(role_mst_tbl.role_id) like '%" + Str.ToUpper().Replace("'", "''") + "%'";
-				}
-			}
+            Int32 last = default(Int32);
+            Int32 start = default(Int32);
+            string strSQL = null;
+            string strCondition = null;
+            Int32 TotalRecords = default(Int32);
+            WorkFlow objWF = new WorkFlow();
+            if (flag == 0)
+            {
+                strCondition += " AND 1=2";
+            }
+            if (Searchtype == "S")
+            {
+                if (Str.Length > 0)
+                {
+                    strCondition = strCondition + "  and upper(role_mst_tbl.role_id) like '" + Str.ToUpper().Replace("'", "''") + "%'";
+                }
+            }
+            else
+            {
+                if (Str.Length > 0)
+                {
+                    strCondition = strCondition + " and upper(role_mst_tbl.role_id) like '%" + Str.ToUpper().Replace("'", "''") + "%'";
+                }
+            }
 
-			if (Searchtype == "S") {
-				if (strDesc.Length > 0) {
-					strCondition = strCondition + " and upper(role_mst_tbl.role_description) like '" + strDesc.ToUpper().Replace("'", "''") + "%'";
-				}
-			} else {
-				if (strDesc.Length > 0) {
-					strCondition = strCondition + " and upper(role_mst_tbl.role_description) like '%" + strDesc.ToUpper().Replace("'", "''") + "%'";
-				}
-			}
-			if (ActFlag == 1) {
-				strCondition = strCondition + " AND ROLE_MST_TBL.ACTIVE_FLAG = " + ActFlag;
-			}
-			strSQL = "select Count(*) from role_mst_tbl where 1=1 ";
-			strSQL += strCondition;
-			TotalRecords = Convert.ToInt32(objWF.ExecuteScaler(strSQL));
-			TotalPage = TotalRecords / RecordsPerPage;
-			if (TotalRecords % RecordsPerPage != 0) {
-				TotalPage += 1;
-			}
-			if (CurrentPage > TotalPage) {
-				CurrentPage = 1;
-			}
-			if (TotalRecords == 0) {
-				CurrentPage = 0;
-			}
-			last = CurrentPage * RecordsPerPage;
-			start = (CurrentPage - 1) * RecordsPerPage + 1;
-			strSQL = "SELECT * from (";
-			strSQL = strSQL + " SELECT ROWNUM SR_NO, q.* FROM " ;
-			strSQL = strSQL + " (select role_mst_tbl.role_mst_tbl_pk," ;
-			strSQL = strSQL + " role_mst_tbl.active_flag," ;
-			strSQL = strSQL + " role_mst_tbl.role_id," ;
-			strSQL = strSQL + " role_mst_tbl.role_description" ;
-			strSQL = strSQL + " from role_mst_tbl where 1=1  " ;
-			strSQL = strSQL + strCondition;
-			if (!strColumnName.Equals("SR_NO")) {
-				strSQL += "order by " + strColumnName;
-			}
-			if (!blnSortAscending & !strColumnName.Equals("SR_NO")) {
-				strSQL += " DESC";
-			}
-			strSQL = strSQL + " )q) WHERE SR_NO  Between " + start + " and " + last;
-			strSQL += " ORDER BY  SR_NO";
-			try {
-				return objWF.GetDataSet(strSQL);
-			} catch (OracleException sqlExp) {
-				ErrorMessage = sqlExp.Message;
-				throw sqlExp;
-			} catch (Exception exp) {
-				ErrorMessage = exp.Message;
-				throw exp;
-			}
-		}
+            if (Searchtype == "S")
+            {
+                if (strDesc.Length > 0)
+                {
+                    strCondition = strCondition + " and upper(role_mst_tbl.role_description) like '" + strDesc.ToUpper().Replace("'", "''") + "%'";
+                }
+            }
+            else
+            {
+                if (strDesc.Length > 0)
+                {
+                    strCondition = strCondition + " and upper(role_mst_tbl.role_description) like '%" + strDesc.ToUpper().Replace("'", "''") + "%'";
+                }
+            }
+            if (ActFlag == 1)
+            {
+                strCondition = strCondition + " AND ROLE_MST_TBL.ACTIVE_FLAG = " + ActFlag;
+            }
+            strSQL = "select Count(*) from role_mst_tbl where 1=1 ";
+            strSQL += strCondition;
+            TotalRecords = Convert.ToInt32(objWF.ExecuteScaler(strSQL));
+            TotalPage = TotalRecords / RecordsPerPage;
+            if (TotalRecords % RecordsPerPage != 0)
+            {
+                TotalPage += 1;
+            }
+            if (CurrentPage > TotalPage)
+            {
+                CurrentPage = 1;
+            }
+            if (TotalRecords == 0)
+            {
+                CurrentPage = 0;
+            }
+            last = CurrentPage * RecordsPerPage;
+            start = (CurrentPage - 1) * RecordsPerPage + 1;
+            strSQL = "SELECT * from (";
+            strSQL = strSQL + " SELECT ROWNUM SR_NO, q.* FROM ";
+            strSQL = strSQL + " (select role_mst_tbl.role_mst_tbl_pk,";
+            strSQL = strSQL + " role_mst_tbl.active_flag,";
+            strSQL = strSQL + " role_mst_tbl.role_id,";
+            strSQL = strSQL + " role_mst_tbl.role_description";
+            strSQL = strSQL + " from role_mst_tbl where 1=1  ";
+            strSQL = strSQL + strCondition;
+            if (!strColumnName.Equals("SR_NO"))
+            {
+                strSQL += "order by " + strColumnName;
+            }
+            if (!blnSortAscending & !strColumnName.Equals("SR_NO"))
+            {
+                strSQL += " DESC";
+            }
+            strSQL = strSQL + " )q)";
+                //WHERE SR_NO  Between " + start + " and " + last;
+            strSQL += " ORDER BY  SR_NO";
+            try
+            {
+                DataSet DS = objWF.GetDataSet(strSQL);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+            }
+            catch (OracleException sqlExp)
+            {
+                ErrorMessage = sqlExp.Message;
+                throw sqlExp;
+            }
+            catch (Exception exp)
+            {
+                ErrorMessage = exp.Message;
+                throw exp;
+            }
+        }
 
 		public DataSet GetData()
 		{

@@ -345,8 +345,6 @@ namespace Quantum_QFOR.Controllers
             return JsonConvert.DeserializeObject(FillGrid);
         }
 
-        
-        
         #region Commodity
 
         /// <summary>
@@ -482,7 +480,7 @@ namespace Quantum_QFOR.Controllers
         {
             if (location == null) return "";
             Int64 P_Location_Mst_Pk = location.P_Location_Mst_Pk;
-        string P_Location_Id = location.P_Location_Id;
+            string P_Location_Id = location.P_Location_Id;
             string P_Location_Name = location.P_Location_Name;
             Int64 P_LocationType = location.P_LocationType;
             string P_Rep_Location_Id = location.P_Rep_Location_Id;
@@ -498,10 +496,10 @@ namespace Quantum_QFOR.Controllers
             bool isEFS = location.isEFS;
             bool blnSortAscending = location.blnSortAscending;
             Int32 flag = location.flag;
-            Int32 FromFlag = location.FromFlag;       
-           
+            Int32 FromFlag = location.FromFlag;
+
             cls_Location_Mst_Tbl cs = new cls_Location_Mst_Tbl();
-            string value = cs.FetchListing(P_Location_Mst_Pk,P_Location_Id,P_Location_Name,P_LocationType,P_Rep_Location_Id,P_Rep_Location_Name,P_COUNTRY_Id,P_COUNTRY_Name,P_OFFICE_NAME,SearchType,strColumnName,CurrentPage,TotalPage,isActive,isEFS,blnSortAscending,FromFlag);
+            string value = cs.FetchListing(P_Location_Mst_Pk, P_Location_Id, P_Location_Name, P_LocationType, P_Rep_Location_Id, P_Rep_Location_Name, P_COUNTRY_Id, P_COUNTRY_Name, P_OFFICE_NAME, SearchType, strColumnName, CurrentPage, TotalPage, isActive, isEFS, blnSortAscending, FromFlag);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -794,7 +792,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchUser_Task_List()
         {
             cls_user_task cs = new cls_user_task();
-            string value = cs.Fetch(1,0,0);
+            string value = cs.Fetch(1, 0, 0);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -810,7 +808,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchAllWorkFlowRules()
         {
             Cls_WorkflowRulesListing cs = new Cls_WorkflowRulesListing();
-            string value = cs.FetchInternal(0, "", "", "", 1, 1, 0,1);
+            string value = cs.FetchInternal(0, "", "", "", 1, 1, 0, 1);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -845,7 +843,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchAllWorkFlowTask()
         {
             Cls_Taskalotment cs = new Cls_Taskalotment();
-            string value = cs.Fetch("", "", 1, 0, "", false, 0,1);
+            string value = cs.Fetch("", "", 1, 0, "", false, 0, 1);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -991,7 +989,7 @@ namespace Quantum_QFOR.Controllers
         [AcceptVerbs("GET", "POST")]
         public object FetchAppFinLoc([FromBody]AppFinLoc appFinLoc)
         {
-            
+
             if (appFinLoc == null) return "";
             Int32 FromFlag = appFinLoc.FromFlag;
             string DBName = appFinLoc.DBName;
@@ -1286,7 +1284,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchAllSeaCargoManifestDataNew()
         {
             Cls_SeaCargoManifest cs = new Cls_SeaCargoManifest();
-            string value = cs.FetchSeaCargoManifestDataNew(0,"","","",0,0,"",0,0,"",0,"",0,0,"","","");
+            string value = cs.FetchSeaCargoManifestDataNew(0, "", "", "", 0, 0, "", 0, 0, "", 0, "", 0, 0, "", "", "");
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -1364,5 +1362,313 @@ namespace Quantum_QFOR.Controllers
         #endregion Airline Delivery Note
 
         #endregion Print ExportDocs
+
+        #region Security
+
+        #region Roles
+
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAllUserRoles()
+        {
+            cls_ROLE_MST_TBL cs = new cls_ROLE_MST_TBL();
+            string value = cs.RoleListingSearch("", "", "C", "ROLE_ID", true, 1, 0, 1, 1);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        /// <summary>
+        /// Fetches the fin generation.
+        /// </summary>
+        /// <param name="finGenerate">The fin generate.</param>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchUserRoles([FromBody]UserRole seaCargoManifest)
+        {
+            if (seaCargoManifest == null) return "";
+            String Str = seaCargoManifest.Str;
+            String strDesc = seaCargoManifest.strDesc;
+            String Searchtype = seaCargoManifest.Searchtype;
+            String strColumnName = seaCargoManifest.strColumnName;
+            bool blnSortAscending = seaCargoManifest.blnSortAscending;
+            Int32 CurrentPage = seaCargoManifest.CurrentPage;
+            Int32 TotalPage = seaCargoManifest.TotalPage;
+            Int32 flag = seaCargoManifest.flag;
+            Int32 ActFlag = seaCargoManifest.ActFlag;
+
+            cls_ROLE_MST_TBL cs = new cls_ROLE_MST_TBL();
+            string value = cs.RoleListingSearch(Str, strDesc, Searchtype, strColumnName, blnSortAscending, CurrentPage, TotalPage, flag, ActFlag);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion
+        #region Setup of Employee
+
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAllEmployees()
+        {
+            cls_Employee_Mst_Table cs = new cls_Employee_Mst_Table();
+            string value = cs.FetchAll("","","","","","","","","","","","","","","","","","","","C", "EMPLOYEE_ID", 0,1,0,3,1,true,1);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        /// <summary>
+        /// Fetches the fin generation.
+        /// </summary>
+        /// <param name="finGenerate">The fin generate.</param>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchEmployees([FromBody]Employee employee)
+        {
+            if (employee == null) return "";
+            String EmpId = employee.EmpId;
+            String EmpName = employee.EmpName;
+            String FirstName = employee.FirstName;
+            String LastName = employee.LastName;
+            string LocId = employee.LocId;
+            string LocName = employee.LocName;
+            string DepartmentID = employee.DepartmentID;
+            string DepartmentName = employee.DepartmentName;
+            string DesignationID = employee.DesignationID;
+            String DesignationName = employee.DesignationName;
+            String StateId = employee.StateId;
+            String StateName = employee.StateName;
+            String Address1 = employee.Address1;
+            string Address2 = employee.Address2;
+            string City = employee.City;
+            string ZIP = employee.ZIP;
+            string Phone = employee.Phone;
+            string Mobile = employee.Mobile;
+            String EMail = employee.EMail;
+            String SearchType = employee.SearchType;
+            String strColumnName = employee.strColumnName;
+            Int32 CurrentPage = employee.CurrentPage;
+            Int32 TotalPage = employee.TotalPage;
+            Int32 intBusType = employee.intBusType;
+            Int32 intUser = employee.intUser;
+            Int32 intActive = employee.intActive;
+            bool blnSortAscending = employee.blnSortAscending;
+            Int32 flag = employee.flag;
+
+            cls_Employee_Mst_Table cs = new cls_Employee_Mst_Table();
+            string value = cs.FetchAll(EmpId, EmpName, FirstName, LastName, LocId, LocName, DepartmentID, DepartmentName,
+             DesignationID, DesignationName, StateId, StateName, Address1, Address2, City, ZIP, Phone, Mobile, EMail, SearchType, strColumnName, CurrentPage, TotalPage, intBusType, intUser, intActive, blnSortAscending, flag);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion Setup of Employee
+
+        #region Definition of Users
+
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAllUserDef()
+        {
+            clsUser_Mst_Tbl cs = new clsUser_Mst_Tbl();
+            string value = cs.FetchAll("","","","", true, "C", "USER_ID",1,0,true,1);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        /// <summary>
+        /// Fetches the fin generation.
+        /// </summary>
+        /// <param name="finGenerate">The fin generate.</param>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchUserDefinations([FromBody]UserDefination userDefination)
+        {
+            if (userDefination == null) return "";
+            String UserID = userDefination.UserID;
+            String UserName = userDefination.UserName;
+            String BranchID = userDefination.BranchID;
+            String BranchName = userDefination.BranchName;
+            bool ActiveOnly = userDefination.ActiveOnly;
+            string SearchType = userDefination.SearchType;
+            string strColumnName = userDefination.strColumnName;
+            Int32 CurrentPage = userDefination.CurrentPage;
+            Int32 TotalPage = userDefination.TotalPage;
+            bool blnSortAscending = userDefination.blnSortAscending;
+            Int32 flag = userDefination.flag;
+            
+
+            clsUser_Mst_Tbl cs = new clsUser_Mst_Tbl();
+            string value = cs.FetchAll(UserID, UserName, BranchID, BranchName, ActiveOnly, SearchType, strColumnName, CurrentPage, TotalPage, blnSortAscending, flag);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion Definition of Users
+
+        #region User Access Listing
+
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAllFetchUserAccess()
+        {
+            clsUSER_ENTRY_TRN cs = new clsUSER_ENTRY_TRN();
+            string value = cs.UserListingSearch("", "", "", "C", "USER_ID", true, 1, 0, 1);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        /// <summary>
+        /// Fetches the fin generation.
+        /// </summary>
+        /// <param name="finGenerate">The fin generate.</param>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchUserAccess([FromBody]UserAccess userDefination)
+        {
+            if (userDefination == null) return "";
+            String Str = userDefination.Str;
+            String Str1 = userDefination.Str1;
+            String Str2 = userDefination.Str2;
+            String Searchtype = userDefination.Searchtype;
+            string strColumnName = userDefination.strColumnName;
+            bool blnSortAscending = userDefination.blnSortAscending;
+            Int32 CurrentPage = userDefination.CurrentPage;
+            Int32 TotalPage = userDefination.TotalPage;
+            Int32 flag = userDefination.flag;
+
+
+            clsUSER_ENTRY_TRN cs = new clsUSER_ENTRY_TRN();
+            string value = cs.UserListingSearch(Str, Str1, Str2, Searchtype, strColumnName, blnSortAscending, CurrentPage, TotalPage, flag);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion User Access Listing
+
+        #region Password Management
+
+        
+
+        #endregion Password Management
+
+        #region User Preferences
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchUserPreference()
+        {
+            cls_User_Preference_Mst_Tbl cs = new cls_User_Preference_Mst_Tbl();
+            string value = cs.FetchAll(3,1841);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+
+        #endregion User Preferences
+
+        #region Audit Trail - Setup
+
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAuditTrialSetupDetails(Int64 moduleid)
+        {
+            cls_AuditTrailsSetup cs = new cls_AuditTrailsSetup();
+            string value = cs.Fn_AuditTrials_Grid(moduleid,1);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion Audit Trail - Setup
+
+        #region Audit Trail - Log Info.
+
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAllAuditLog()
+        {
+            cls_AuditTrail_Log cs = new cls_AuditTrail_Log();
+            string value = cs.fn_Fetch_AuditLogDetails(0,0,0,0,0,0,"","",0,1);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        /// <summary>
+        /// Fetches the fin generation.
+        /// </summary>
+        /// <param name="finGenerate">The fin generate.</param>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAuditLog([FromBody]AuditTrailLog auditTrailLog)
+        {
+            if (auditTrailLog == null) return "";
+            Int32 CurrentPage = auditTrailLog.CurrentPage;
+            Int32 TotalPage = auditTrailLog.TotalPage;
+            Int64 locPk = auditTrailLog.locPk;
+            Int64 UserPk = auditTrailLog.UserPk;
+            Int64 modulefk = auditTrailLog.modulefk;
+            Int64 menu_fk = auditTrailLog.menu_fk;
+            string fromDt = auditTrailLog.fromDt;
+            string toDt = auditTrailLog.toDt;
+            Int16 PostBackFlag = auditTrailLog.PostBackFlag;
+            Int32 flag = auditTrailLog.flag;
+
+            cls_AuditTrail_Log cs = new cls_AuditTrail_Log();
+            string value = cs.fn_Fetch_AuditLogDetails(CurrentPage, TotalPage, locPk, UserPk, modulefk, menu_fk, fromDt, toDt, PostBackFlag, flag);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion Audit Trail - Log Info.
+
+        #region Audit Trail
+
+        /// <summary>
+        /// Fetches all fin generation.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAllAuditTrail()
+        {
+            cls_RPT_AUDIT_TRAIL_REPORT cs = new cls_RPT_AUDIT_TRAIL_REPORT();
+            string value = cs.FetchAllNew(0, 0, "", "USER_NAME", "", "", "1841", 1, 0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        /// <summary>
+        /// Fetches the fin generation.
+        /// </summary>
+        /// <param name="finGenerate">The fin generate.</param>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        public object FetchAuditTrail([FromBody]AuditTrail auditTrail)
+        {
+            if (auditTrail == null) return "";
+            Int64 UserID = auditTrail.UserID;
+            Int64 Modules = auditTrail.Modules;
+            string Activity = auditTrail.Activity;
+            string SortBy = auditTrail.SortBy;
+            string FromDate = auditTrail.FromDate;
+            string ToDate = auditTrail.ToDate;
+            string location = auditTrail.location;
+            Int32 CurrentPage = auditTrail.CurrentPage;
+            Int32 TotalPage = auditTrail.TotalPage;
+
+            cls_RPT_AUDIT_TRAIL_REPORT cs = new cls_RPT_AUDIT_TRAIL_REPORT();
+            string value = cs.FetchAllNew(UserID, Modules, Activity, SortBy, FromDate, ToDate, location, CurrentPage, TotalPage);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+
+        #endregion Audit Trail
+
+        #endregion
     }
 }
+

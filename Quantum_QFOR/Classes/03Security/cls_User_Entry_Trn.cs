@@ -21,6 +21,7 @@
 
 //Option Strict On
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -183,7 +184,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "User Listing Search"
-        public DataSet UserListingSearch(string Str, string Str1, string Str2, string Searchtype, string strColumnName = "", bool blnSortAscending = false, Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0)
+        public string UserListingSearch(string Str, string Str1, string Str2, string Searchtype, string strColumnName = "", bool blnSortAscending = false, Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0)
         {
             string strSQL = null;
             Int32 last = default(Int32);
@@ -275,7 +276,7 @@ namespace Quantum_QFOR
             strSQL += " ORDER BY  SR_NO";
             try
             {
-                return objWF.GetDataSet(strSQL);
+                return JsonConvert.SerializeObject(objWF.GetDataSet(strSQL), Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {

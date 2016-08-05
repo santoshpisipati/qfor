@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -195,7 +196,7 @@ namespace Quantum_QFOR
 		#endregion
 
 		#region "Fetch All"
-		public DataSet FetchAll(Int32 User_Pk, Int32 Loc_Fk)
+		public string FetchAll(Int32 User_Pk, Int32 Loc_Fk)
 		{
 			WorkFlow objWF = new WorkFlow();
 			System.Text.StringBuilder sb = new System.Text.StringBuilder(5000);
@@ -222,8 +223,8 @@ namespace Quantum_QFOR
 			sb.Append(" AND  UMT.DEFAULT_LOCATION_FK=" + Loc_Fk + " ");
 
 			try {
-				return objWF.GetDataSet(sb.ToString());
-			} catch (OracleException sqlExp) {
+                return JsonConvert.SerializeObject(objWF.GetDataSet(sb.ToString()), Formatting.Indented);
+            } catch (OracleException sqlExp) {
 				ErrorMessage = sqlExp.Message;
 				throw sqlExp;
 			} catch (Exception exp) {

@@ -109,6 +109,7 @@ namespace Quantum_QFOR
             try
             {
                 objStr = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 3, 1);
+
             }
             catch (Exception sqlExp)
             {
@@ -116,7 +117,7 @@ namespace Quantum_QFOR
                 throw sqlExp;
             }
 
-            return JsonConvert.SerializeObject(objStr, Formatting.Indented);
+            return objStr;
         }
         public string FetchBothIMPPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 LocFk = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
         {
@@ -177,14 +178,14 @@ namespace Quantum_QFOR
             }
             Strsql = "SELECT DISTINCT 0 JOBPPK,";
             //Strsql &= vbCrLf & " JSE.JOB_CARD_TRN_PK JOBPK,"
-            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOB_CARD_TRN_PK FROM JOB_CARD_TRN JCT, INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE";
-            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK";
+            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOB_CARD_TRN_PK FROM JOB_CARD_TRN JCT, INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE ";
+            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK ";
             Strsql += "AND SUP.INVOICE_REF_NO =''' || IST.INVOICE_REF_NO || '''";
             Strsql += "AND PIA.JOB_CARD_TRN_FK=JCT.JOB_CARD_TRN_PK(+)') FROM DUAL) AS JOBPK,";
 
             //Strsql &= vbCrLf & " JSE.JOBCARD_REF_NO JOBNUMBER,"
-            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOBCARD_REF_NO FROM JOB_CARD_TRN JCT,INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE";
-            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK";
+            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOBCARD_REF_NO FROM JOB_CARD_TRN JCT,INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE ";
+            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK ";
             Strsql += "AND SUP.INVOICE_REF_NO =''' || IST.INVOICE_REF_NO || '''";
             Strsql += "AND PIA.JOB_CARD_TRN_FK=JCT.JOB_CARD_TRN_PK(+)') FROM DUAL) AS JOBNUMBER,";
 
@@ -205,10 +206,10 @@ namespace Quantum_QFOR
             Strsql += " CURRENCY_TYPE_MST_TBL CMST,";
             Strsql += " JOB_TRN_PIA JSEP,";
             Strsql += " USER_MST_TBL UMT";
-            Strsql += " WHERE IST.INV_SUPPLIER_PK = JSEP.INV_SUPPLIER_FK";
+            Strsql += " WHERE IST.INV_SUPPLIER_PK = JSEP.INV_SUPPLIER_FK ";
             Strsql += " AND JSEP.JOB_CARD_TRN_FK=JSE.JOB_CARD_TRN_PK(+)";
             Strsql += " AND IST.VENDOR_MST_FK=VMT.VENDOR_MST_PK(+)";
-            Strsql += " AND IST.CURRENCY_MST_FK=CMST.CURRENCY_MST_PK";
+            Strsql += " AND IST.CURRENCY_MST_FK=CMST.CURRENCY_MST_PK ";
             Strsql += strCondition;
             Strsql += " AND (IST.INVOICE_AMT-PAYMENTS_TBL_PKG.CAL_PAID_AMOUNT(IST.INV_SUPPLIER_PK))>0";
             Strsql += " AND IST.APPROVED=1";
@@ -266,7 +267,7 @@ namespace Quantum_QFOR
             try
             {
                 DataSet DS = ObjWF.GetDataSet(strMain);
-                return JsonConvert.SerializeObject(DS, Newtonsoft.Json.Formatting.Indented);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -286,16 +287,16 @@ namespace Quantum_QFOR
             int BaseCurrFk = Convert.ToInt32(HttpContext.Current.Session["CURRENCY_MST_PK"]);
             Strsql = "SELECT 0 JOBPPK,";
             //Strsql &= vbCrLf & " JSE.JOB_CARD_TRN_PK JOBPK,"
-            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOB_CARD_TRN_PK FROM JOB_CARD_TRN JCT, INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE";
-            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK";
-            Strsql += "AND SUP.INVOICE_REF_NO =''' || IST.INVOICE_REF_NO || '''";
-            Strsql += "AND PIA.JOB_CARD_TRN_FK=JCT.JOB_CARD_TRN_PK(+)') FROM DUAL) AS JOBPK,";
+            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOB_CARD_TRN_PK FROM JOB_CARD_TRN JCT, INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE ";
+            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK ";
+            Strsql += " AND SUP.INVOICE_REF_NO =''' || IST.INVOICE_REF_NO || '''";
+            Strsql += " AND PIA.JOB_CARD_TRN_FK=JCT.JOB_CARD_TRN_PK(+)') FROM DUAL) AS JOBPK,";
 
             //Strsql &= vbCrLf & " JSE.JOBCARD_REF_NO JOBNUMBER,"
-            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOBCARD_REF_NO FROM JOB_CARD_TRN JCT,INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE";
-            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK";
-            Strsql += "AND SUP.INVOICE_REF_NO =''' || IST.INVOICE_REF_NO || '''";
-            Strsql += "AND PIA.JOB_CARD_TRN_FK=JCT.JOB_CARD_TRN_PK(+)') FROM DUAL) AS JOBNUMBER,";
+            Strsql += "(SELECT ROWTOCOL(' SELECT DISTINCT JCT.JOBCARD_REF_NO FROM JOB_CARD_TRN JCT,INV_SUPPLIER_TBL SUP, JOB_TRN_PIA PIA WHERE ";
+            Strsql += "SUP.INV_SUPPLIER_PK=PIA.INV_SUPPLIER_FK ";
+            Strsql += " AND SUP.INVOICE_REF_NO =''' || IST.INVOICE_REF_NO || '''";
+            Strsql += " AND PIA.JOB_CARD_TRN_FK=JCT.JOB_CARD_TRN_PK(+)') FROM DUAL) AS JOBNUMBER,";
 
             Strsql += " VMT.VENDOR_NAME   VENDOENAME,";
             Strsql += " IST.INVOICE_REF_NO INVOICENO,";
@@ -341,7 +342,7 @@ namespace Quantum_QFOR
             Strsql += "CMST.CURRENCY_ID CURRENCY";
             Strsql += "FROM JOB_TRN_PIA JSEP,";
             Strsql += "CURRENCY_TYPE_MST_TBL CMST,";
-            Strsql += "JOB_CARD_TRN JSE,VENDOR_MST_TBL VM";
+            Strsql += "JOB_CARD_TRN JSE,VENDOR_MST_TBL VM ";
             Strsql += "WHERE CMST.CURRENCY_MST_PK(+)=JSEP.CURRENCY_MST_FK ";
             Strsql += "AND JSEP.JOB_CARD_TRN_FK=JSE.JOB_CARD_TRN_PK(+)";
             Strsql += "AND VM.VENDOR_MST_PK=JSEP.VENDOR_MST_FK";

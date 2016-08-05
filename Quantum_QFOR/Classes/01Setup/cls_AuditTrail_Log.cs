@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -48,7 +49,7 @@ namespace Quantum_QFOR
         /// <param name="PostBackFlag">The post back flag.</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataTable fn_Fetch_AuditLogDetails(Int32 CurrentPage, Int32 TotalPage, Int64 locPk = 0, Int64 UserPk = 0, Int64 modulefk = 0, Int64 menu_fk = 0, string fromDt = "", string toDt = "", Int16 PostBackFlag = 0, Int32 flag = 0)
+        public string fn_Fetch_AuditLogDetails(Int32 CurrentPage, Int32 TotalPage, Int64 locPk = 0, Int64 UserPk = 0, Int64 modulefk = 0, Int64 menu_fk = 0, string fromDt = "", string toDt = "", Int16 PostBackFlag = 0, Int32 flag = 0)
         {
             try
             {
@@ -163,7 +164,7 @@ namespace Quantum_QFOR
                 StrSqlRecords = "SELECT * FROM ( ";
                 StrSqlRecords = StrSqlRecords + sb.ToString();
                 StrSqlRecords = StrSqlRecords + " ) WHERE SLNR BETWEEN " + start + " AND " + last;
-                return objWF.GetDataTable(StrSqlRecords);
+                return JsonConvert.SerializeObject(objWF.GetDataTable(StrSqlRecords.ToString()), Formatting.Indented);
                 //Manjunath  PTS ID:Sep-02  13/09/2011
             }
             catch (OracleException OraExp)

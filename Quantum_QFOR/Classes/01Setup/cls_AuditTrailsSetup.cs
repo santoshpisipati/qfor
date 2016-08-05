@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -60,11 +61,10 @@ namespace Quantum_QFOR
         /// </summary>
         /// <param name="MENU_MST_PK">The men u_ ms t_ pk.</param>
         /// <returns></returns>
-        public DataTable Fn_AuditTrials_Grid(long MENU_MST_PK = 0)
+        public string Fn_AuditTrials_Grid(long MENU_MST_PK = 0, Int32 bizType = 1)
         {
             WorkFlow objWF = new WorkFlow();
             System.Text.StringBuilder strBuilder = new System.Text.StringBuilder(5000);
-
             try
             {
                 strBuilder.Append(" SELECT ROWNUM SLNR,");
@@ -80,18 +80,18 @@ namespace Quantum_QFOR
                 strBuilder.Append(" V.AUDIT_SETUP_PK");
                 strBuilder.Append(" FROM VIEW_QCOR_AUDIT_SETUP V");
                 strBuilder.Append(" WHERE V.MODULE_FK=" + MENU_MST_PK);
-                if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 1)
+                if (bizType == 1)
                 {
                     strBuilder.Append("   AND V.BIZ_TYPE IN (1,3)");
                 }
-                else if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 2)
+                else if (bizType == 2)
                 {
                     strBuilder.Append("  AND V.BIZ_TYPE IN (2,3)");
                 }
 
                 strBuilder.Append(" ORDER BY V.display_order ");
                 strBuilder.Append(" ) QRY ");
-                return objWF.GetDataTable(strBuilder.ToString());
+                return JsonConvert.SerializeObject(objWF.GetDataTable(strBuilder.ToString()), Formatting.Indented);
                 //Manjunath  PTS ID:Sep-02   12/09/2011
             }
             catch (OracleException OraExp)
