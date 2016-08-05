@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -48,7 +49,7 @@ namespace Quantum_QFOR
         /// <param name="TotalPage">The total page.</param>
         /// <param name="CurrentPage">The current page.</param>
         /// <returns></returns>
-        public DataSet GetData(int FromFlag, string DBName, string ProductName, string LocationName = "", string Description = "", string fromDate = "", string Todate = "", int Status = 0, string SearchType = "", Int32 TotalPage = 0,
+        public string GetData(int FromFlag, string DBName, string ProductName, string LocationName = "", string Description = "", string fromDate = "", string Todate = "", int Status = 0, string SearchType = "", Int32 TotalPage = 0,
         Int32 CurrentPage = 0)
         {
             WorkFlow objWF = new WorkFlow();
@@ -69,7 +70,7 @@ namespace Quantum_QFOR
             dsAll = objWF.GetDataSet("FETCH_MASTER_DATA", "FETCH_GRIDDETAILS");
             TotalPage = Convert.ToInt32(objWF.MyCommand.Parameters["TOTALPAGE_IN"].Value);
             CurrentPage = Convert.ToInt32(objWF.MyCommand.Parameters["CURRENTPAGE_IN"].Value);
-            return dsAll;
+            return JsonConvert.SerializeObject(dsAll, Formatting.Indented);
         }
 
         #endregion "GET DATA"

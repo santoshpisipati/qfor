@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -49,14 +50,14 @@ namespace Quantum_QFOR
         /// Gets the document flow description.
         /// </summary>
         /// <returns></returns>
-        public DataSet GetDocumentFlowDescription()
+        public string GetDocumentFlowDescription()
         {
             try
             {
                 WorkFlow objWF = new WorkFlow();
                 string Sql = null;
                 Sql = "SELECT * FROM DOCUMENT_FLOW_TBL ";
-                return objWF.GetDataSet(Sql.ToString());
+                return JsonConvert.SerializeObject(objWF.GetDataSet(Sql.ToString()), Formatting.Indented);
             }
             catch (Exception ex)
             {
@@ -131,7 +132,7 @@ namespace Quantum_QFOR
             WorkFlow ObjWF = new WorkFlow();
             try
             {
-                DS = GetDocumentFlowDescription();
+                string s = GetDocumentFlowDescription();
                 dt = GetDeatilsForLoc((int)HttpContext.Current.Session["LOGED_IN_LOC_FK"]);
                 System.Text.StringBuilder sb = new System.Text.StringBuilder(5000);
                 sb.Append("SELECT Q.DOCUMENT_FLOW_PK   VIEW_DOCUMENT_PK,");

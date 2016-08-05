@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -174,7 +175,7 @@ namespace Quantum_QFOR
         /// <param name="CurrentPage">The current page.</param>
         /// <param name="TotalPage">The total page.</param>
         /// <returns></returns>
-        public DataSet FetchInternal(Int32 Activity, string Rule, string fdate, string tdate, Int16 chk, Int32 CurrentPage = 0, Int32 TotalPage = 0)
+        public string FetchInternal(Int32 Activity, string Rule, string fdate, string tdate, Int16 chk, Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 bizType = 0)
         {
             WorkFlow objWF = new WorkFlow();
             string strSQL = null;
@@ -189,11 +190,11 @@ namespace Quantum_QFOR
             strSQL += "  (select WFAM.WF_ACTIVITY_NAME from wf_activity_mst_tbl wfam ";
             strSQL += "  where WRMT.WF_RULES_INT_NEXT_ACTIVITY=WFAM.WF_ACTIVITY_MST_TBL_PK";
 
-            if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 1)
+            if (bizType == 1)
             {
                 strSQL += "   and wfam.biz_type in (1,3))  \"Next Activity\",";
             }
-            else if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 2)
+            else if (bizType == 2)
             {
                 strSQL += "   and wfam.biz_type in (2,3))  \"Next Activity\",";
             }
@@ -223,11 +224,11 @@ namespace Quantum_QFOR
                 strSQL += "and wrmt.Active =" + chk;
             }
 
-            if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 1)
+            if (bizType == 1)
             {
                 strSQL += "   and wfam.biz_type in (1,3)";
             }
-            else if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 2)
+            else if (bizType == 2)
             {
                 strSQL += "   and wfam.biz_type in (2,3)";
             }
@@ -265,10 +266,12 @@ namespace Quantum_QFOR
             strSQL += " order by wrmt.created_dt desc ";
             strSQL1 = " select a.* from ( select rownum slno,q.* from (";
             strSQL1 += strSQL;
-            strSQL1 += "  )q )a  WHERE SlNo Between " + start + " and " + last;
+            strSQL1 += "  )q )a  ";
+                //WHERE SlNo Between " + start + " and " + last;
             try
             {
-                return objWF.GetDataSet(strSQL1);
+                DataSet DS = objWF.GetDataSet(strSQL1);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (OracleException OraExp)
             {

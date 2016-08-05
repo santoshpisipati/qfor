@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -56,7 +57,7 @@ namespace Quantum_QFOR
         /// <param name="flag">The flag.</param>
         /// <param name="biz_type">The biz_type.</param>
         /// <returns></returns>
-        public DataSet FetchListing(string strWFRulesId = "", string strDocId = "", string strEmpName = "", string SearchType = "", string strColumnName = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 IsActive = 0, bool blnSortAscending = false, int intBusType = 0,
+        public string FetchListing(string strWFRulesId = "", string strDocId = "", string strEmpName = "", string SearchType = "", string strColumnName = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 IsActive = 0, bool blnSortAscending = false, int intBusType = 0,
         int intUser = 0, Int32 flag = 0, string biz_type = "")
         {
             WorkFlow objWF = new WorkFlow();
@@ -75,7 +76,7 @@ namespace Quantum_QFOR
                 _with1.Add("BIZ_IN", biz_type).Direction = ParameterDirection.Input;
                 _with1.Add("M_MASTERPAGESIZE_IN", MasterPageSize).Direction = ParameterDirection.Input;
                 _with1.Add("TOTALPAGE_IN", TotalPage).Direction = ParameterDirection.InputOutput;
-                _with1.Add("CURRENTPAGE_IN", CurrentPage).Direction = ParameterDirection.InputOutput;
+                _with1.Add("CURRENTPAGE_IN", 1).Direction = ParameterDirection.InputOutput;
                 _with1.Add("WF_BAND0", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 _with1.Add("WF_BAND1", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 DS = objWF.GetDataSet("FETCH_DOC_WORKFLOW", "FETCH_WORKFLOW_LIST");
@@ -87,13 +88,13 @@ namespace Quantum_QFOR
                 }
                 else
                 {
-                    CurrentPage = Convert.ToInt32(objWF.MyCommand.Parameters["CURRENTPAGE_IN"].Value);
+                    CurrentPage = 1;
                 }
                 DataRelation WFRel = null;
                 WFRel = new DataRelation("WFRelation", DS.Tables[0].Columns["WORKFLOW_RULES_PK"], DS.Tables[1].Columns["WORKFLOW_RULES_PK"], true);
                 WFRel.Nested = true;
                 DS.Relations.Add(WFRel);
-                return DS;
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (Exception sqlExp)
             {

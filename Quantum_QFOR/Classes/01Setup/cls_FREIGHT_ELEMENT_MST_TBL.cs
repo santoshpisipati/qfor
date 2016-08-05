@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -979,69 +980,73 @@ namespace Quantum_QFOR
         /// Fetches the freight_ parameters.
         /// </summary>
         /// <returns></returns>
-        public DataSet FetchFreight_Parameters()
-		{
-			string strSql = null;
-			try {
-				//strSql = strSql & vbCrLf & "SELECT "
-				//strSql = strSql & vbCrLf & "0 FREIGHT_ELEMENT_MST_PK,"
-				//strSql = strSql & vbCrLf & "' ' FREIGHT_ELEMENT_ID"
-				//strSql = strSql & vbCrLf & "FROM dual"
-				//strSql = strSql & vbCrLf & "Union "
-				strSql = strSql + "SELECT ";
-				strSql = strSql + "FREIGHT_ELEMENT_MST_PK,";
-				strSql = strSql + "FREIGHT_ELEMENT_ID,";
-				//freight_element_name
-				strSql = strSql + "freight_element_name";
-				strSql = strSql + "FROM FREIGHT_ELEMENT_MST_TBL";
-				strSql = strSql + "WHERE ACTIVE_FLAG = 1";
-				strSql = strSql + " order by Freight_Element_ID";
+        public string FetchFreight_Parameters()
+        {
+            string strSql = null;
+            try
+            {
+                //strSql = strSql & vbCrLf & "SELECT "
+                //strSql = strSql & vbCrLf & "0 FREIGHT_ELEMENT_MST_PK,"
+                //strSql = strSql & vbCrLf & "' ' FREIGHT_ELEMENT_ID"
+                //strSql = strSql & vbCrLf & "FROM dual"
+                //strSql = strSql & vbCrLf & "Union "
+                strSql = strSql + "SELECT ";
+                strSql = strSql + "FREIGHT_ELEMENT_MST_PK,";
+                strSql = strSql + "FREIGHT_ELEMENT_ID,";
+                //freight_element_name
+                strSql = strSql + "freight_element_name";
+                strSql = strSql + " FROM FREIGHT_ELEMENT_MST_TBL";
+                strSql = strSql + " WHERE ACTIVE_FLAG = 1";
+                strSql = strSql + " order by Freight_Element_ID";
 
-				WorkFlow objWF = new WorkFlow();
+                WorkFlow objWF = new WorkFlow();
 
-				return objWF.GetDataSet(strSql);
-			// Manjunath  PTS ID:Sep-02  14/09/2011
-			} catch (OracleException sqlExp) {
-				throw sqlExp;
-			} catch (Exception exp) {
-				throw exp;
-			}
-		}
+                DataSet DS = objWF.GetDataSet(strSql);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+                // Manjunath  PTS ID:Sep-02  14/09/2011
+            }
+            catch (OracleException sqlExp)
+            {
+                throw sqlExp;
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+        }
         #endregion
         #region "Fetch Freight Element Into Parameters"
         /// <summary>
         /// Fetches the freight surcharge_ parameters.
         /// </summary>
         /// <returns></returns>
-        public DataSet FetchFreightSurcharge_Parameters()
-		{
-			string strSql = null;
-			try {
-				//strSql = strSql & vbCrLf & "SELECT "
-				//strSql = strSql & vbCrLf & "0 FREIGHT_ELEMENT_MST_PK,"
-				//strSql = strSql & vbCrLf & "' ' FREIGHT_ELEMENT_ID"
-				//strSql = strSql & vbCrLf & "FROM dual"
-				//strSql = strSql & vbCrLf & "Union "
-				strSql = strSql + "SELECT ";
-				strSql = strSql + "FREIGHT_ELEMENT_MST_PK,";
-				strSql = strSql + "FREIGHT_ELEMENT_ID,";
-				//freight_element_name
-				strSql = strSql + " freight_element_name";
-				strSql = strSql + " FROM FREIGHT_ELEMENT_MST_TBL ";
-				strSql = strSql + " WHERE CHARGE_TYPE IN (1,2) ";
-				strSql = strSql + " AND ACTIVE_FLAG = 1 ";
-				strSql = strSql + " order by Freight_Element_ID";
+        public string FetchFreightSurcharge_Parameters()
+        {
+            string strSql = null;
+            try
+            {
+                strSql = strSql + "SELECT ";
+                strSql = strSql + "FREIGHT_ELEMENT_MST_PK,";
+                strSql = strSql + "FREIGHT_ELEMENT_ID,";
+                strSql = strSql + " freight_element_name";
+                strSql = strSql + " FROM FREIGHT_ELEMENT_MST_TBL ";
+                strSql = strSql + " WHERE CHARGE_TYPE IN (1,2) ";
+                strSql = strSql + " AND ACTIVE_FLAG = 1 ";
+                strSql = strSql + " order by Freight_Element_ID";
 
-				WorkFlow objWF = new WorkFlow();
-
-				return objWF.GetDataSet(strSql);
-			// Manjunath  PTS ID:Sep-02  14/09/2011
-			} catch (OracleException sqlExp) {
-				throw sqlExp;
-			} catch (Exception exp) {
-				throw exp;
-			}
-		}
+                WorkFlow objWF = new WorkFlow();
+                DataSet DS = objWF.GetDataSet(strSql);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+            }
+            catch (OracleException sqlExp)
+            {
+                throw sqlExp;
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+        }
         #endregion
 
         #region "Fetch Freight Element Into Parameters"
@@ -1049,35 +1054,33 @@ namespace Quantum_QFOR
         /// Fetches the freight mi s_ parameters.
         /// </summary>
         /// <returns></returns>
-        public DataSet FetchFreightMIS_Parameters()
-		{
-			string strSql = null;
-			try {
-				//strSql = strSql & vbCrLf & "SELECT "
-				//strSql = strSql & vbCrLf & "0 FREIGHT_ELEMENT_MST_PK,"
-				//strSql = strSql & vbCrLf & "' ' FREIGHT_ELEMENT_ID"
-				//strSql = strSql & vbCrLf & "FROM dual"
-				//strSql = strSql & vbCrLf & "Union "
-				strSql = strSql + "SELECT ";
-				strSql = strSql + "FREIGHT_ELEMENT_MST_PK,";
-				strSql = strSql + "FREIGHT_ELEMENT_ID,";
-				//freight_element_name
-				strSql = strSql + " freight_element_name";
-				strSql = strSql + " FROM FREIGHT_ELEMENT_MST_TBL ";
-				strSql = strSql + " WHERE ";
-				strSql = strSql + " ACTIVE_FLAG = 1 ";
-				strSql = strSql + " order by Freight_Element_ID";
-
-				WorkFlow objWF = new WorkFlow();
-
-				return objWF.GetDataSet(strSql);
-			// Manjunath  PTS ID:Sep-02  14/09/2011
-			} catch (OracleException sqlExp) {
-				throw sqlExp;
-			} catch (Exception exp) {
-				throw exp;
-			}
-		}
+        public string FetchFreightMIS_Parameters()
+        {
+            string strSql = null;
+            try
+            {
+                strSql = strSql + "SELECT ";
+                strSql = strSql + "FREIGHT_ELEMENT_MST_PK,";
+                strSql = strSql + "FREIGHT_ELEMENT_ID,";
+                strSql = strSql + " freight_element_name";
+                strSql = strSql + " FROM FREIGHT_ELEMENT_MST_TBL ";
+                strSql = strSql + " WHERE ";
+                strSql = strSql + " ACTIVE_FLAG = 1 ";
+                strSql = strSql + " order by Freight_Element_ID";
+                WorkFlow objWF = new WorkFlow();
+                DataSet DS = objWF.GetDataSet(strSql);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+                // Manjunath  PTS ID:Sep-02  14/09/2011
+            }
+            catch (OracleException sqlExp)
+            {
+                throw sqlExp;
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+        }
         #endregion
 
         #region "Fetch Detention "
@@ -1085,7 +1088,7 @@ namespace Quantum_QFOR
         /// Fetch_s the detention.
         /// </summary>
         /// <returns></returns>
-        public DataSet Fetch_Detention()
+        public string Fetch_Detention()
 		{
 			try {
 				string strSql = null;
@@ -1095,10 +1098,10 @@ namespace Quantum_QFOR
 				//End
 
 				WorkFlow objWF = new WorkFlow();
-
-				return objWF.GetDataSet(strSql);
-			// Manjunath  PTS ID:Sep-02  14/09/2011
-			} catch (OracleException sqlExp) {
+                DataSet DS = objWF.GetDataSet(strSql);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+                // Manjunath  PTS ID:Sep-02  14/09/2011
+            } catch (OracleException sqlExp) {
 				throw sqlExp;
 			} catch (Exception exp) {
 				throw exp;
@@ -1112,20 +1115,18 @@ namespace Quantum_QFOR
         /// Fetch_s the demurage.
         /// </summary>
         /// <returns></returns>
-        public DataSet Fetch_Demurage()
+        public string Fetch_Demurage()
 		{
 			try {
 				string strSql = null;
 				//Modified By Koteshwari on 28/5/2011
-				//strSql = strSql & vbCrLf & "SELECT FREIGHT_ELEMENT_MST_PK,FREIGHT_ELEMENT_ID,freight_element_name FROM FREIGHT_ELEMENT_MST_TBL FEM WHERE FEM.BUSINESS_TYPE = 1 AND FEM.ACTIVE_FLAG = 1"
 				strSql = strSql + "SELECT FREIGHT_ELEMENT_MST_PK,FREIGHT_ELEMENT_ID,freight_element_name FROM FREIGHT_ELEMENT_MST_TBL FEM WHERE FEM.BUSINESS_TYPE = 1 AND FEM.ACTIVE_FLAG = 1   ORDER BY FREIGHT_ELEMENT_ID";
-				//End
-
 				WorkFlow objWF = new WorkFlow();
 
-				return objWF.GetDataSet(strSql);
-			// Manjunath  PTS ID:Sep-02  14/09/2011
-			} catch (OracleException sqlExp) {
+                DataSet DS = objWF.GetDataSet(strSql);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+                // Manjunath  PTS ID:Sep-02  14/09/2011
+            } catch (OracleException sqlExp) {
 				throw sqlExp;
 			} catch (Exception exp) {
 				throw exp;

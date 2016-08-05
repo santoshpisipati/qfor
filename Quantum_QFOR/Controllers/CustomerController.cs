@@ -35,72 +35,8 @@ namespace Quantum_QFOR.Controllers
     /// <seealso cref="System.Web.Http.ApiController" />
     public class CustomerController : ApiController
     {
-        /// <summary>
-        /// Fetches the key contacts.
-        /// </summary>
-        /// <returns></returns>
-        [AcceptVerbs("GET", "POST")]
-        [HttpGet]
-        public object FetchKeyContacts()
-        {
-            string json = string.Empty;
-            System.Text.StringBuilder strSQL = new System.Text.StringBuilder();
-            strSQL.Append("SELECT E.EMPLOYEE_NAME,");
-            strSQL.Append("       RLMST.ROLE_DESCRIPTION,");
-            strSQL.Append("       E.PHONE_NO,");
-            strSQL.Append("       E.EMAIL_ID");
-            strSQL.Append("  FROM ROLE_MST_TBL RLMST, USER_MST_TBL UMT, EMPLOYEE_MST_TBL E");
-            strSQL.Append(" WHERE RLMST.ROLE_MST_TBL_PK(+) = UMT.ROLE_MST_FK");
-            strSQL.Append("   AND UMT.EMPLOYEE_MST_FK = E.EMPLOYEE_MST_PK");
-            strSQL.Append("   AND E.KEY_CONTACT = 1");
-            strSQL.Append("   ORDER BY E.EMPLOYEE_NAME");
-
-            WorkFlow objWF = new WorkFlow();
-
-            try
-            {
-                DataSet ds = objWF.GetDataSet(strSQL.ToString());
-                string value = JsonConvert.SerializeObject(ds, Formatting.Indented);
-                return JsonConvert.DeserializeObject(value);
-            }
-            catch (OracleException sqlExp)
-            {
-                throw sqlExp;
-            }
-            catch (Exception exp)
-            {
-                throw exp;
-            }
-        }
-
-        /// <summary>
-        /// Gets all currencies.
-        /// </summary>
-        /// <returns></returns>
-        [AcceptVerbs("GET", "POST")]
-        [HttpGet]
-        public object GetAllCurrencies()
-        {
-            string json = string.Empty;
-            WorkFlow objWF = new WorkFlow();
-            DataSet ds = new DataSet();
-            try
-            {
-                var _with1 = objWF.MyCommand.Parameters;
-                _with1.Add("CURR_DS", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
-                ds = objWF.GetDataSet("EXCHANGE_SCHEDULER_SETUP_PKG", "GET_CURRENCY");
-                string value = JsonConvert.SerializeObject(ds, Formatting.Indented);
-                return JsonConvert.DeserializeObject(value);
-            }
-            catch (Exception sqlExp)
-            {
-                throw sqlExp;
-            }
-            finally
-            {
-                objWF.MyConnection.Close();
-            }
-        }
+        
+       
 
         /// <summary>
         /// Fills the currency.
@@ -147,6 +83,31 @@ namespace Quantum_QFOR.Controllers
                 _with1.Add("CURR_DS", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 ds = objWF.GetDataSet("EXCHANGE_SCHEDULER_SETUP_PKG", "GET_SHD_SETUP_DTLS");
                 string value = JsonConvert.SerializeObject(ds, Formatting.Indented);
+                return JsonConvert.DeserializeObject(value);
+            }
+            catch (Exception sqlExp)
+            {
+                throw sqlExp;
+            }
+            finally
+            {
+                objWF.MyConnection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Fetches the setup DTLS.
+        /// </summary>
+        /// <returns></returns>
+        public object FetchCurrency()
+        {
+            string json = string.Empty;
+            WorkFlow objWF = new WorkFlow();
+            DataSet ds = new DataSet();
+            try
+            {
+                cls_Corporate_Mst_Tbl cs = new cls_Corporate_Mst_Tbl();
+                string value = cs.FetchCurrency();
                 return JsonConvert.DeserializeObject(value);
             }
             catch (Exception sqlExp)

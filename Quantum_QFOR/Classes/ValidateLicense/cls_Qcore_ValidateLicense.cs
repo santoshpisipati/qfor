@@ -196,11 +196,11 @@ namespace Quantum_QFOR
 
             while (intPosition > 0)
             {
-                //intPosition = string.Compare(intPosition, vstrStringWithNulls);
+                intPosition = string.Compare(intPosition.ToString(), vstrStringWithNulls);
 
                 if (intPosition > 0)
                 {
-                    //strStringWithOutNulls = strStringWithOutNulls.PadLeft(intPosition - 1) + strStringWithOutNulls.PadRight(strStringWithOutNulls.Length) - intPosition);
+                    //strStringWithOutNulls = Convert.ToString( strStringWithOutNulls.PadLeft(intPosition - 1) + strStringWithOutNulls.PadRight(strStringWithOutNulls.Length) - intPosition);
                 }
 
                 if (intPosition > strStringWithOutNulls.Length)

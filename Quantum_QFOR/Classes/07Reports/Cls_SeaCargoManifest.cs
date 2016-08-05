@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -1759,7 +1760,7 @@ namespace Quantum_QFOR
         /// <param name="Consignee">The consignee.</param>
         /// <param name="DPAgent">The dp agent.</param>
         /// <returns></returns>
-        public DataSet FetchSeaCargoManifestDataNew(long VesPK = 0, string Ves_Flight = "", string Voyage = "", string POL = "", long MBLPk = 0, long HBLPk = 0, string POD = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, string CargoType = "",
+        public string FetchSeaCargoManifestDataNew(long VesPK = 0, string Ves_Flight = "", string Voyage = "", string POL = "", long MBLPk = 0, long HBLPk = 0, string POD = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, string CargoType = "",
         long CommodityType = 0, string Status = "", int nLocationFk = 0, Int32 flag = 0, string Customer = "", string Consignee = "", string DPAgent = "")
         {
             string Strsql = null;
@@ -1924,7 +1925,8 @@ namespace Quantum_QFOR
             Strsql += " )q) WHERE SLNO  Between " + start + " and " + last;
             try
             {
-                return Objwk.GetDataSet(Strsql);
+                DataSet DS = Objwk.GetDataSet(Strsql);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (OracleException OraExp)
             {
@@ -1954,7 +1956,7 @@ namespace Quantum_QFOR
         /// <param name="Consignee">The consignee.</param>
         /// <param name="DPAgent">The dp agent.</param>
         /// <returns></returns>
-        public DataSet FetchAirCargoManifestData1(string VesPK = "", string Flight = "", string POL = "", long MBLPk = 0, long HAWBPk = 0, string POD = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, long CommodityType = 0, Int32 flag = 0,
+        public string FetchAirCargoManifestData1(string VesPK = "", string Flight = "", string POL = "", long MBLPk = 0, long HAWBPk = 0, string POD = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, long CommodityType = 0, Int32 flag = 0,
         string Customer = "", string Consignee = "", string DPAgent = "")
         {
             string Strsql = null;
@@ -2024,8 +2026,7 @@ namespace Quantum_QFOR
             Strsql += "AND JOB.HBL_HAWB_FK = HAWB.HAWB_EXP_TBL_PK(+)";
             Strsql += "AND JOB.MBL_MAWB_FK = MAWB.MAWB_EXP_TBL_PK(+)";
 
-            //WHY REQUIRED??????
-            //Strsql &= vbCrLf & " AND (select count(*) from job_trn_cont cont where cont.job_card_trn_fk=JOB.JOB_CARD_TRN_PK and cont.load_date  is not null)>0"
+           
             Strsql += "AND JOB.SHIPPER_CUST_MST_FK = CUSTSHIP.CUSTOMER_MST_PK(+)";
             Strsql += "AND JOB.CONSIGNEE_CUST_MST_FK = CUSTCONS.CUSTOMER_MST_PK(+)";
             Strsql += "AND JOB.COMMODITY_GROUP_FK= COMM.COMMODITY_GROUP_PK";
@@ -2108,8 +2109,7 @@ namespace Quantum_QFOR
             Strsql += "AND JOB.HBL_HAWB_FK = HAWB.HAWB_EXP_TBL_PK(+)";
             Strsql += "AND JOB.MBL_MAWB_FK = MAWB.MAWB_EXP_TBL_PK(+)";
             Strsql += " AND JOB.DP_AGENT_MST_FK=AMT.AGENT_MST_PK(+) ";
-            //WHY REQUIRED??????
-            //Strsql &= vbCrLf & " AND (select count(*) from job_trn_cont cont where cont.job_card_trn_fk=JOB.JOB_CARD_TRN_PK and cont.load_date  is not null)>0"
+           
             Strsql += "AND JOB.SHIPPER_CUST_MST_FK = CUSTSHIP.CUSTOMER_MST_PK(+)";
             Strsql += "AND JOB.CONSIGNEE_CUST_MST_FK = CUSTCONS.CUSTOMER_MST_PK(+)";
             Strsql += "AND JOB.COMMODITY_GROUP_FK= COMM.COMMODITY_GROUP_PK";
@@ -2126,7 +2126,8 @@ namespace Quantum_QFOR
             Strsql += " ))q) WHERE SLNO  Between " + start + " and " + last;
             try
             {
-                return Objwk.GetDataSet(Strsql);
+                DataSet Ds = Objwk.GetDataSet(Strsql);
+                return JsonConvert.SerializeObject(Ds, Formatting.Indented);
             }
             catch (OracleException OraExp)
             {

@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System;
@@ -37,13 +38,13 @@ namespace Quantum_QFOR
 
         WorkFlow ObjWF = new WorkFlow();
         #region " FetchPaymentGridData"
-        public DataSet FetchSeaExpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
+        public string FetchSeaExpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
         {
 
-            DataSet objDS = new DataSet();
+            string objStr = "";
             try
             {
-                objDS = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 2, 1);
+                objStr = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 2, 1);
             }
             catch (Exception sqlExp)
             {
@@ -51,15 +52,15 @@ namespace Quantum_QFOR
                 throw sqlExp;
             }
             
-            return objDS;
+            return objStr;
         }
-        public DataSet FetchSeaImpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 LocFk = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
+        public string FetchSeaImpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 LocFk = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
         {
 
-            DataSet objDS = new DataSet();
+            string objStr = "";
             try
             {
-                objDS = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 2, 2);
+                objStr = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 2, 2);
             }
             catch (Exception sqlExp)
             {
@@ -67,76 +68,75 @@ namespace Quantum_QFOR
                 throw sqlExp;
             }
            
-            return objDS;
+            return objStr;
         }
-        public DataSet FetchAirExpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
+        public string FetchAirExpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
         {
 
-            DataSet objDS = new DataSet();
+            string objStr = "";
             try
             {
-                objDS = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 1, 1);
+                objStr = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 1, 1);
             }
             catch (Exception sqlExp)
             {
                 ErrorMessage = sqlExp.Message;
                 throw sqlExp;
             }
-            
-            return objDS;
+            return JsonConvert.SerializeObject(objStr, Formatting.Indented);
         }
-        public DataSet FetchAirImpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 LocFk = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
+        public string FetchAirImpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 LocFk = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
         {
 
 
-            DataSet objDS = new DataSet();
+            string objStr = "";
             try
             {
-                objDS = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 1, 2);
+                objStr = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 1, 2);
             }
             catch (Exception sqlExp)
             {
                 ErrorMessage = sqlExp.Message;
                 throw sqlExp;
             }
-           
-            return objDS;
+
+            return JsonConvert.SerializeObject(objStr, Formatting.Indented);
         }
-        public DataSet FetchBothExpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
+        public string FetchBothExpPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
         {
 
-            DataSet objDS = new DataSet();
+            string objStr = "";
             try
             {
-                objDS = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 3, 1);
+                objStr = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 3, 1);
             }
             catch (Exception sqlExp)
             {
                 ErrorMessage = sqlExp.Message;
                 throw sqlExp;
             }
-           
-            return objDS;
+
+            return JsonConvert.SerializeObject(objStr, Formatting.Indented);
         }
-        public DataSet FetchBothIMPPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 LocFk = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
+        public string FetchBothIMPPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, Int32 LocFk = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0)
         {
 
-            DataSet objDS = new DataSet();
+            string objStr = "";
             try
             {
-                objDS = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 3, 2);
+                objStr = FetchAllPaymentGridData(JobNo, Party, CurrentPage, TotalPage, flag, invNr, PageTotal, GrandTotal, 3, 2);
             }
             catch (Exception sqlExp)
             {
                 ErrorMessage = sqlExp.Message;
                 throw sqlExp;
             }
-           
-            return objDS;
+
+            return JsonConvert.SerializeObject(objStr, Formatting.Indented);
         }
 
         //--------------------------------------------------------------------------
-        public DataSet FetchAllPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0, short BizType = 3, short ProcessType = 3)
+        public string FetchAllPaymentGridData(string JobNo = "", string Party = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0, string invNr = "", double PageTotal = 0, double GrandTotal = 0, short BizType = 3, short ProcessType = 3)
         {
 
             //BizType-3:Both,2:Sea,1:Air
@@ -148,7 +148,7 @@ namespace Quantum_QFOR
             Int32 TotalRecords = default(Int32);
             Int32 last = default(Int32);
             Int32 start = default(Int32);
-            int BaseCurrFk = Convert.ToInt32(HttpContext.Current.Session["CURRENCY_MST_PK"]);
+            int BaseCurrFk = 1418;
 
             if (flag == 0)
             {
@@ -214,7 +214,7 @@ namespace Quantum_QFOR
             Strsql += " AND IST.APPROVED=1";
             Strsql += " AND UMT.USER_MST_PK=IST.CREATED_BY_FK";
             Strsql += " AND UMT.DEFAULT_LOCATION_FK IN";
-            Strsql += " (SELECT LMT.LOCATION_MST_PK FROM LOCATION_MST_TBL LMT START WITH LMT.LOCATION_MST_PK = " + HttpContext.Current.Session["LOGED_IN_LOC_FK"] + " CONNECT BY PRIOR LMT.LOCATION_MST_PK = LMT.REPORTING_TO_FK)";
+            Strsql += " (SELECT LMT.LOCATION_MST_PK FROM LOCATION_MST_TBL LMT START WITH LMT.LOCATION_MST_PK = " + 1841 + " CONNECT BY PRIOR LMT.LOCATION_MST_PK = LMT.REPORTING_TO_FK)";
             Strsql += " GROUP BY IST.INV_SUPPLIER_PK,JSE.Job_Card_Trn_Pk,JSE.JOBCARD_REF_NO,VMT.VENDOR_NAME,";
             Strsql += " IST.INVOICE_REF_NO, IST.INVOICE_DATE, CMST.CURRENCY_ID, IST.INVOICE_AMT, CMST.CURRENCY_MST_PK,JSE.BUSINESS_TYPE ";
 
@@ -265,14 +265,18 @@ namespace Quantum_QFOR
             }
             try
             {
-                return ObjWF.GetDataSet(strMain);
+                DataSet DS = ObjWF.GetDataSet(strMain);
+                return JsonConvert.SerializeObject(DS, Newtonsoft.Json.Formatting.Indented);
             }
-            catch (Exception sqlExp)
+            catch (OracleException sqlExp)
             {
                 ErrorMessage = sqlExp.Message;
                 throw sqlExp;
             }
-            
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
 

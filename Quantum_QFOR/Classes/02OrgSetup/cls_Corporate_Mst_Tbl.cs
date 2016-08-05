@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -30,7 +31,7 @@ namespace Quantum_QFOR
     ///
     /// </summary>
     /// <seealso cref="Quantum_QFOR.CommonFeatures" />
-    public class clsCorporate_Mst_Tbl : CommonFeatures
+    public class cls_Corporate_Mst_Tbl : CommonFeatures
     {
         #region "KeyContact"
 
@@ -1472,7 +1473,7 @@ namespace Quantum_QFOR
         /// Fetches the currency.
         /// </summary>
         /// <returns></returns>
-        public DataSet FetchCurrency()
+        public string FetchCurrency()
         {
             WorkFlow objWF = new WorkFlow();
             DataSet DS = new DataSet();
@@ -1481,7 +1482,7 @@ namespace Quantum_QFOR
                 var _with6 = objWF.MyCommand.Parameters;
                 _with6.Add("CURR_DS", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 DS = objWF.GetDataSet("EXCHANGE_SCHEDULER_SETUP_PKG", "GET_CURRENCY");
-                return DS;
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (Exception sqlExp)
             {

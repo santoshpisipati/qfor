@@ -40,7 +40,7 @@ namespace Quantum_QFOR.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private clsCorporate_Mst_Tbl objCorp = new clsCorporate_Mst_Tbl();
+        private cls_Corporate_Mst_Tbl objCorp = new cls_Corporate_Mst_Tbl();
         private cls_ValidateLicense objLicenseCmn = new cls_ValidateLicense();
         private clsUser_Mst_Tbl objUser = new clsUser_Mst_Tbl();
         private CLS_UserAccountVariable userDetail = new CLS_UserAccountVariable();

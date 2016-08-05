@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -30,131 +31,126 @@ namespace Quantum_QFOR
     public class cls_user_task : CommonFeatures
 	{
 
-		#region "Fetch"
-		public DataSet Fetch(Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 SortCol = 2)
-		{
+        #region "Fetch"
+        public string Fetch(Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 SortCol = 2)
+        {
 
-			System.Text.StringBuilder sb = new System.Text.StringBuilder(5000);
-			Int32 last = default(Int32);
-			Int32 start = default(Int32);
-			string strCondition = null;
-			string strSQL1 = null;
-			Int32 TotalRecords = default(Int32);
-			WorkFlow objWF = new WorkFlow();
-			var User = HttpContext.Current.Session["user_pk"];
-			try {
-				sb.AppendLine("SELECT ROWNUM SlNo, A.*");
-				sb.AppendLine("  FROM (SELECT UST.WF_MGR_USER_TASK_ACTIVITY,");
-				sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_ACTIVITY_TYPE,");
-				sb.AppendLine("                      1,");
-				sb.AppendLine("                      'Internal',");
-				sb.AppendLine("                      2,");
-				sb.AppendLine("                      'Manual') ActitvityType,");
-				sb.AppendLine("               UST.WF_MGR_USER_TASK_REF_NR,");
-				sb.AppendLine("               WFLIST.WF_MGR_ADM_TASK_START_DT START_DT,");
-				//sb.AppendLine("               TO_CHAR(WFLIST.WF_MGR_ADM_TASK_START_DT +")
-				//sb.AppendLine("                       WC.WF_RULES_INT_DEADLINE +")
-				//sb.AppendLine("                       numtodsinterval(WC.WF_RULES_INT_DEADLINE_HOURS,")
-				//sb.AppendLine("                                       'hour') +")
-				//sb.AppendLine("                       numtodsinterval(WC.WF_RULES_INT_DEADLINE_MINS,")
-				//sb.AppendLine("                                       'minute'),")
-				//sb.AppendLine("                       DATETIMEFORMAT24) DEADLINE,")
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(5000);
+            Int32 last = default(Int32);
+            Int32 start = default(Int32);
+            string strCondition = null;
+            string strSQL1 = null;
+            Int32 TotalRecords = default(Int32);
+            WorkFlow objWF = new WorkFlow();
+            var User = 3;
+            try
+            {
+                sb.AppendLine("SELECT ROWNUM SlNo, A.*");
+                sb.AppendLine("  FROM (SELECT UST.WF_MGR_USER_TASK_ACTIVITY,");
+                sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_ACTIVITY_TYPE,");
+                sb.AppendLine("                      1,");
+                sb.AppendLine("                      'Internal',");
+                sb.AppendLine("                      2,");
+                sb.AppendLine("                      'Manual') ActitvityType,");
+                sb.AppendLine("               UST.WF_MGR_USER_TASK_REF_NR,");
+                sb.AppendLine("               WFLIST.WF_MGR_ADM_TASK_START_DT START_DT,");
 
-				//sb.AppendLine("   TO_CHAR(FN_EX_WEEKENDDATE(WC.WF_RULES_INT_CONFIG_PK,(WFLIST.WF_MGR_ADM_TASK_START_DT + ")
-				//sb.AppendLine("           WC.WF_RULES_INT_DEADLINE + ")
-				//sb.AppendLine("          NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_HOURS,'HOUR') + ")
-				//sb.AppendLine("         NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_MINS,'MINUTE'))),DATETIMEFORMAT24 ) DEADLINE, ")
+                sb.AppendLine("   FN_EX_WEEKENDDATE(WC.WF_RULES_INT_CONFIG_PK,(WFLIST.WF_MGR_ADM_TASK_START_DT + ");
+                sb.AppendLine("           WC.WF_RULES_INT_DEADLINE + ");
+                sb.AppendLine("          NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_HOURS,'HOUR') + ");
+                sb.AppendLine("         NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_MINS,'MINUTE'))) DEADLINE, ");
 
-				sb.AppendLine("   FN_EX_WEEKENDDATE(WC.WF_RULES_INT_CONFIG_PK,(WFLIST.WF_MGR_ADM_TASK_START_DT + ");
-				sb.AppendLine("           WC.WF_RULES_INT_DEADLINE + ");
-				sb.AppendLine("          NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_HOURS,'HOUR') + ");
-				sb.AppendLine("         NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_MINS,'MINUTE'))) DEADLINE, ");
+                sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_DLMODE,");
+                sb.AppendLine("                      1,");
+                sb.AppendLine("                      'Mins',");
+                sb.AppendLine("                      2,");
+                sb.AppendLine("                      'Hours',");
+                sb.AppendLine("                      3,");
+                sb.AppendLine("                      'Days') Dlmode,");
+                sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_PRIORITY,");
+                sb.AppendLine("                      1,");
+                sb.AppendLine("                      'Low',");
+                sb.AppendLine("                      2,");
+                sb.AppendLine("                      'High',");
+                sb.AppendLine("                      3,");
+                sb.AppendLine("                      'Critical') Priority,");
+                sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_STATUS,");
+                sb.AppendLine("                      1,");
+                sb.AppendLine("                      'Nottaken',");
+                sb.AppendLine("                      2,");
+                sb.AppendLine("                      'Taken',");
+                sb.AppendLine("                      3,");
+                sb.AppendLine("                      'Escalated',");
+                sb.AppendLine("                      4,");
+                sb.AppendLine("                      'Completed') Status,");
+                sb.AppendLine("               '' Sel,");
+                sb.AppendLine("               UST.WF_MGR_USER_TASK_REF_FK,");
+                sb.AppendLine("               wf_mgr_user_task_pk");
+                sb.AppendLine("          FROM WF_MGR_ADM_TASK_LIST_TBL      WFLIST,");
+                sb.AppendLine("               WF_mgr_user_task_list_tbl     UST,");
+                sb.AppendLine("               WORKFLOW_MGR_TASK_MSG_TBL     TASK,");
+                sb.AppendLine("               WORKFLOW_RULES_INT_MST_TBL    WF,");
+                sb.AppendLine("               WORKFLOW_RULES_INT_APPL_TBL   APP,");
+                sb.AppendLine("               WORKFLOW_RULES_INT_CONFIG_TBL WC,");
+                sb.AppendLine("               WF_ACTIVITY_MST_TBL           ACT,");
+                sb.AppendLine("               WF_ACTIVITY_MST_TBL           NEXTACT,");
+                sb.AppendLine("               USER_MST_TBL                  U");
+                sb.AppendLine("         WHERE WF.WF_RULES_INT_ACTIVITY = ACT.WF_ACTIVITY_MST_TBL_PK");
+                sb.AppendLine("           AND WF.WF_RULES_INT_NEXT_ACTIVITY =");
+                sb.AppendLine("               NEXTACT.WF_ACTIVITY_MST_TBL_PK");
+                sb.AppendLine("           AND WF.WF_RULES_INT_MST_TBL_PK = APP.WORKFLOW_RULES_INT_MST_FK");
+                sb.AppendLine("           AND WF.WF_RULES_INT_MST_TBL_PK = WC.WF_RULES_INT_MST_FK");
+                sb.AppendLine("           AND APP.WORKFLOW_RULES_INT_CONFIG_FK = WC.WF_RULES_INT_CONFIG_PK");
+                sb.AppendLine("           AND UPPER(WFLIST.WF_MGR_ADM_TASK_REF_NR) =");
+                sb.AppendLine("               UPPER(UST.WF_MGR_USER_TASK_REF_NR)");
+                sb.AppendLine("           AND UPPER(WFLIST.WF_MGR_ADM_TASK_ACTIVITY) =");
+                sb.AppendLine("               UPPER(ACT.WF_ACTIVITY_NAME)");
+                sb.AppendLine("           AND WFLIST.WF_MGR_ADM_TASK_PK = TASK.ADM_TASK_FK");
+                sb.AppendLine("           AND WFLIST.WF_MGR_ADM_TASK_REF_FK = TASK.DOC_REF_NO_PK");
+                sb.AppendLine("           AND UPPER(TASK.NEXT_ACTIVITY) = UPPER(NEXTACT.WF_ACTIVITY_NAME)");
+                sb.AppendLine("           AND U.USER_MST_PK = UST.wf_mgr_user_task_user_fk");
+                sb.AppendLine("           AND U.DEFAULT_LOCATION_FK =");
+                sb.AppendLine("               TO_NUMBER(APP.WORKFLOW_RULES_INT_LOC_FK)");
+                sb.AppendLine("           AND UST.wf_mgr_user_task_user_fk = " + User);
+                sb.AppendLine("         order by UST.WF_MGR_USER_TASK_START_DT DESC,");
+                sb.AppendLine("                  UST.WF_MGR_USER_TASK_REF_NR   DESC) A");
 
-				sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_DLMODE,");
-				sb.AppendLine("                      1,");
-				sb.AppendLine("                      'Mins',");
-				sb.AppendLine("                      2,");
-				sb.AppendLine("                      'Hours',");
-				sb.AppendLine("                      3,");
-				sb.AppendLine("                      'Days') Dlmode,");
-				sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_PRIORITY,");
-				sb.AppendLine("                      1,");
-				sb.AppendLine("                      'Low',");
-				sb.AppendLine("                      2,");
-				sb.AppendLine("                      'High',");
-				sb.AppendLine("                      3,");
-				sb.AppendLine("                      'Critical') Priority,");
-				sb.AppendLine("               decode(UST.WF_MGR_USER_TASK_STATUS,");
-				sb.AppendLine("                      1,");
-				sb.AppendLine("                      'Nottaken',");
-				sb.AppendLine("                      2,");
-				sb.AppendLine("                      'Taken',");
-				sb.AppendLine("                      3,");
-				sb.AppendLine("                      'Escalated',");
-				sb.AppendLine("                      4,");
-				sb.AppendLine("                      'Completed') Status,");
-				sb.AppendLine("               '' Sel,");
-				sb.AppendLine("               UST.WF_MGR_USER_TASK_REF_FK,");
-				sb.AppendLine("               wf_mgr_user_task_pk");
-				sb.AppendLine("          FROM WF_MGR_ADM_TASK_LIST_TBL      WFLIST,");
-				sb.AppendLine("               WF_mgr_user_task_list_tbl     UST,");
-				sb.AppendLine("               WORKFLOW_MGR_TASK_MSG_TBL     TASK,");
-				sb.AppendLine("               WORKFLOW_RULES_INT_MST_TBL    WF,");
-				sb.AppendLine("               WORKFLOW_RULES_INT_APPL_TBL   APP,");
-				sb.AppendLine("               WORKFLOW_RULES_INT_CONFIG_TBL WC,");
-				sb.AppendLine("               WF_ACTIVITY_MST_TBL           ACT,");
-				sb.AppendLine("               WF_ACTIVITY_MST_TBL           NEXTACT,");
-				sb.AppendLine("               USER_MST_TBL                  U");
-				sb.AppendLine("         WHERE WF.WF_RULES_INT_ACTIVITY = ACT.WF_ACTIVITY_MST_TBL_PK");
-				sb.AppendLine("           AND WF.WF_RULES_INT_NEXT_ACTIVITY =");
-				sb.AppendLine("               NEXTACT.WF_ACTIVITY_MST_TBL_PK");
-				sb.AppendLine("           AND WF.WF_RULES_INT_MST_TBL_PK = APP.WORKFLOW_RULES_INT_MST_FK");
-				sb.AppendLine("           AND WF.WF_RULES_INT_MST_TBL_PK = WC.WF_RULES_INT_MST_FK");
-				sb.AppendLine("           AND APP.WORKFLOW_RULES_INT_CONFIG_FK = WC.WF_RULES_INT_CONFIG_PK");
-				sb.AppendLine("           AND UPPER(WFLIST.WF_MGR_ADM_TASK_REF_NR) =");
-				sb.AppendLine("               UPPER(UST.WF_MGR_USER_TASK_REF_NR)");
-				sb.AppendLine("           AND UPPER(WFLIST.WF_MGR_ADM_TASK_ACTIVITY) =");
-				sb.AppendLine("               UPPER(ACT.WF_ACTIVITY_NAME)");
-				sb.AppendLine("           AND WFLIST.WF_MGR_ADM_TASK_PK = TASK.ADM_TASK_FK");
-				sb.AppendLine("           AND WFLIST.WF_MGR_ADM_TASK_REF_FK = TASK.DOC_REF_NO_PK");
-				sb.AppendLine("           AND UPPER(TASK.NEXT_ACTIVITY) = UPPER(NEXTACT.WF_ACTIVITY_NAME)");
-				sb.AppendLine("           AND U.USER_MST_PK = UST.wf_mgr_user_task_user_fk");
-				sb.AppendLine("           AND U.DEFAULT_LOCATION_FK =");
-				sb.AppendLine("               TO_NUMBER(APP.WORKFLOW_RULES_INT_LOC_FK)");
-				sb.AppendLine("           AND UST.wf_mgr_user_task_user_fk = " + User);
-				sb.AppendLine("         order by UST.WF_MGR_USER_TASK_START_DT DESC,");
-				sb.AppendLine("                  UST.WF_MGR_USER_TASK_REF_NR   DESC) A");
-
-				//sb.AppendLine("and UST.WF_MGR_USER_TASK_REF_FK=WMA.WF_MGR_ADM_TASK_REF_FK"
-				strSQL1 = "SELECT Count(*) from (";
-				strSQL1 += sb.ToString() + ")";
-				TotalRecords = Convert.ToInt32(objWF.ExecuteScaler(strSQL1));
-				TotalPage = TotalRecords / RecordsPerPage;
-				if (TotalRecords % RecordsPerPage != 0) {
-					TotalPage += 1;
-				}
-				if (CurrentPage > TotalPage) {
-					CurrentPage = 1;
-				}
-				if (TotalRecords == 0) {
-					CurrentPage = 0;
-				}
-				last = CurrentPage * RecordsPerPage;
-				start = (CurrentPage - 1) * RecordsPerPage + 1;
-				strSQL1 = " select * from (";
-				strSQL1 += sb.ToString();
-				strSQL1 += " ) WHERE SlNo Between " + start + " and " + last;
-				return objWF.GetDataSet(strSQL1.ToString());
-			} catch (OracleException sqlExp) {
-				ErrorMessage = sqlExp.Message;
-				throw sqlExp;
-			} catch (Exception exp) {
-				ErrorMessage = exp.Message;
-				throw exp;
-				//Catch ex As Exception
-
-			}
-		}
+                //sb.AppendLine("and UST.WF_MGR_USER_TASK_REF_FK=WMA.WF_MGR_ADM_TASK_REF_FK"
+                strSQL1 = "SELECT Count(*) from (";
+                strSQL1 += sb.ToString() + ")";
+                TotalRecords = Convert.ToInt32(objWF.ExecuteScaler(strSQL1));
+                TotalPage = TotalRecords / RecordsPerPage;
+                if (TotalRecords % RecordsPerPage != 0)
+                {
+                    TotalPage += 1;
+                }
+                if (CurrentPage > TotalPage)
+                {
+                    CurrentPage = 1;
+                }
+                if (TotalRecords == 0)
+                {
+                    CurrentPage = 0;
+                }
+                last = CurrentPage * RecordsPerPage;
+                start = (CurrentPage - 1) * RecordsPerPage + 1;
+                strSQL1 = " select * from (";
+                strSQL1 += sb.ToString();
+                strSQL1 += " ) WHERE SlNo Between " + start + " and " + last;
+                DataSet DS = objWF.GetDataSet(strSQL1.ToString());
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+            }
+            catch (OracleException sqlExp)
+            {
+                ErrorMessage = sqlExp.Message;
+                throw sqlExp;
+            }
+            catch (Exception exp)
+            {
+                ErrorMessage = exp.Message;
+                throw exp;
+            }
+        }
 
 		#endregion
 		#region "Class Members"

@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -45,7 +46,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Function"
-        public DataSet FetchAll(string RestrictionRefNo = "", string RestrictionDate = "", int Restrictionfk = 0, Int32 Commoditypk = 0, string RestrictionMessage = "", string IMDGCode = "", string SearchType = "", string SortColumn = "", Int32 CurrentPage = 0, Int32 TotalPage = 0,
+        public string FetchAll(string RestrictionRefNo = "", string RestrictionDate = "", int Restrictionfk = 0, Int32 Commoditypk = 0, string RestrictionMessage = "", string IMDGCode = "", string SearchType = "", string SortColumn = "", Int32 CurrentPage = 0, Int32 TotalPage = 0,
         short Active = 1, string SortType = " ASC ", short IntBizType = 1, Int32 flag = 0, Int16 RestrictType = 0, Int16 RestrictAs = 0)
         {
 
@@ -128,7 +129,6 @@ namespace Quantum_QFOR
                 strSQL += " (SELECT RES.RESTRICTION_PK,";
                 strSQL += "  RES.ACTIVE,";
                 strSQL += "  RES.RESTRICTION_REF_NO,";
-                //strSQL &= vbCrLf & "  to_Char(RES.RESTRICTION_DT,'" & dateFormat & "')RESTRICTION_DT1,"
                 strSQL += "  RES.RESTRICTION_DT RESTRICTION_DT1,";
                 strSQL += " nvl((SELECT DD.DD_ID FROM QFOR_DROP_DOWN_TBL DD WHERE DD.DD_FLAG = 'BIZ_TYPE' AND DD.CONFIG_ID = 'QFOR3012' AND DD.DD_VALUE = RES.BUSINESS_TYPE),'Both') BIZ_TYPE,";
                 strSQL += " (SELECT DD.DD_ID FROM QFOR_DROP_DOWN_TBL DD WHERE DD.DD_FLAG = 'RES_TYPE' AND DD.CONFIG_ID = 'QFOR3012' AND DD.DD_VALUE = RES.RESTRICTION_TYPE) TYPE,";
@@ -136,15 +136,12 @@ namespace Quantum_QFOR
                 strSQL += " (SELECT DD.DD_ID FROM QFOR_DROP_DOWN_TBL DD WHERE DD.DD_FLAG = 'RES_AS' AND DD.CONFIG_ID = 'QFOR3012' AND DD.DD_VALUE = RES.RESTRICT_AS) RESTRICT_AS,";
                 strSQL += "  RES.VALID_FROM VALID_FROM,";
                 strSQL += "  RES.VALID_TO VALID_TO,";
-                //StrSQL &= vbCrLf & "  to_Char(RES.VALID_FROM,'" & dateFormat & "')VALID_FROM,"
-                //strSQL &= vbCrLf & "  to_Char(RES.VALID_TO,'" & dateFormat & "')VALID_TO,"
                 strSQL += "  RES.BUSINESS_TYPE";
                 strSQL += strCondition;
-                //strSQL &= vbCrLf & " ORDER BY " & SortColumn & SortType & ") q  ) "
                 strSQL += " ORDER BY RES.RESTRICTION_DT desc ) q  ) ";
-                strSQL += " WHERE SR_NO  Between " + start + " and " + last;
+                //strSQL += " WHERE SR_NO  Between " + start + " and " + last;
                 DSMain = objWF.GetDataSet(strSQL);
-                return DSMain;
+                return JsonConvert.SerializeObject(DSMain, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -1346,7 +1343,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region " Fetch Restriction Approval "
-        public DataSet FetchRestrictionApproval(int RestrictionTypePK, int ReferencePK, int CustomerPK, Int16 Status, string RestrictionMsg, string S_C, string FromDate, string ToDate, Int32 CurrentPage, Int32 TotalPage,
+        public string FetchRestrictionApproval(int RestrictionTypePK, int ReferencePK, int CustomerPK, Int16 Status, string RestrictionMsg, string S_C, string FromDate, string ToDate, Int32 CurrentPage, Int32 TotalPage,
         Int16 DataonLoad)
         {
 
@@ -1368,7 +1365,7 @@ namespace Quantum_QFOR
                 _with37.SelectCommand.Parameters.Add("REFERENCE_PK_IN", ReferencePK).Direction = ParameterDirection.Input;
                 _with37.SelectCommand.Parameters.Add("CUSTOMER_MST_FK_IN", CustomerPK).Direction = ParameterDirection.Input;
                 _with37.SelectCommand.Parameters.Add("STATUS_IN", Status).Direction = ParameterDirection.Input;
-                _with37.SelectCommand.Parameters.Add("RESTRICTION_MSG_IN", (string.IsNullOrEmpty(RestrictionMsg) ? "": RestrictionMsg.ToUpper())).Direction = ParameterDirection.Input;
+                _with37.SelectCommand.Parameters.Add("RESTRICTION_MSG_IN", (string.IsNullOrEmpty(RestrictionMsg) ? "" : RestrictionMsg.ToUpper())).Direction = ParameterDirection.Input;
                 _with37.SelectCommand.Parameters.Add("S_C_IN", S_C).Direction = ParameterDirection.Input;
                 _with37.SelectCommand.Parameters.Add("FROM_DATE_IN", (string.IsNullOrEmpty(FromDate) ? "" : FromDate)).Direction = ParameterDirection.Input;
                 _with37.SelectCommand.Parameters.Add("TO_DATE_IN", (string.IsNullOrEmpty(ToDate) ? "" : ToDate)).Direction = ParameterDirection.Input;
@@ -1379,10 +1376,9 @@ namespace Quantum_QFOR
                 _with37.SelectCommand.Parameters.Add("RES_CUR", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
                 _with37.Fill(ds);
-                TotalPage = Convert.ToInt32(_with37.SelectCommand.Parameters["TOTAL_PAGE_IN"].Value);
-                CurrentPage = Convert.ToInt32(_with37.SelectCommand.Parameters["CURRENT_PAGE_IN"].Value);
-
-                return ds;
+                TotalPage = Convert.ToInt32(TotalPage);
+                CurrentPage = Convert.ToInt32(CurrentPage);
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (Exception ex)
             {
@@ -1391,7 +1387,7 @@ namespace Quantum_QFOR
             {
                 objWF.CloseConnection();
             }
-            return new DataSet();
+            return "";
         }
         #endregion
         #region "Get Navigate Information"

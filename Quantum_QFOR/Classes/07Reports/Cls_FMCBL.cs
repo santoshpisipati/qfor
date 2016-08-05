@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -230,7 +231,7 @@ namespace Quantum_QFOR
         /// <param name="flag">The flag.</param>
         /// <param name="loc">The loc.</param>
         /// <returns></returns>
-        public DataSet FetchFMCSeaUserExport(string VslVoy = "", long JobPk = 0, long ShipperPk = 0, long HBLPk = 0, Int32 CurrentPage = 0, Int32 TotalPage = 0, string depDate = "", Int32 flag = 0, int loc = 0)
+        public string FetchFMCSeaUserExport(string VslVoy = "", long JobPk = 0, long ShipperPk = 0, long HBLPk = 0, Int32 CurrentPage = 0, Int32 TotalPage = 0, string depDate = "", Int32 flag = 0, int loc = 0)
         {
             string Strsql = null;
             WorkFlow Objwk = new WorkFlow();
@@ -347,7 +348,8 @@ namespace Quantum_QFOR
 
             try
             {
-                return Objwk.GetDataSet(Strsql);
+                DataSet DS = Objwk.GetDataSet(Strsql);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (Exception sqlExp)
             {

@@ -20,6 +20,7 @@
 #endregion "Comments"
 
 // ERROR: Not supported in C#: OptionDeclaration
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.ComponentModel;
@@ -790,7 +791,7 @@ namespace Quantum_QFOR
         /// <param name="PortGrp">The port GRP.</param>
         /// <param name="CommPKs">The comm p ks.</param>
         /// <returns></returns>
-        public DataTable Fetch(int status, int status2, int check, int AnnType, string id = "", string idExt = "", string annfdate = "", string anntdate = "", string annsub = "", string des = "",
+        public string Fetch(int status, int status2, int check, int AnnType, string id = "", string idExt = "", string annfdate = "", string anntdate = "", string annsub = "", string des = "",
         string annsub2 = "", string des2 = "", Int32 CurrentPage = 1, Int32 TotalPage = 0, string strsort = "SUBJECT", bool blnsortascending = true, string annfDtExt = "", string annToDtExt = "", string LocPKs = "", string DeptPKs = "",
         string DesigPKs = "", string UserPKs = "", string MangementPKs = "", string RegionPks = "", string TradePKs = "", string POLPks = "", string AreaPKs = "", string SectorPKs = "", string CountryPKs = "", string PODPks = "",
         string AgentPKs = "", string CustomerPKS = "", string PortGrp = "", string CommPKs = "")
@@ -1105,7 +1106,7 @@ namespace Quantum_QFOR
                 switch ((status))
                 {
                     case 0:
-                        strsql += " (( to_date('" + DateTime.Today.Date + "','dd/mm/yyyy') between VALID_FROM and VALID_TO ) and ( STATUS   = 0 or STATUS  = 4 )) ";
+                        strsql += " (( to_date('" + DateTime.Today.Date.ToShortDateString() + "','dd/mm/yyyy') between VALID_FROM and VALID_TO ) and ( STATUS   = 0 or STATUS  = 4 )) ";
                         break;
 
                     case 1:
@@ -1113,7 +1114,7 @@ namespace Quantum_QFOR
                         break;
 
                     case 2:
-                        strsql += "   VALID_TO < to_date('" + date1 + "','dd/mm/yyyy') and status <>3";
+                        strsql += "   VALID_TO < to_date('" + date1.ToShortDateString() + "','dd/mm/yyyy') and status <>3";
                         break;
 
                     case 3:
@@ -1121,7 +1122,7 @@ namespace Quantum_QFOR
                         break;
 
                     case 4:
-                        strsql += " VALID_FROM > to_date('" + DateTime.Today.Date + "','dd/mm/yyyy') and STATUS = 4 ";
+                        strsql += " VALID_FROM > to_date('" + DateTime.Today.Date.ToShortDateString() + "','dd/mm/yyyy') and STATUS = 4 ";
                         break;
 
                     case 5:
@@ -1163,11 +1164,11 @@ namespace Quantum_QFOR
                 switch ((status2))
                 {
                     case 0:
-                        strsql += " (( to_date('" + DateTime.Today.Date + "','dd/mm/yyyy') between TO_DATE(VALID_FROM_EXT,'DD/MM/YYYY') and TO_DATE(VALID_TO_EXT,'DD/MM/YYYY')) and ( STATUS_EXT   = 0 or STATUS_EXT  = 4 )) ";
+                        strsql += " (( to_date('" + DateTime.Today.Date.ToShortDateString() + "','dd/mm/yyyy') between TO_DATE(VALID_FROM_EXT,'DD/MM/YYYY') and TO_DATE(VALID_TO_EXT,'DD/MM/YYYY')) and ( STATUS_EXT   = 0 or STATUS_EXT  = 4 )) ";
                         break;
 
                     case 1:
-                        strsql += " ( VALID_TO_EXT between to_date('" + date1 + "','dd/mm/yyyy') and to_date('" + date2 + "','dd/mm/yyyy')) and   STATUS_EXT  in (0,1,4)";
+                        strsql += " ( VALID_TO_EXT between to_date('" + date1.ToShortDateString() + "','dd/mm/yyyy') and to_date('" + date2.ToShortDateString() + "','dd/mm/yyyy')) and   STATUS_EXT  in (0,1,4)";
                         break;
 
                     case 2:
@@ -1179,7 +1180,7 @@ namespace Quantum_QFOR
                         break;
 
                     case 4:
-                        strsql += " VALID_FROM_EXT > to_date('" + DateTime.Today.Date + "','dd/mm/yyyy') and STATUS_EXT = 4 ";
+                        strsql += " VALID_FROM_EXT > to_date('" + DateTime.Today.Date.ToShortDateString() + "','dd/mm/yyyy') and STATUS_EXT = 4 ";
                         break;
 
                     case 5:
@@ -1247,7 +1248,8 @@ namespace Quantum_QFOR
                     strsql = sql + strsql;
                 }
 
-                return objWF.GetDataTable(strsql);
+                DataSet DS = objWF.GetDataSet(strsql);
+                return JsonConvert.SerializeObject(DS, Newtonsoft.Json.Formatting.Indented);
             }
             catch (OracleException OraExp)
             {

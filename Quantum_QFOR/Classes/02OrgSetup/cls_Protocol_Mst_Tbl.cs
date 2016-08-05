@@ -111,7 +111,7 @@ namespace Quantum_QFOR
         /// <param name="intUser">The int user.</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataSet FetchAll(Int64 ProtocolPk, string ProtocolName, string ProtocolValue, string SearchType, string strSortColumn, Int32 CurrentPage, Int32 TotalPage, bool blnSortAscending = false, int intIntervalMonthly = 0, int IsActive = -1,
+        public string FetchAll(Int64 ProtocolPk, string ProtocolName, string ProtocolValue, string SearchType, string strSortColumn, Int32 CurrentPage, Int32 TotalPage, bool blnSortAscending = false, int intIntervalMonthly = 0, int IsActive = -1,
         int intBusType = 0, int intUser = 0, Int32 flag = 0)
         {
             Int32 last = default(Int32);
@@ -202,15 +202,15 @@ namespace Quantum_QFOR
             start = (CurrentPage - 1) * RecordsPerPage + 1;
 
             strSQL = "  Select * From (SELECT ROWNUM SR_NO, q.* From ( Select ";
-            strSQL = "Protocol_MST_PK, ";
-            strSQL = "DECODE(IS_ACTIVATED ,'0','false','1','true') IS_ACTIVATED , ";
-            strSQL = "Protocol_NAME, ";
-            strSQL = "Protocol_VALUE, ";
-            strSQL = "0 RESET_INTERVAL, ";
-            strSQL = " DECODE(BUSINESS_TYPE,'0','','1','Air','2','Sea','3','Both','4','Removals') BUSINESS_TYPE,VERSION_NO,";
-            strSQL = "APPLY_BARCODE";
-            strSQL = "FROM Protocol_MST_TBL ";
-            strSQL = "WHERE 1=1 ";
+            strSQL += "Protocol_MST_PK, ";
+            strSQL += "DECODE(IS_ACTIVATED ,'0','false','1','true') IS_ACTIVATED , ";
+            strSQL += "Protocol_NAME, ";
+            strSQL += "Protocol_VALUE, ";
+            strSQL += "0 RESET_INTERVAL, ";
+            strSQL += " DECODE(BUSINESS_TYPE,'0','','1','Air','2','Sea','3','Both','4','Removals') BUSINESS_TYPE,VERSION_NO,";
+            strSQL += "APPLY_BARCODE";
+            strSQL += " FROM Protocol_MST_TBL ";
+            strSQL += "WHERE 1=1 ";
             strSQL += strCondition;
 
             if (!strSortColumn.Equals("SR_NO"))
@@ -223,13 +223,14 @@ namespace Quantum_QFOR
                 strSQL += " DESC";
             }
 
-            strSQL += ") q  ) WHERE SR_NO  Between " + start + " and " + last;
+            strSQL += ") q  )  ";
+            //strSQL += "WHERE SR_NO Between " + start + " and " + last;
 
             DataSet objDS = null;
             try
             {
                 objDS = objWF.GetDataSet(strSQL);
-                return objDS;
+                return JsonConvert.SerializeObject(objDS, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {

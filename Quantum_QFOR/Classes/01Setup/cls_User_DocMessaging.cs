@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -29,7 +30,7 @@ namespace Quantum_QFOR
 	{
 
 		#region "Messaging_Grid"
-		public DataTable fn_Messaging_Grid(string MODE = "NEW", long TransPK = 0, long CustPK = 0, bool FilterCriteria = false, int ParyType = 1)
+		public string fn_Messaging_Grid(string MODE = "NEW", long TransPK = 0, long CustPK = 0, bool FilterCriteria = false, int ParyType = 1)
 		{
 
 			WorkFlow objWF = new WorkFlow();
@@ -37,34 +38,7 @@ namespace Quantum_QFOR
 			Int32 RecordsFound = default(Int32);
 
 			System.Text.StringBuilder sb = new System.Text.StringBuilder(5000);
-
-
-			///If FilterCriteria = True Then
-			///    sb.Append(" select count(*) from (SELECT ")
-			///    sb.Append(" V.TRANFK,")
-			///    sb.Append(" V.TRANDTLPK,")
-			///    sb.Append(" V.DOCUMENTS,")
-			///    sb.Append(" V.SMS,")
-			///    sb.Append(" V.EMAIL,")
-			///    sb.Append(" V.PRINT,")
-			///    sb.Append(" V.FAX,")
-			///    sb.Append(" V.ALL_MESSAGING,")
-			///    sb.Append(" V.CONFIG_FLAG,")
-			///    sb.Append(" V.CONFIG_BTN,")
-			///    sb.Append(" V.CONFIG_MSG_DS,")
-			///    sb.Append(" V.LASTUPD")
-
-			///    sb.Append(" FROM VIEW_DOC_MESSAGING_EDIT_DOC V where 1=1")
-			///    If TransPK > 0 Then
-			///        sb.Append("  and v.TRANFK = " & TransPK)
-			///    End If
-			///    If CustPK > 0 Then
-			///        sb.Append(" and v.TRANFK in  ")
-			///        sb.Append(" ( select c.message_setup_mst_fk from qcor_mc_m_message_setup_cust c where c.cust_mst_fk=" & CustPK & ")")
-			///    End If
-			///End If
-
-
+            
 
 			///sb.Length = 0
 			if (FilterCriteria == false) {
@@ -350,115 +324,19 @@ namespace Quantum_QFOR
 					//sb.Append(" order by q.TRANDTLPK ")
 				}
 			}
-			///''sb.Append(" select * from (SELECT ")
-			///''sb.Append(" V.TRANFK,")
-			///''sb.Append(" V.TRANDTLPK,")
-			///''sb.Append(" V.DOCUMENTS,")
-			///''sb.Append(" V.SMS,")
-			///''sb.Append(" V.EMAIL,")
-			///''sb.Append(" V.PRINT,")
-			///''sb.Append(" V.FAX,")
-			///''sb.Append(" V.ALL_MESSAGING,")
-			///''sb.Append(" V.CONFIG_FLAG,")
-			///''sb.Append(" V.CONFIG_BTN,")
-			///''sb.Append(" V.CONFIG_MSG_DS,")
-			///''sb.Append(" V.LASTUPD")
-			///''If FilterCriteria = True Then
-			///''    sb.Append(" FROM VIEW_DOC_MESSAGING_EDIT_DOC V where 1=1")
-			///''    If TransPK > 0 Then
-			///''        sb.Append("  and v.TRANFK = " & TransPK)
-			///''    End If
-			///''    If CustPK > 0 Then
-			///''        sb.Append(" and v.TRANFK in  ")
-			///''        sb.Append(" ( select c.message_setup_mst_fk from qcor_mc_m_message_setup_cust c where c.cust_mst_fk=" & CustPK & ")")
-			///''    End If
-			///''    sb.Append("    UNION ")
-			///''    sb.Append("       SELECT 0   TRANFK,")
-			///''    sb.Append("    DOC.DOCUMENT_MST_PK TRANDTLPK,  ")
-			///''    sb.Append("       DOC.DOCUMENT_NAME   DOCUMENTS, ")
-			///''    sb.Append("       0  SMS, ")
-			///''    sb.Append("   0 EMAIL,")
-			///''    sb.Append("    0   PRINT,")
-			///''    sb.Append("        0  FAX, ")
-			///''    sb.Append("       0     ALL_MESSAGING, ")
-			///''    sb.Append("          NULL    CONFIG_FLAG, ")
-			///''    sb.Append("        NULL    CONFIG_BTN, ")
-			///''    sb.Append("        NULL   CONFIG_MSG_DS,")
-			///''    sb.Append("    SYSDATE LASTUPD")
-			///''    sb.Append("      FROM QCOR_MC_M_DOCUMENTS DOC ")
-			///''    sb.Append("       WHERE DOC.DOCUMENT_MST_PK NOT IN ")
-			///''    sb.Append("      (SELECT D.DOCUMENT_MST_FK ")
-			///''    sb.Append("       FROM QCOR_MC_M_MESSAGE_SETUP_DOCS D , qcor_mc_m_message_setup_cust c")
-			///''    sb.Append("        where c.message_setup_mst_fk = d.message_setup_mst_fk")
-			///''    If CustPK > 0 Then
-			///''        sb.Append("     and c.cust_mst_fk = " & CustPK)
-			///''    End If
-			///''    If TransPK > 0 Then
-			///''        sb.Append("      and D.MESSAGE_SETUP_MST_FK = " & TransPK)
-			///''    End If
-			///''    sb.Append(" ) ")
-			///''Else
-			///''    If CustPK > 0 Then 'fetching for copy from 
-			///''        sb.Append(" FROM VIEW_DOC_MESSAGING_EDIT_DOC V ")
-			///''        sb.Append(" , qcor_mc_m_message_setup_cust c ")
-			///''        sb.Append(" where c.message_setup_mst_fk = v.TRANFK ")
-			///''        sb.Append(" and c.cust_mst_fk=" & CustPK)
-			///''        sb.Append(" UNION ")
-			///''        sb.Append("  SELECT 0   TRANFK, ")
-			///''        sb.Append(" DOC.DOCUMENT_MST_PK TRANDTLPK, ")
-			///''        sb.Append(" DOC.DOCUMENT_NAME   DOCUMENTS, ")
-			///''        sb.Append(" 0  SMS, ")
-			///''        sb.Append(" 0 EMAIL,")
-			///''        sb.Append(" 0   PRINT,")
-			///''        sb.Append("  0  FAX, ")
-			///''        sb.Append("  0     ALL_MESSAGING, ")
-			///''        sb.Append("  NULL    CONFIG_FLAG, ")
-			///''        sb.Append("  NULL    CONFIG_BTN, ")
-			///''        sb.Append("  NULL   CONFIG_MSG_DS,")
-			///''        sb.Append("   SYSDATE LASTUPD")
-			///''        sb.Append(" FROM QCOR_MC_M_DOCUMENTS DOC ")
-			///''        sb.Append(" WHERE DOC.DOCUMENT_MST_PK NOT IN ")
-			///''        sb.Append("  (SELECT D.DOCUMENT_MST_FK ")
-			///''        sb.Append(" FROM QCOR_MC_M_MESSAGE_SETUP_DOCS D , qcor_mc_m_message_setup_cust c")
-			///''        sb.Append(" where c.message_setup_mst_fk = d.message_setup_mst_fk")
-			///''        sb.Append(" and c.cust_mst_fk = " & CustPK & ") ")
-			///''    ElseIf MODE = "NEW" Then 'Fetching for new record
-			///''        sb.Append(" FROM VIEW_DOC_MESSAGING V ")
-			///''    ElseIf MODE = "EDIT" Then 'fetching for edit after selection of existing protocol
-			///''        sb.Append(" FROM VIEW_DOC_MESSAGING_EDIT_DOC V")
-			///''        sb.Append(" WHERE V.TRANFK in (" & TransPK & ",0) ")
-			///''        sb.Append(" UNION ")
-			///''        sb.Append(" SELECT 0                   TRANFK, ")
-			///''        sb.Append(" DOC.DOCUMENT_MST_PK TRANDTLPK, ")
-			///''        sb.Append(" DOC.DOCUMENT_NAME   DOCUMENTS, ")
-			///''        sb.Append(" 0                   SMS, ")
-			///''        sb.Append(" 0                    EMAIL,")
-			///''        sb.Append(" 0                    PRINT,")
-			///''        sb.Append(" 0                   FAX, ")
-			///''        sb.Append(" 0                   ALL_MESSAGING, ")
-			///''        sb.Append(" NULL                CONFIG_FLAG, ")
-			///''        sb.Append(" NULL                CONFIG_BTN, ")
-			///''        sb.Append(" NULL                CONFIG_MSG_DS,")
-			///''        sb.Append(" SYSDATE             LASTUPD ")
-			///''        sb.Append(" FROM QCOR_MC_M_DOCUMENTS DOC ")
-			///''        sb.Append(" WHERE DOC.DOCUMENT_MST_PK NOT IN ")
-			///''        sb.Append("     (SELECT D.DOCUMENT_MST_FK ")
-			///''        sb.Append(" FROM QCOR_MC_M_MESSAGE_SETUP_DOCS D ")
-			///''        sb.Append(" WHERE D.MESSAGE_SETUP_MST_FK = " & TransPK & ")")
-			///''    End If
-			///''End If
-			///''sb.Append(")q order by q.DOCUMENTS")
-
+			
 			try {
 				dt = objWF.GetDataTable(sb.ToString());
-				return dt;
-			//Manjunath  PTS ID:Sep-02   12/09/2011
-			} catch (OracleException OraExp) {
+                return JsonConvert.SerializeObject(dt, Formatting.Indented);
+                //Manjunath  PTS ID:Sep-02   12/09/2011
+            } catch (OracleException OraExp) {
 				throw OraExp;
 			} catch (Exception ex) {
 				throw ex;
 			}
 		}
+
+
 		#endregion
 
 		#region "Messaging_Grid_MailMsg"

@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -31,7 +32,7 @@ namespace Quantum_QFOR
     {
         #region "Fetch Function"
 
-        public DataSet Fetch(string ValidFrom = " ", string ValidTo = " ", Int32 CurrentPage = 0, Int32 TotalPage = 0, string User = " ", bool flag = false, Int32 Status = 0)
+        public string Fetch(string ValidFrom = " ", string ValidTo = " ", Int32 CurrentPage = 0, Int32 TotalPage = 0, string User = " ", bool flag = false, Int32 Status = 0,Int32 bizType=0)
         {
             string StrSQL = null;
             string strSQL1 = null;
@@ -49,21 +50,11 @@ namespace Quantum_QFOR
             sb.AppendLine(" decode(wfadm.wf_mgr_adm_task_priority,1,'Low',2,'High',3,'Critical') priority,");
             sb.AppendLine(" decode(wfadm.wf_mgr_adm_task_status,1,'Not Taken',2,'Taken',3,'Escalated',4,'Completed') Status,");
             sb.AppendLine(" wfadm.wf_mgr_adm_task_start_dt startdate,");
-            //sb.AppendLine(" wfadm.wf_mgr_adm_task_deadline deadline,")
-
-            //sb.AppendLine("               TO_CHAR(wfadm.WF_MGR_ADM_TASK_START_DT +")
-            //sb.AppendLine("                       WC.WF_RULES_INT_DEADLINE +")
-            //sb.AppendLine("                       numtodsinterval(WC.WF_RULES_INT_DEADLINE_HOURS,")
-            //sb.AppendLine("                                       'hour') +")
-            //sb.AppendLine("                       numtodsinterval(WC.WF_RULES_INT_DEADLINE_MINS,")
-            //sb.AppendLine("                                       'minute'),")
-            //sb.AppendLine("                       DATETIMEFORMAT24) DEADLINE,")
             sb.AppendLine("   FN_EX_WEEKENDDATE(WC.WF_RULES_INT_CONFIG_PK,(wfadm.WF_MGR_ADM_TASK_START_DT + ");
             sb.AppendLine("           WC.WF_RULES_INT_DEADLINE + ");
             sb.AppendLine("          NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_HOURS,'HOUR') + ");
             sb.AppendLine("         NUMTODSINTERVAL(WC.WF_RULES_INT_DEADLINE_MINS,'MINUTE'))) DEADLINE, ");
 
-            //sb.AppendLine(" decode(wfadm.wf_mgr_adm_task_dlmode ,1,'Mins',2,'Hours',3,'Days') deadlinemode,")
             sb.AppendLine(" 'NA' deadlinemode,");
             sb.AppendLine(" '' ReasignedTo,'....'  users,'' sel ,");
             sb.AppendLine(" wfadm.wf_mgr_adm_task_cuser_fk,");
@@ -86,11 +77,11 @@ namespace Quantum_QFOR
             sb.AppendLine("               NEXTACT.WF_ACTIVITY_MST_TBL_PK");
 
             string biz_type = null;
-            if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 1)
+            if (bizType == 1)
             {
                 sb.AppendLine("     and act.biz_type in (1,3)");
             }
-            else if ((Int16)HttpContext.Current.Session["BIZ_TYPE"] == 2)
+            else if (bizType == 2)
             {
                 sb.AppendLine("     and act.biz_type in (2,3)");
             }
@@ -108,14 +99,14 @@ namespace Quantum_QFOR
             sb.AppendLine("           AND wfadm.WF_MGR_ADM_TASK_REF_FK = TASK.DOC_REF_NO_PK");
             sb.AppendLine("           AND UPPER(TASK.NEXT_ACTIVITY) = UPPER(NEXTACT.WF_ACTIVITY_NAME)");
             //sb.AppendLine("           AND U.USER_MST_PK = wfadm.wf_mgr_adm_task_cuser_fk(+)")
-            sb.AppendLine("          AND APP.WORKFLOW_RULES_INT_LOC_FK IN ('" + HttpContext.Current.Session["LOGED_IN_LOC_FK"] + "') ");
+            sb.AppendLine("          AND APP.WORKFLOW_RULES_INT_LOC_FK IN ('" + 1841 + "') ");
             if (!string.IsNullOrEmpty(User))
             {
                 sb.AppendLine("           AND U.USER_MST_PK = " + User);
             }
             else
             {
-                sb.AppendLine("           AND U.USER_MST_PK = " + HttpContext.Current.Session["user_pk"]);
+                sb.AppendLine("           AND U.USER_MST_PK = " + 3);
             }
 
             //sb.AppendLine("           AND U.DEFAULT_LOCATION_FK =")
@@ -190,7 +181,8 @@ namespace Quantum_QFOR
             strSQL1 += "  WHERE SlNr Between " + start + " and " + last;
             try
             {
-                return objWF.GetDataSet(strSQL1.ToString());
+                DataSet DS = objWF.GetDataSet(strSQL1.ToString());
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (OracleException OraExp)
             {

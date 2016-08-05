@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -236,7 +237,7 @@ namespace Quantum_QFOR
         /// <param name="Desc">The desc.</param>
         /// <param name="ExportFlg">The export FLG.</param>
         /// <returns></returns>
-        public DataSet FetchActivityLog(Int16 ChkOnLoad, Int16 SearchFlag, Int16 CurrentPage, Int16 TotalPage, Int16 RecType = 0, Int16 Category = 0, Int16 UpdateType = 0, string frmDt = "", string ToDt = "", string trnType = "",
+        public string FetchActivityLog(Int16 ChkOnLoad, Int16 SearchFlag, Int16 CurrentPage, Int16 TotalPage, Int16 RecType = 0, Int16 Category = 0, Int16 UpdateType = 0, string frmDt = "", string ToDt = "", string trnType = "",
         string RefNr = "", string Desc = "", int ExportFlg = 0)
         {
             WorkFlow objWF = new WorkFlow();
@@ -271,7 +272,7 @@ namespace Quantum_QFOR
                 {
                     CurrentPage = Convert.ToInt16(objWF.MyCommand.Parameters["CURRENT_PAGE_IN"].Value);
                 }
-                return DS;
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {

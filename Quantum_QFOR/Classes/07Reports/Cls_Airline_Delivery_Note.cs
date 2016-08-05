@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -51,7 +52,7 @@ namespace Quantum_QFOR
         /// <param name="TotalPage">The total page.</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataSet FetchAirUserExport(string Flight = "", long JobPk = 0, long PolPk = 0, long PodPk = 0, long CustPk = 0, long strLocPk = 0, Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0)
+        public string FetchAirUserExport(string Flight = "", long JobPk = 0, long PolPk = 0, long PodPk = 0, long CustPk = 0, long strLocPk = 0, Int32 CurrentPage = 0, Int32 TotalPage = 0, Int32 flag = 0)
         {
             string Strsql = null;
             WorkFlow Objwk = new WorkFlow();
@@ -156,8 +157,8 @@ namespace Quantum_QFOR
             Strsql += " AND DP.DOC_NUMBER(+) LIKE 'AIRLINE%' ";
             Strsql += "and jA.JOB_CARD_TRN_PK in";
             Strsql += "(select jc.JOB_CARD_TRN_PK";
-            Strsql += " from JOB_CARD_TRN jc";
-            Strsql += "where";
+            Strsql += " from JOB_CARD_TRN jc ";
+            Strsql += " where";
             Strsql += "   jc.JOB_CARD_TRN_PK not in";
             Strsql += " (select d1.job_card_ref_fk";
             Strsql += "  from DOCS_PRINT_DTL_TBL D1";
@@ -248,7 +249,7 @@ namespace Quantum_QFOR
             Strsql += "and jA.JOB_CARD_TRN_PK in";
             Strsql += "(select jc.JOB_CARD_TRN_PK";
             Strsql += " from JOB_CARD_TRN jc";
-            Strsql += "where";
+            Strsql += " where";
             Strsql += "   jc.JOB_CARD_TRN_PK not in";
             Strsql += " (select d1.job_card_ref_fk";
             Strsql += "  from DOCS_PRINT_DTL_TBL D1";
@@ -260,7 +261,8 @@ namespace Quantum_QFOR
 
             try
             {
-                return Objwk.GetDataSet(Strsql);
+                DataSet Ds = Objwk.GetDataSet(Strsql);
+                return JsonConvert.SerializeObject(Ds, Formatting.Indented);
             }
             catch (OracleException OraExp)
             {

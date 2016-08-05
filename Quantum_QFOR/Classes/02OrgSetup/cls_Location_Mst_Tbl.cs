@@ -33,7 +33,7 @@ namespace Quantum_QFOR
     ///
     /// </summary>
     /// <seealso cref="Quantum_QFOR.CommonFeatures" />
-    public class clsLocation_Mst_Tbl : CommonFeatures
+    public class cls_Location_Mst_Tbl : CommonFeatures
     {
         /// <summary>
         /// Fetches the profit margin setup.
@@ -1171,7 +1171,7 @@ namespace Quantum_QFOR
         /// <param name="blnSortAscending">if set to <c>true</c> [BLN sort ascending].</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataSet FetchListing(Int64 P_Location_Mst_Pk, string P_Location_Id, string P_Location_Name, long P_LocationType, string P_Rep_Location_Id, string P_Rep_Location_Name, string P_COUNTRY_Id, string P_COUNTRY_Name, string P_OFFICE_NAME, string SearchType,
+        public string FetchListing(Int64 P_Location_Mst_Pk, string P_Location_Id, string P_Location_Name, long P_LocationType, string P_Rep_Location_Id, string P_Rep_Location_Name, string P_COUNTRY_Id, string P_COUNTRY_Name, string P_OFFICE_NAME, string SearchType,
         string strColumnName, Int32 CurrentPage, Int32 TotalPage, int isActive, bool isEFS, bool blnSortAscending, Int32 flag)
         {
             Int32 last = default(Int32);
@@ -1334,7 +1334,8 @@ namespace Quantum_QFOR
             strSQL += " ) ABC) WHERE Sr_No  Between " + start + " and " + last;
             try
             {
-                return objWF.GetDataSet(strSQL);
+                DataSet DS = objWF.GetDataSet(strSQL);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -1516,7 +1517,7 @@ namespace Quantum_QFOR
         /// Fetches all locations.
         /// </summary>
         /// <returns></returns>
-        public DataTable FetchAllLocations()
+        public string FetchAllLocations()
         {
             string strSQL = null;
             strSQL = "          SELECT                 ";
@@ -1567,7 +1568,7 @@ namespace Quantum_QFOR
                 ErrorMessage = exp.Message;
                 throw exp;
             }
-            return objDT;
+            return JsonConvert.SerializeObject(objDT, Formatting.Indented);
         }
 
         #endregion "Fetch All Locations"

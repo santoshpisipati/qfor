@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
@@ -220,7 +221,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Export Cover Sheet Details"
-        public DataSet FetchAirUserExport(string MAWBRefNo, Int32 CurrentPage = 0, Int32 TotalPage = 0, int Loc = 0, Int32 flag = 0)
+        public string FetchAirUserExport(string MAWBRefNo, Int32 CurrentPage = 0, Int32 TotalPage = 0, int Loc = 0, Int32 flag = 0)
         {
 
             Int32 last = default(Int32);
@@ -248,16 +249,16 @@ namespace Quantum_QFOR
             strSQL += "PORT_MST_TBL POD,";
             strSQL += "AIRLINE_MST_TBL AMST,";
             strSQL += "user_mst_tbl umt ";
-            strSQL += "WHERE MAWB.MAWB_EXP_TBL_PK = HAWB.MAWB_EXP_TBL_FK";
-            strSQL += "AND CMST.CUSTOMER_MST_PK(+)=HAWB.SHIPPER_CUST_MST_FK ";
-            strSQL += "AND JAE.JOB_CARD_TRN_PK(+)=HAWB.JOB_CARD_AIR_EXP_FK ";
-            strSQL += "AND JAE.BOOKING_MST_FK=BAT.BOOKING_MST_PK(+) ";
-            strSQL += "AND POL.PORT_MST_PK(+)=BAT.PORT_MST_POL_FK";
-            strSQL += "AND POD.PORT_MST_PK(+)=BAT.PORT_MST_POD_FK";
-            strSQL += "AND AMST.AIRLINE_MST_PK(+)=BAT.CARRIER_MST_FK";
-            strSQL += "AND JAE.created_by_fk= umt.user_mst_pk";
-            strSQL += "AND umt.default_location_fk=" + Loc;
-            strSQL += "AND  JAE.JOB_CARD_STATUS =1";
+            strSQL += " WHERE MAWB.MAWB_EXP_TBL_PK = HAWB.MAWB_EXP_TBL_FK";
+            strSQL += " AND CMST.CUSTOMER_MST_PK(+)=HAWB.SHIPPER_CUST_MST_FK ";
+            strSQL += " AND JAE.JOB_CARD_TRN_PK(+)=HAWB.JOB_CARD_AIR_EXP_FK ";
+            strSQL += " AND JAE.BOOKING_MST_FK=BAT.BOOKING_MST_PK(+) ";
+            strSQL += " AND POL.PORT_MST_PK(+)=BAT.PORT_MST_POL_FK";
+            strSQL += " AND POD.PORT_MST_PK(+)=BAT.PORT_MST_POD_FK";
+            strSQL += " AND AMST.AIRLINE_MST_PK(+)=BAT.CARRIER_MST_FK";
+            strSQL += " AND JAE.created_by_fk= umt.user_mst_pk";
+            strSQL += " AND umt.default_location_fk=" + Loc;
+            strSQL += " AND  JAE.JOB_CARD_STATUS =1";
             strSQL += strCondition;
 
             TotalRecords = Convert.ToInt32(objWF.ExecuteScaler(strSQL));
@@ -290,7 +291,7 @@ namespace Quantum_QFOR
             strSQL += "HAWB.FLIGHT_NO FLIGHT,";
             strSQL += "''DELIVERDATA,";
             strSQL += "'' DeliverTo";
-            strSQL += "FROM HAWB_EXP_TBL HAWB,";
+            strSQL += " FROM HAWB_EXP_TBL HAWB,";
             strSQL += "MAWB_EXP_TBL MAWB,";
             strSQL += "CUSTOMER_MST_TBL CMST,";
             strSQL += "JOB_CARD_TRN JAE,";
@@ -300,25 +301,26 @@ namespace Quantum_QFOR
             strSQL += "AIRLINE_MST_TBL AMST,";
             strSQL += "user_mst_tbl umt ";
 
-            strSQL += "WHERE MAWB.MAWB_EXP_TBL_PK = HAWB.MAWB_EXP_TBL_FK";
-            strSQL += "AND CMST.CUSTOMER_MST_PK(+)=HAWB.SHIPPER_CUST_MST_FK ";
-            strSQL += "AND JAE.JOB_CARD_TRN_PK(+)=HAWB.JOB_CARD_AIR_EXP_FK ";
-            strSQL += "AND JAE.BOOKING_MST_FK=BAT.BOOKING_MST_PK(+) ";
-            strSQL += "AND POL.PORT_MST_PK(+)=BAT.PORT_MST_POL_FK";
-            strSQL += "AND POD.PORT_MST_PK(+)=BAT.PORT_MST_POD_FK";
-            strSQL += "AND AMST.AIRLINE_MST_PK(+)=BAT.CARRIER_MST_FK";
-            strSQL += "AND  JAE.JOB_CARD_STATUS =1";
-            strSQL += "and JAE.created_by_fk= umt.user_mst_pk";
-            strSQL += "and umt.default_location_fk=" + Loc;
+            strSQL += " WHERE MAWB.MAWB_EXP_TBL_PK = HAWB.MAWB_EXP_TBL_FK";
+            strSQL += " AND CMST.CUSTOMER_MST_PK(+)=HAWB.SHIPPER_CUST_MST_FK ";
+            strSQL += " AND JAE.JOB_CARD_TRN_PK(+)=HAWB.JOB_CARD_AIR_EXP_FK ";
+            strSQL += " AND JAE.BOOKING_MST_FK=BAT.BOOKING_MST_PK(+) ";
+            strSQL += " AND POL.PORT_MST_PK(+)=BAT.PORT_MST_POL_FK";
+            strSQL += " AND POD.PORT_MST_PK(+)=BAT.PORT_MST_POD_FK";
+            strSQL += " AND AMST.AIRLINE_MST_PK(+)=BAT.CARRIER_MST_FK";
+            strSQL += " AND  JAE.JOB_CARD_STATUS =1";
+            strSQL += " and JAE.created_by_fk= umt.user_mst_pk";
+            strSQL += " and umt.default_location_fk=" + Loc;
             strSQL += strCondition;
             strSQL += "ORDER BY HAWB.HAWB_DATE DESC, MAWB.MAWB_REF_NO DESC";
-            strSQL += " ) q )WHERE SR_NO  Between " + start + " and " + last;
+            strSQL += " ) q )";
+                //WHERE SR_NO  Between " + start + " and " + last;
 
             DataSet DS = null;
             DS = objWF.GetDataSet(strSQL);
             try
             {
-                return DS;
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {

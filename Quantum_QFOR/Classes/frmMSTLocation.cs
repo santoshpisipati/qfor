@@ -13,12 +13,12 @@ namespace Quantum_QFOR
         /// <summary>
         /// The object location
         /// </summary>
-        private clsLocation_Mst_Tbl objLocation = new clsLocation_Mst_Tbl();
+        private cls_Corporate_Mst_Tbl objLocation = new cls_Corporate_Mst_Tbl();
 
         /// <summary>
         /// The object corporate
         /// </summary>
-        private clsCorporate_Mst_Tbl objCorporate = new clsCorporate_Mst_Tbl();
+        private cls_Corporate_Mst_Tbl objCorporate = new cls_Corporate_Mst_Tbl();
 
         /// <summary>
         /// The object location_ type

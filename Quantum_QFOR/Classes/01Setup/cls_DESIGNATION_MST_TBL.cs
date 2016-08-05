@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -237,7 +238,7 @@ namespace Quantum_QFOR
         /// Fetches the desig.
         /// </summary>
         /// <returns></returns>
-        public DataSet FetchDesig()
+        public string FetchDesig()
         {
             string strSQL = null;
             string strCondition = null;
@@ -259,7 +260,8 @@ namespace Quantum_QFOR
 
             try
             {
-                return objWF.GetDataSet(strSQL);
+                DataSet DS = objWF.GetDataSet(strSQL);
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
                 //Catch sqlExp As OracleException
                 //Modified by Manjunath  PTS ID:Sep-02  14/09/2011
             }
