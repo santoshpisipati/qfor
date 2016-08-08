@@ -1414,7 +1414,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchAllEmployees()
         {
             cls_Employee_Mst_Table cs = new cls_Employee_Mst_Table();
-            string value = cs.FetchAll("","","","","","","","","","","","","","","","","","","","C", "EMPLOYEE_ID", 0,1,0,3,1,true,1);
+            string value = cs.FetchAll("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "C", "EMPLOYEE_ID", 0, 1, 0, 3, 1, true, 1);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -1474,7 +1474,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchAllUserDef()
         {
             clsUser_Mst_Tbl cs = new clsUser_Mst_Tbl();
-            string value = cs.FetchAll("","","","", true, "C", "USER_ID",1,0,true,1);
+            string value = cs.FetchAll("", "", "", "", true, "C", "USER_ID", 1, 0, true, 1);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -1498,7 +1498,7 @@ namespace Quantum_QFOR.Controllers
             Int32 TotalPage = userDefination.TotalPage;
             bool blnSortAscending = userDefination.blnSortAscending;
             Int32 flag = userDefination.flag;
-            
+
 
             clsUser_Mst_Tbl cs = new clsUser_Mst_Tbl();
             string value = cs.FetchAll(UserID, UserName, BranchID, BranchName, ActiveOnly, SearchType, strColumnName, CurrentPage, TotalPage, blnSortAscending, flag);
@@ -1550,7 +1550,7 @@ namespace Quantum_QFOR.Controllers
 
         #region Password Management
 
-        
+
 
         #endregion Password Management
 
@@ -1563,7 +1563,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchUserPreference()
         {
             cls_User_Preference_Mst_Tbl cs = new cls_User_Preference_Mst_Tbl();
-            string value = cs.FetchAll(3,1841);
+            string value = cs.FetchAll(3, 1841);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -1580,7 +1580,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchAuditTrialSetupDetails(Int64 moduleid)
         {
             cls_AuditTrailsSetup cs = new cls_AuditTrailsSetup();
-            string value = cs.Fn_AuditTrials_Grid(moduleid,1);
+            string value = cs.Fn_AuditTrials_Grid(moduleid, 1);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -1596,7 +1596,7 @@ namespace Quantum_QFOR.Controllers
         public object FetchAllAuditLog()
         {
             cls_AuditTrail_Log cs = new cls_AuditTrail_Log();
-            string value = cs.fn_Fetch_AuditLogDetails(0,0,0,0,0,0,"","",0,1);
+            string value = cs.fn_Fetch_AuditLogDetails(0, 0, 0, 0, 0, 0, "", "", 0, 1);
             return JsonConvert.DeserializeObject(value);
         }
 
@@ -1669,6 +1669,221 @@ namespace Quantum_QFOR.Controllers
         #endregion Audit Trail
 
         #endregion
+
+        #region Setup
+
+        #region Airline Schedule
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchAllSchedules()
+        {
+            String Carrier_FK = "";
+            String strFlightNo = "";
+            Int16 excludeExp = 0;
+            String SortColumn = "";
+            Int32 CurrentPage = 0;
+            Int32 TotalPage = 0;
+            Int64 usrLocFK = 0;
+
+            clsAirlineSchedule cs = new clsAirlineSchedule();
+            string value = cs.FetchAllSchedules(Carrier_FK, strFlightNo, excludeExp, SortColumn, CurrentPage, TotalPage, usrLocFK);
+            return JsonConvert.DeserializeObject(value);
+
+        }
+
+        #endregion
+
+        #region Air Freight Slabs
+
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchAirFreightSlabs(AirFreightSlab airFreightSlab)
+        {
+            String strBreakPointId = airFreightSlab.strBreakPointId;
+            String strDescription = airFreightSlab.strDescription;
+            string SearchType = airFreightSlab.SearchType;
+            String strColumnName = airFreightSlab.strColumnName;
+            Int32 CurrentPage = airFreightSlab.CurrentPage;
+            Int32 TotalPage = airFreightSlab.TotalPage;
+            Int16 SortCol = airFreightSlab.SortCol;
+            Int16 IsActive = airFreightSlab.IsActive;
+            bool blnSortAscending = airFreightSlab.blnSortAscending;
+            Int32 flag = airFreightSlab.flag;
+
+            clsAirFreightSlabs cs = new clsAirFreightSlabs();
+            string value = cs.FetchAll(strBreakPointId, strDescription, SearchType, strColumnName, CurrentPage, TotalPage, SortCol, IsActive, blnSortAscending, flag);
+            return JsonConvert.DeserializeObject(value);
+
+        }
+
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchAirFreightSlabs()
+        {
+            clsAirFreightSlabs cs = new clsAirFreightSlabs();
+            string value = cs.FetchAll("", "", "", "", 1, 0, 0, 0, true, 1);
+            return JsonConvert.DeserializeObject(value);
+
+        }
+
+        #endregion
+        #region Area Master
+
+
+        #endregion
+        #region Bank Master
+
+        #endregion
+        #region Cargo Movement Code
+
+        #endregion
+        #region Charge Mapping*
+
+        #endregion
+        #region Charge Master
+
+        #endregion
+
+        #endregion
+
+        #region Export Docs
+
+        #region Master Job Card Search
+
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchMasterJobCardSearch(MasterJobCardSea airFreightSlab)
+        {
+            String MSTJCRefNo = airFreightSlab.MSTJCRefNo;
+            bool ActiveOnly = airFreightSlab.ActiveOnly;
+            string POLPk = airFreightSlab.POLPk;
+            string PODPk = airFreightSlab.PODPk;
+            String AgentPk = airFreightSlab.AgentPk;
+            string LinePk = airFreightSlab.LinePk;
+            string SearchType = airFreightSlab.SearchType;
+            Int32 CurrentPage = airFreightSlab.CurrentPage;
+            Int32 TotalPage = airFreightSlab.TotalPage;
+            string POLID = airFreightSlab.POLID;
+            string PODId = airFreightSlab.PODId;
+            string POLName = airFreightSlab.POLName;
+            string PODName = airFreightSlab.PODName;
+            Int64 lngUsrLocFk = airFreightSlab.lngUsrLocFk;
+            string strColumnName = airFreightSlab.strColumnName;
+            bool blnSortAscending = airFreightSlab.blnSortAscending;
+            Int32 flag = airFreightSlab.flag;
+            string VesselName = airFreightSlab.VesselName;
+
+            clsMSTJobCardSea cs = new clsMSTJobCardSea();
+            string value = cs.FetchAll(MSTJCRefNo, ActiveOnly, POLPk, PODPk, AgentPk, LinePk, SearchType, CurrentPage, TotalPage, POLID, PODId, POLName, PODName, lngUsrLocFk, strColumnName, blnSortAscending, flag, VesselName);
+            return JsonConvert.DeserializeObject(value);
+
+        }
+
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchMasterJobCardSearch()
+        {
+            clsMSTJobCardSea cs = new clsMSTJobCardSea();
+            string value = cs.FetchAll("", true, "", "", "", "", "C", 1, 0, "", "", "", "", 1841, "", true, 1, "");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion
+
+        #region Master Job Card Search
+
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchJobCardSearch(JobCardSea jobCardSea)
+        {
+            string jobrefNO = jobCardSea.jobrefNO;
+            string bookingNo = jobCardSea.bookingNo;
+            string HblNo = jobCardSea.HblNo;
+            string polID = jobCardSea.polID;
+            string podId = jobCardSea.podId;
+            string polPK = jobCardSea.polPK;
+            string podPK = jobCardSea.podPK;
+            string jcStatus = jobCardSea.jcStatus;
+            string shipper = jobCardSea.shipper;
+            string consignee = jobCardSea.consignee;
+            string agent = jobCardSea.agent;
+            string bizType = jobCardSea.bizType;
+            string processType = jobCardSea.processType;
+            string cargoType = jobCardSea.cargoType;
+            Double SearchFor = jobCardSea.SearchFor;
+            Int32 SearchFortime = jobCardSea.SearchFortime;
+            string SortColumn = jobCardSea.SortColumn;
+            Int32 CurrentPage = jobCardSea.CurrentPage;
+            Int32 TotalPage = jobCardSea.TotalPage;
+            string SortType = jobCardSea.SortType;
+            bool BOOKING = jobCardSea.BOOKING;
+            string MblNo = jobCardSea.MblNo;
+            Int64 lngUsrLocFk = jobCardSea.lngUsrLocFk;
+            string containerno = jobCardSea.containerno;
+            Int32 jctype = jobCardSea.jctype;
+            Int32 flag = jobCardSea.flag;
+            string hdnPlrpk = jobCardSea.hdnPlrpk;
+            string hdnPfdpk = jobCardSea.hdnPfdpk;
+            string carrierFk = jobCardSea.carrierFk;
+            string vesselPk = jobCardSea.vesselPk;
+            string UcrNr = jobCardSea.UcrNr;
+            string Commpk = jobCardSea.Commpk;
+            bool flgXBkg = jobCardSea.flgXBkg;
+            bool flgCL = jobCardSea.flgCL;
+            string VesselName = jobCardSea.VesselName;
+            string VoyageFlightNo = jobCardSea.VoyageFlightNo;
+            string PONumber = jobCardSea.PONumber;
+            bool IsNominated = jobCardSea.IsNominated;
+            Int32 SalesExecMstFk = jobCardSea.SalesExecMstFk;
+            Int32 OtherStatus = jobCardSea.OtherStatus;
+            Int64 CustomerPK = jobCardSea.CustomerPK;
+            Int64 NotifyPK = jobCardSea.NotifyPK;
+
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchAllJob(jobrefNO, bookingNo, HblNo, polID, podId, polPK, podPK, jcStatus, shipper, consignee, agent, bizType, processType, cargoType, SearchFor, SearchFortime, SortColumn, CurrentPage, TotalPage, SortType, BOOKING, MblNo, lngUsrLocFk, containerno, jctype, flag, hdnPlrpk, hdnPfdpk, carrierFk, vesselPk, UcrNr, Commpk, flgXBkg, flgCL, VesselName, VoyageFlightNo, PONumber, IsNominated, SalesExecMstFk, OtherStatus, CustomerPK, NotifyPK);
+            return JsonConvert.DeserializeObject(value);
+
+        }
+
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchJobCardSearch()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchAllJob("", "", "", "", "", "", "", "1", "", "", "2", "", "1", "0", 0, 0, "JCPK", 1, 0, "DESC", false, "", 1841, "", 2, 1, "", "", "", "0", "", "0", false, false, "", "", "", false, 0, 0, 0, 0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion
+
+        #endregion
     }
 }
-

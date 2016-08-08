@@ -27,6 +27,7 @@ using System.Data;
 using System.Text;
 using System.Web;
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 
 namespace Quantum_QFOR
 {
@@ -369,7 +370,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Job Card For Listing Screen as per the new Requirement"
-        public DataSet FetchAllJob(string jobrefNO = "", string bookingNo = "", string HblNo = "", string polID = "", string podId = "", string polPK = "", string podPK = "", string jcStatus = "", string shipper = "", string consignee = "",
+        public str FetchAllJob(string jobrefNO = "", string bookingNo = "", string HblNo = "", string polID = "", string podId = "", string polPK = "", string podPK = "", string jcStatus = "", string shipper = "", string consignee = "",
         string agent = "", string bizType = "3", string processType = "", string cargoType = "", double SearchFor = 0, Int32 SearchFortime = 0, string SortColumn = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, string SortType = " ASC ",
         bool BOOKING = false, string MblNo = "", long lngUsrLocFk = 0, string containerno = "", int jctype = 0, Int32 flag = 1, string hdnPlrpk = "", string hdnPfdpk = "", string carrierFk = "", string vesselPk = "",
         string UcrNr = "", string Commpk = "0", bool flgXBkg = false, bool flgCL = false, string VesselName = "", string VoyageFlightNo = "", string PONumber = "", bool IsNominated = false, int SalesExecMstFk = 0, int OtherStatus = 0,
@@ -440,7 +441,7 @@ namespace Quantum_QFOR
                 TotalPage = Convert.ToInt32(objWF.MyCommand.Parameters["TOTAL_PAGE_IN"].Value);
                 objWF.MyCommand.Dispose();
                 objWF.MyDataAdapter.Dispose();
-                return MainDS;
+                return JsonConvert.SerializeObject(MainDS, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {

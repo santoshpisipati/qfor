@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -74,7 +75,7 @@ namespace Quantum_QFOR
 		#endregion
 
 		#region "Fetch Master Jobcard"
-		public DataSet FetchAll(string MSTJCRefNo = "", bool ActiveOnly = true, string POLPk = "", string PODPk = "", string AgentPk = "", string LinePk = "", string SearchType = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, string POLID = "",
+		public string FetchAll(string MSTJCRefNo = "", bool ActiveOnly = true, string POLPk = "", string PODPk = "", string AgentPk = "", string LinePk = "", string SearchType = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, string POLID = "",
 		string PODId = "", string POLName = "", string PODName = "", long lngUsrLocFk = 0, string strColumnName = "", bool blnSortAscending = false, Int32 flag = 0, string VesselName = "")
 		{
 
@@ -262,8 +263,8 @@ namespace Quantum_QFOR
                 , "", "2"));
 				DataRelation trfRel = new DataRelation("TariffRelation", DS.Tables[0].Columns["MSTJCPK"], DS.Tables[1].Columns["MASTER_JC_FK"], true);
 				DS.Relations.Add(trfRel);
-				return DS;
-			} catch (OracleException sqlExp) {
+                return JsonConvert.SerializeObject(DS, Formatting.Indented);
+            } catch (OracleException sqlExp) {
 				ErrorMessage = sqlExp.Message;
 				throw sqlExp;
 			} catch (Exception exp) {

@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -117,7 +118,7 @@ namespace Quantum_QFOR
         /// <param name="blnSortAscending">if set to <c>true</c> [BLN sort ascending].</param>
         /// <param name="flag">The flag.</param>
         /// <returns></returns>
-        public DataSet FetchAll(string strBreakPointId, string strDescription, string SearchType = "", string strColumnName = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 SortCol = 0, Int16 IsActive = 0, bool blnSortAscending = false, Int32 flag = 0)
+        public string FetchAll(string strBreakPointId, string strDescription, string SearchType = "", string strColumnName = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, Int16 SortCol = 0, Int16 IsActive = 0, bool blnSortAscending = false, Int32 flag = 0)
         {
             Int32 last = default(Int32);
             Int32 start = default(Int32);
@@ -205,7 +206,8 @@ namespace Quantum_QFOR
             strSQL += " )q) WHERE SR_NO  Between " + start + " and " + last;
             try
             {
-                return objWF.GetDataSet(strSQL);
+                DataSet Ds = objWF.GetDataSet(strSQL);
+                return JsonConvert.SerializeObject(Ds, Formatting.Indented);
                 //Modified by Manjunath  PTS ID:Sep-02   12/09/2011
             }
             catch (OracleException sqlExp)

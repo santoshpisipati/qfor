@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -46,7 +47,7 @@ namespace Quantum_QFOR
         /// <param name="TotalPage">The total page.</param>
         /// <param name="usrLocFK">The usr loc fk.</param>
         /// <returns></returns>
-        public DataSet FetchAllSchedules(string Carrier_FK = "", string strFlightNo = "", Int16 excludeExp = 0, string SortColumn = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, long usrLocFK = 0)
+        public string FetchAllSchedules(string Carrier_FK = "", string strFlightNo = "", Int16 excludeExp = 0, string SortColumn = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, long usrLocFK = 0)
         {
             WorkFlow objWF = new WorkFlow();
             DataSet dsAll = new DataSet();
@@ -65,7 +66,7 @@ namespace Quantum_QFOR
                 dsAll = objWF.GetDataSet("AIRLINE_SCHEDULE_PKG", "FETCH_AIRLINE_SCHEDULE_LIST");
                 TotalPage = Convert.ToInt32(objWF.MyCommand.Parameters["TOTALPAGE_IN"].Value);
                 CurrentPage = Convert.ToInt32(objWF.MyCommand.Parameters["CURRENTPAGE_IN"].Value);
-                return dsAll;
+                return JsonConvert.SerializeObject(dsAll, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
