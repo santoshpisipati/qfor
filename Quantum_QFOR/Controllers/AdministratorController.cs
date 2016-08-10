@@ -1810,7 +1810,7 @@ namespace Quantum_QFOR.Controllers
 
         #endregion
 
-        #region Master Job Card Search
+        #region Job Card Search
 
         /// <summary>
         /// Fetches the key contacts.
@@ -1882,6 +1882,157 @@ namespace Quantum_QFOR.Controllers
             return JsonConvert.DeserializeObject(value);
         }
 
+        #region Initialze the freight datagrid
+
+        /// <summary>
+        /// Fetches the key contacts.
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object Fetchfreight()
+        {
+            clsConsolidatedInvoices cs = new clsConsolidatedInvoices();
+            string value = cs.Fetch_Surcharge_assign(new DataSet(), "", "JOB_CARD_TRN", "JOB_TRN_FD", "job_card_trn_pk", "FREIGHT_ELEMENT_MST_FK", "job_card_trn_fk", 0, 0, 0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        #endregion Initialze the freight datagrid
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchContainerDataExp()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchContainerDataExp("0", "");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchContDeposit()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchContDeposit("0", "");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchRcptDeposit()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchRcptDeposit("", 0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchCntrDepositHdr()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchCntrDepositHdr(0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchFreightDataExp()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchFreightDataExp("", 0, "", 0, 0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchFret()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchFret(0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchCostDet()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchCostDet(0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object fillJcOthChrg()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.fillJcOthChrg("");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchPIA()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchPIA("");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchAgentFret()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchAgentFret(0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchMainJobCardDataExp()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchMainJobCardDataExp("", "", "");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchTPDataExp()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchTPDataExp("");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchPurchaseInvDataExp()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchPurchaseInvDataExp("", 0, 0);
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FetchRevenueData()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FetchRevenueData("");
+            return JsonConvert.DeserializeObject(value);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [HttpGet]
+        public object FillJobCardOtherChargesDataSet()
+        {
+            cls_JobCard cs = new cls_JobCard();
+            string value = cs.FillJobCardOtherChargesDataSet("", 0, 0, "");
+            return JsonConvert.DeserializeObject(value);
+        }
         #endregion
 
         #endregion

@@ -62,10 +62,10 @@ namespace Quantum_QFOR
             {
                 try
                 {
-                    if ((Request.QueryString["PK_Value"] != null))
-                    {
-                        return Convert.ToInt32(Request.QueryString["PK_Value"]);
-                    }
+                    //if ((Request.QueryString["PK_Value"] != null))
+                    //{
+                    //    return Convert.ToInt32(Request.QueryString["PK_Value"]);
+                    //}
                 }
                 catch (Exception ex)
                 {

@@ -370,7 +370,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Job Card For Listing Screen as per the new Requirement"
-        public str FetchAllJob(string jobrefNO = "", string bookingNo = "", string HblNo = "", string polID = "", string podId = "", string polPK = "", string podPK = "", string jcStatus = "", string shipper = "", string consignee = "",
+        public string FetchAllJob(string jobrefNO = "", string bookingNo = "", string HblNo = "", string polID = "", string podId = "", string polPK = "", string podPK = "", string jcStatus = "", string shipper = "", string consignee = "",
         string agent = "", string bizType = "3", string processType = "", string cargoType = "", double SearchFor = 0, Int32 SearchFortime = 0, string SortColumn = "", Int32 CurrentPage = 0, Int32 TotalPage = 0, string SortType = " ASC ",
         bool BOOKING = false, string MblNo = "", long lngUsrLocFk = 0, string containerno = "", int jctype = 0, Int32 flag = 1, string hdnPlrpk = "", string hdnPfdpk = "", string carrierFk = "", string vesselPk = "",
         string UcrNr = "", string Commpk = "0", bool flgXBkg = false, bool flgCL = false, string VesselName = "", string VoyageFlightNo = "", string PONumber = "", bool IsNominated = false, int SalesExecMstFk = 0, int OtherStatus = 0,
@@ -5969,7 +5969,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Main Jobcard for export"
-        public DataSet FetchMainJobCardDataExp(string jobCardPK = "0", string BizType = "0", string ProcessType = "0")
+        public string FetchMainJobCardDataExp(string jobCardPK = "0", string BizType = "0", string ProcessType = "0")
         {
 
             StringBuilder strSQL = new StringBuilder();
@@ -6359,7 +6359,8 @@ namespace Quantum_QFOR
             WorkFlow objWF = new WorkFlow();
             try
             {
-                return objWF.GetDataSet(strSQL.ToString());
+                DataSet ds = objWF.GetDataSet(strSQL.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -6499,7 +6500,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region " Fetch Container data export"
-        public DataSet FetchContainerDataExp(string jobCardPK = "0", string MJCPK = "")
+        public string FetchContainerDataExp(string jobCardPK = "0", string MJCPK = "")
         {
             WorkFlow objWF = new WorkFlow();
             DataSet ds = new DataSet();
@@ -6517,7 +6518,7 @@ namespace Quantum_QFOR
                 _with92.SelectCommand.Parameters.Add("JOB_CONT_CUT", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 _with92.Fill(ds);
 
-                return ds;
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (Exception ex)
             {
@@ -6529,7 +6530,7 @@ namespace Quantum_QFOR
             }
         }
 
-        public DataSet FetchContainerDataExpBooking(string jobCardPK = "0", string MJCPK = "")
+        public string FetchContainerDataExpBooking(string jobCardPK = "0", string MJCPK = "")
         {
             StringBuilder sb = new StringBuilder(5000);
             WorkFlow objWF = new WorkFlow();
@@ -6637,7 +6638,8 @@ namespace Quantum_QFOR
                 //strSQL.Append(vbCrLf & "    AND job_trn_cont.JOB_CARD_TRN_FK = job_exp.JOB_CARD_TRN_PK")
                 //strSQL.Append(vbCrLf & "    AND job_exp.JOB_CARD_TRN_PK =" & jobCardPK)
 
-                return objWF.GetDataSet(sb.ToString());
+                DataSet Ds = objWF.GetDataSet(sb.ToString());
+                return JsonConvert.SerializeObject(Ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -6654,7 +6656,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Frieght Element"
-        public DataSet FetchCostDet(int jobcardpk)
+        public string FetchCostDet(int jobcardpk)
         {
             try
             {
@@ -6669,7 +6671,8 @@ namespace Quantum_QFOR
                 sb.Append("   AND JOB.JOB_CARD_TRN_PK = " + jobcardpk);
                 sb.Append("   AND INVTRN.JOB_TRN_EST_FK = JOBCOST.JOB_TRN_COST_PK");
                 sb.Append("   AND INV.INV_SUPPLIER_PK = INVTRN.INV_SUPPLIER_TBL_FK");
-                return objWF.GetDataSet(sb.ToString());
+                DataSet ds= objWF.GetDataSet(sb.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException Oraexp)
             {
@@ -6681,7 +6684,7 @@ namespace Quantum_QFOR
                 throw ex;
             }
         }
-        public DataSet FetchFret(int jobcardpk)
+        public string FetchFret(int jobcardpk)
         {
             try
             {
@@ -6694,7 +6697,8 @@ namespace Quantum_QFOR
                 strsql = strsql  + " and con.frt_oth_element_fk=job_trn_fd.freight_element_mst_fk ";
                 strsql = strsql  + "  and con.JOB_CARD_FK = " + jobcardpk;
                 strsql = strsql  + " and con.consol_invoice_trn_pk=job_trn_fd.consol_invoice_trn_fk ";
-                return objWF.GetDataSet(strsql);
+                DataSet ds= objWF.GetDataSet(strsql);
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException Oraexp)
             {
@@ -6705,7 +6709,7 @@ namespace Quantum_QFOR
                 throw ex;
             }
         }
-        public DataSet FetchAgentFret(int jobcardpk)
+        public string FetchAgentFret(int jobcardpk)
         {
             WorkFlow objWF = new WorkFlow();
             StringBuilder sb = new StringBuilder(5000);
@@ -6722,7 +6726,8 @@ namespace Quantum_QFOR
                 sb.Append("   AND INV.INV_AGENT_PK = INVTRN.INV_AGENT_FK");
                 sb.Append("   AND INVTRN.COST_FRT_ELEMENT_FK = JOB_TRN_FD.FREIGHT_ELEMENT_MST_FK");
                 sb.Append("   AND INV.JOB_CARD_FK = " + jobcardpk);
-                return objWF.GetDataSet(sb.ToString());
+                DataSet ds = objWF.GetDataSet(sb.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException Oraexp)
             {
@@ -6777,7 +6782,7 @@ namespace Quantum_QFOR
             }
 
         }
-        public DataSet FetchFreightDataExp(string jobCardPK = "0", Int64 jobProfit = 0, string BaseCurrFk = "0", Int64 BizType = 0, Int64 CargoType = 0)
+        public string FetchFreightDataExp(string jobCardPK = "0", Int64 jobProfit = 0, string BaseCurrFk = "0", Int64 BizType = 0, Int64 CargoType = 0)
         {
             StringBuilder strSQL = new StringBuilder();
             WorkFlow objWF = new WorkFlow();
@@ -7042,7 +7047,8 @@ namespace Quantum_QFOR
                 strSQL.Append( "   WHERE qry.container_type_mst_fk=ctmt.CONTAINER_TYPE_MST_PK(+)");
                 strSQL.Append( "   AND qry.freight_element_mst_pk=femt.freight_element_mst_pk");
                 strSQL.Append( "   ORDER BY QRY.BASIS, ctmt.preferences,femt.preference");
-                return objWF.GetDataSet(strSQL.ToString());
+                DataSet ds = objWF.GetDataSet(strSQL.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -7428,7 +7434,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region " Fetch Purchase Inventory data export"
-        public DataSet FetchPurchaseInvDataExp(string jobCardPK = "0", Int64 BizType = 0, Int64 CargoType = 0)
+        public string FetchPurchaseInvDataExp(string jobCardPK = "0", Int64 BizType = 0, Int64 CargoType = 0)
         {
             StringBuilder strSQL = new StringBuilder();
             WorkFlow objWF = new WorkFlow();
@@ -7624,7 +7630,8 @@ namespace Quantum_QFOR
                 strSQL.Append( "  AND TIST.TRANSPORT_INST_SEA_PK = TCST.TRANSPORT_INST_FK ");
                 strSQL.Append( " AND TCST.COST_ELEMENT_MST_FK = JOB_TRN_PIA.COST_ELEMENT_MST_FK ");
 
-                return objWF.GetDataSet(strSQL.ToString());
+                DataSet ds= objWF.GetDataSet(strSQL.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -7638,7 +7645,7 @@ namespace Quantum_QFOR
             }
 
         }
-        public DataSet FetchPIA(string jobCardPK = "0")
+        public string FetchPIA(string jobCardPK = "0")
         {
 
             StringBuilder strSQL = new StringBuilder();
@@ -7659,7 +7666,8 @@ namespace Quantum_QFOR
                 strSQL.Append( "    AND job_trn_pia.cost_element_mst_fk =cost_ele.cost_element_mst_pk");
                 strSQL.Append( "    AND job_trn_pia.currency_mst_fk =curr.currency_mst_pk");
                 strSQL.Append( "    AND job_exp.JOB_CARD_TRN_PK =" + jobCardPK);
-                return objWF.GetDataSet(strSQL.ToString());
+                DataSet ds= objWF.GetDataSet(strSQL.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -7769,7 +7777,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region " Fetch TP data export"
-        public DataSet FetchTPDataExp(string jobCardPK = "0")
+        public string FetchTPDataExp(string jobCardPK = "0")
         {
             StringBuilder strSQL = new StringBuilder();
             WorkFlow objWF = new WorkFlow();
@@ -7804,7 +7812,8 @@ namespace Quantum_QFOR
                 strSQL.Append( "    AND job_exp.JOB_CARD_TRN_PK =" + jobCardPK);
                 strSQL.Append( "    ORDER BY transhipment_no");
 
-                return objWF.GetDataSet(strSQL.ToString());
+                DataSet ds = objWF.GetDataSet(strSQL.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -8244,7 +8253,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Revenue data export"
-        public DataSet FetchRevenueData(string jobCardPK = "0")
+        public string FetchRevenueData(string jobCardPK = "0")
         {
             //Dim strSQL As StringBuilder = New StringBuilder
             WorkFlow objWF = new WorkFlow();
@@ -8255,7 +8264,8 @@ namespace Quantum_QFOR
                 var _with95 = objWF.MyCommand.Parameters;
                 _with95.Add("JOBCARD_PK", jobCardPK).Direction = ParameterDirection.Input;
                 _with95.Add("JOB_SEA_EXP_CUR", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
-                return objWF.GetDataSet("FETCH_JOB_CARD_REVENUE_DATA", "FETCH_JOB_CARD");
+                DataSet ds= objWF.GetDataSet("FETCH_JOB_CARD_REVENUE_DATA", "FETCH_JOB_CARD");
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException Oraexp)
             {
@@ -8405,7 +8415,7 @@ namespace Quantum_QFOR
 
         }
 
-        public DataSet FillJobCardOtherChargesDataSet(string pk = "0", Int64 baseCurrency = 1, Int16 CheckBkgJC = 0, string BKGPK = "")
+        public string FillJobCardOtherChargesDataSet(string pk = "0", Int64 baseCurrency = 1, Int16 CheckBkgJC = 0, string BKGPK = "")
         {
             StringBuilder strSQL = new StringBuilder();
             WorkFlow objWF = new WorkFlow();
@@ -8413,94 +8423,95 @@ namespace Quantum_QFOR
 
             if (CheckBkgJC == 0)
             {
-                strSQL.Append( "         SELECT");
-                strSQL.Append( "         oth_chrg.job_trn_oth_pk,");
-                strSQL.Append( "         frt.freight_element_mst_pk,");
-                strSQL.Append( "         frt.freight_element_id,");
-                strSQL.Append( "         frt.freight_element_name,");
-                strSQL.Append( "         DECODE(oth_chrg.freight_type,1,'Prepaid',2,'Collect', 3,'Foreign') Payment_Type, ");
+                strSQL.Append("         SELECT");
+                strSQL.Append("         oth_chrg.job_trn_oth_pk,");
+                strSQL.Append("         frt.freight_element_mst_pk,");
+                strSQL.Append("         frt.freight_element_id,");
+                strSQL.Append("         frt.freight_element_name,");
+                strSQL.Append("         DECODE(oth_chrg.freight_type,1,'Prepaid',2,'Collect', 3,'Foreign') Payment_Type, ");
                 // By Amit on 26-April-2007
                 //To introduced LOCATION & FREIGHT PAYER Column 
                 //By Amit Singh on 23-May-07
-                strSQL.Append( "         oth_chrg.location_mst_fk,");
+                strSQL.Append("         oth_chrg.location_mst_fk,");
                 //strSQL.Append(vbCrLf & "         (CASE WHEN  oth_chrg.freight_type=1 THEN lmt.location_id ELSE pmt.port_id END) ""location_id"",")
-                strSQL.Append( "         lmt.location_id ,");
-                strSQL.Append( "         oth_chrg.frtpayer_cust_mst_fk,");
-                strSQL.Append( "         cmt.customer_id,");
+                strSQL.Append("         lmt.location_id ,");
+                strSQL.Append("         oth_chrg.frtpayer_cust_mst_fk,");
+                strSQL.Append("         cmt.customer_id,");
                 //End
-                strSQL.Append( "         curr.currency_id currency_mst_pk, ");
+                strSQL.Append("         curr.currency_id currency_mst_pk, ");
                 //strSQL.Append(vbCrLf & "        ROUND(GET_EX_RATE(oth_chrg.currency_mst_fk," & HttpContext.Current.Session("currency_mst_pk") & ",round(sysdate - .5)),4) AS ROE ,") 'Code added by gopi for converting ROE into BaseCurrency Ref No:EQA 2045
-                strSQL.Append( "         oth_chrg.exchange_rate ROE, ");
+                strSQL.Append("         oth_chrg.exchange_rate ROE, ");
                 //adding by thiyagarajan on 12/12/08 
-                strSQL.Append( "         oth_chrg.amount amount,");
-                strSQL.Append( "         'false' \"Delete\", oth_chrg.PRINT_ON_MBL \"Print\" ");
-                strSQL.Append( "FROM");
-                strSQL.Append( "         job_trn_oth_chrg oth_chrg,");
-                strSQL.Append( "         job_card_trn jobcard_mst,");
-                strSQL.Append( "         freight_element_mst_tbl frt,");
-                strSQL.Append( "         currency_type_mst_tbl curr,");
+                strSQL.Append("         oth_chrg.amount amount,");
+                strSQL.Append("         'false' \"Delete\", oth_chrg.PRINT_ON_MBL \"Print\" ");
+                strSQL.Append("FROM");
+                strSQL.Append("         job_trn_oth_chrg oth_chrg,");
+                strSQL.Append("         job_card_trn jobcard_mst,");
+                strSQL.Append("         freight_element_mst_tbl frt,");
+                strSQL.Append("         currency_type_mst_tbl curr,");
                 //To introduced LOCATION & FREIGHT PAYER Column 
                 //By Amit Singh on 23-May-07
-                strSQL.Append( "         location_mst_tbl lmt,");
+                strSQL.Append("         location_mst_tbl lmt,");
                 //strSQL.Append(vbCrLf & "         port_mst_tbl pmt,")
-                strSQL.Append( "         customer_mst_tbl cmt");
+                strSQL.Append("         customer_mst_tbl cmt");
                 //End
-                strSQL.Append( "WHERE");
-                strSQL.Append( "         oth_chrg.job_card_trn_fk = jobcard_mst.job_card_trn_pk");
-                strSQL.Append( "         AND oth_chrg.freight_element_mst_fk = frt.freight_element_mst_pk(+)");
-                strSQL.Append( "         AND oth_chrg.currency_mst_fk        = curr.currency_mst_pk(+)");
+                strSQL.Append("WHERE");
+                strSQL.Append("         oth_chrg.job_card_trn_fk = jobcard_mst.job_card_trn_pk");
+                strSQL.Append("         AND oth_chrg.freight_element_mst_fk = frt.freight_element_mst_pk(+)");
+                strSQL.Append("         AND oth_chrg.currency_mst_fk        = curr.currency_mst_pk(+)");
                 //To introduced LOCATION & FREIGHT PAYER Column 
                 //By Amit Singh on 23-May-07
-                strSQL.Append( "         AND oth_chrg.location_mst_fk = lmt.location_mst_pk (+)");
+                strSQL.Append("         AND oth_chrg.location_mst_fk = lmt.location_mst_pk (+)");
                 //strSQL.Append(vbCrLf & "         AND oth_chrg.location_mst_fk = pmt.port_mst_pk (+)")
-                strSQL.Append( "         AND oth_chrg.frtpayer_cust_mst_fk = cmt.customer_mst_pk(+)");
+                strSQL.Append("         AND oth_chrg.frtpayer_cust_mst_fk = cmt.customer_mst_pk(+)");
                 //End
-                strSQL.Append( "         AND oth_chrg.job_card_trn_fk = " + pk);
-                strSQL.Append( "ORDER BY freight_element_id ");
+                strSQL.Append("         AND oth_chrg.job_card_trn_fk = " + pk);
+                strSQL.Append("ORDER BY freight_element_id ");
 
 
             }
             else
             {
-                strSQL.Append( "         SELECT");
-                strSQL.Append( "         '' JOB_TRN_OTH_PK,");
-                strSQL.Append( "         frt.freight_element_mst_pk,");
-                strSQL.Append( "         frt.freight_element_id,");
-                strSQL.Append( "         frt.freight_element_name,");
-                strSQL.Append( "         DECODE(oth_chrg.freight_type,1,'Prepaid',2,'Collect',3,'Foreign') Payment_Type, ");
+                strSQL.Append("         SELECT");
+                strSQL.Append("         '' JOB_TRN_OTH_PK,");
+                strSQL.Append("         frt.freight_element_mst_pk,");
+                strSQL.Append("         frt.freight_element_id,");
+                strSQL.Append("         frt.freight_element_name,");
+                strSQL.Append("         DECODE(oth_chrg.freight_type,1,'Prepaid',2,'Collect',3,'Foreign') Payment_Type, ");
                 // By Amit on 26-April-2007
                 //To introduced LOCATION & FREIGHT PAYER Column 
                 //By Amit Singh on 23-May-07
-                strSQL.Append( "         '' location_mst_fk,");
+                strSQL.Append("         '' location_mst_fk,");
                 //strSQL.Append(vbCrLf & "         (CASE WHEN  oth_chrg.freight_type=1 THEN lmt.location_id ELSE pmt.port_id END) ""location_id"",")
-                strSQL.Append( "         '' location_id ,");
-                strSQL.Append( "         booking_mst.cust_customer_mst_fk frtpayer_cust_mst_fk,");
-                strSQL.Append( "         cmt.customer_id,");
+                strSQL.Append("         '' location_id ,");
+                strSQL.Append("         booking_mst.cust_customer_mst_fk frtpayer_cust_mst_fk,");
+                strSQL.Append("         cmt.customer_id,");
                 //End
-                strSQL.Append( "         curr.currency_id currency_mst_pk, ");
-                strSQL.Append( "    ROUND(GET_EX_RATE(oth_chrg.currency_mst_fk," + baseCurrency + ",round(sysdate - .5)),4) AS ROE ,");
+                strSQL.Append("         curr.currency_id currency_mst_pk, ");
+                strSQL.Append("    ROUND(GET_EX_RATE(oth_chrg.currency_mst_fk," + baseCurrency + ",round(sysdate - .5)),4) AS ROE ,");
                 //Code added by gopi for converting ROE into BaseCurrency Ref No:EQA 2045
-                strSQL.Append( "         oth_chrg.amount amount,");
-                strSQL.Append( "         'false' \"Delete\", 1 \"Print\" ");
-                strSQL.Append( "FROM");
-                strSQL.Append( "         booking_trn_oth_chrg oth_chrg,");
-                strSQL.Append( "         bookin_mst_tbl booking_mst,");
-                strSQL.Append( "         freight_element_mst_tbl frt,");
-                strSQL.Append( "         currency_type_mst_tbl curr,");
-                strSQL.Append( "         customer_mst_tbl cmt");
-                strSQL.Append( "WHERE");
-                strSQL.Append( "         oth_chrg.booking_mst_fk = booking_mst.booking_mst_pk");
-                strSQL.Append( "         and booking_mst.cust_customer_mst_fk=cmt.customer_mst_pk");
-                strSQL.Append( "         AND oth_chrg.freight_element_mst_fk = frt.freight_element_mst_pk(+)");
-                strSQL.Append( "         AND oth_chrg.currency_mst_fk        = curr.currency_mst_pk(+)");
+                strSQL.Append("         oth_chrg.amount amount,");
+                strSQL.Append("         'false' \"Delete\", 1 \"Print\" ");
+                strSQL.Append("FROM");
+                strSQL.Append("         booking_trn_oth_chrg oth_chrg,");
+                strSQL.Append("         bookin_mst_tbl booking_mst,");
+                strSQL.Append("         freight_element_mst_tbl frt,");
+                strSQL.Append("         currency_type_mst_tbl curr,");
+                strSQL.Append("         customer_mst_tbl cmt");
+                strSQL.Append("WHERE");
+                strSQL.Append("         oth_chrg.booking_mst_fk = booking_mst.booking_mst_pk");
+                strSQL.Append("         and booking_mst.cust_customer_mst_fk=cmt.customer_mst_pk");
+                strSQL.Append("         AND oth_chrg.freight_element_mst_fk = frt.freight_element_mst_pk(+)");
+                strSQL.Append("         AND oth_chrg.currency_mst_fk        = curr.currency_mst_pk(+)");
 
-                strSQL.Append( "         AND oth_chrg.booking_mst_fk    = " + BKGPK);
-                strSQL.Append( "ORDER BY freight_element_id ");
+                strSQL.Append("         AND oth_chrg.booking_mst_fk    = " + BKGPK);
+                strSQL.Append("ORDER BY freight_element_id ");
 
             }
             try
             {
-                return objWF.GetDataSet(strSQL.ToString());
+                DataSet ds = objWF.GetDataSet(strSQL.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -8606,30 +8617,31 @@ namespace Quantum_QFOR
             }
             return new DataSet();
         }
-        public DataSet fillJcOthChrg(string pk = "0")
+        public string fillJcOthChrg(string pk = "0")
         {
             StringBuilder strSQL = new StringBuilder();
             WorkFlow objWF = new WorkFlow();
 
-            strSQL.Append( "         SELECT");
-            strSQL.Append( "         oth_chrg.Inv_Cust_Trn_Fk,");
-            strSQL.Append( "         oth_chrg.Inv_Agent_Trn_Fk,");
-            strSQL.Append( "         oth_chrg.consol_invoice_trn_fk");
-            strSQL.Append( "FROM");
-            strSQL.Append( "         job_trn_oth_chrg oth_chrg,");
-            strSQL.Append( "         JOB_CARD_TRN jobcard_mst,");
-            strSQL.Append( "         freight_element_mst_tbl frt,");
-            strSQL.Append( "         currency_type_mst_tbl curr");
-            strSQL.Append( "WHERE");
-            strSQL.Append( "         oth_chrg.JOB_CARD_TRN_FK = jobcard_mst.JOB_CARD_TRN_PK");
-            strSQL.Append( "         AND oth_chrg.freight_element_mst_fk = frt.freight_element_mst_pk(+)");
-            strSQL.Append( "         AND oth_chrg.currency_mst_fk        = curr.currency_mst_pk(+)");
-            strSQL.Append( "         AND oth_chrg.JOB_CARD_TRN_FK    = " + pk);
-            strSQL.Append( "ORDER BY freight_element_id ");
+            strSQL.Append("         SELECT");
+            strSQL.Append("         oth_chrg.Inv_Cust_Trn_Fk,");
+            strSQL.Append("         oth_chrg.Inv_Agent_Trn_Fk,");
+            strSQL.Append("         oth_chrg.consol_invoice_trn_fk");
+            strSQL.Append("FROM");
+            strSQL.Append("         job_trn_oth_chrg oth_chrg,");
+            strSQL.Append("         JOB_CARD_TRN jobcard_mst,");
+            strSQL.Append("         freight_element_mst_tbl frt,");
+            strSQL.Append("         currency_type_mst_tbl curr");
+            strSQL.Append("WHERE");
+            strSQL.Append("         oth_chrg.JOB_CARD_TRN_FK = jobcard_mst.JOB_CARD_TRN_PK");
+            strSQL.Append("         AND oth_chrg.freight_element_mst_fk = frt.freight_element_mst_pk(+)");
+            strSQL.Append("         AND oth_chrg.currency_mst_fk        = curr.currency_mst_pk(+)");
+            strSQL.Append("         AND oth_chrg.JOB_CARD_TRN_FK    = " + pk);
+            strSQL.Append("ORDER BY freight_element_id ");
 
             try
             {
-                return objWF.GetDataSet(strSQL.ToString());
+                DataSet ds = objWF.GetDataSet(strSQL.ToString());
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (OracleException sqlExp)
             {
@@ -19172,7 +19184,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Receipt Dtls for Container Deposit Form"
-        public DataSet FetchContDeposit(string jobCardPK = "0", string MJCPK = "")
+        public string FetchContDeposit(string jobCardPK = "0", string MJCPK = "")
         {
             WorkFlow objWF = new WorkFlow();
             DataSet ds = new DataSet();
@@ -19190,7 +19202,7 @@ namespace Quantum_QFOR
                 _with138.SelectCommand.Parameters.Add("JOB_CONT_CUT", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 _with138.Fill(ds);
 
-                return ds;
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (Exception ex)
             {
@@ -19201,7 +19213,7 @@ namespace Quantum_QFOR
                 objWF.CloseConnection();
             }
         }
-        public DataSet FetchRcptDeposit(string JobPk, int CurPK = 0)
+        public string FetchRcptDeposit(string JobPk, int CurPK = 0)
         {
             WorkFlow objWF = new WorkFlow();
             DataSet objDS = null;
@@ -19210,7 +19222,7 @@ namespace Quantum_QFOR
             _with139.Add("CUR_PK_IN", CurPK).Direction = ParameterDirection.Input;
             _with139.Add("JOB_CONT_CUT", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
             objDS = objWF.GetDataSet("CONTAINER_DEPOSIT_PKG", "FETCH_RCPT_DEPOSIT");
-            return objDS;
+            return JsonConvert.SerializeObject(objDS, Formatting.Indented);
         }
         #endregion
 
@@ -19603,7 +19615,7 @@ namespace Quantum_QFOR
         #endregion
 
         #region "Fetch Header Dtls for Container Deposit Form"
-        public DataSet FetchCntrDepositHdr(int JobPk)
+        public string FetchCntrDepositHdr(int JobPk)
         {
             WorkFlow objWF = new WorkFlow();
             DataSet ds = new DataSet();
@@ -19619,7 +19631,7 @@ namespace Quantum_QFOR
                 _with158.SelectCommand.Parameters.Add("JOB_PK_IN", JobPk).Direction = ParameterDirection.Input;
                 _with158.SelectCommand.Parameters.Add("HDR_CUR", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
                 _with158.Fill(ds);
-                return ds;
+                return JsonConvert.SerializeObject(ds, Formatting.Indented);
             }
             catch (Exception ex)
             {

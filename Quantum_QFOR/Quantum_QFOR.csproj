@@ -608,15 +608,11 @@
     <Compile Include="Classes\01Setup\cls_TRADE_MST_TBL.cs" />
     <Compile Include="Classes\CustomsBrokerage\cls_TransporterNote.cs" />
     <Compile Include="Classes\04VendorManagement\Cls_Transporter_Contract.cs" />
-    <Compile Include="Classes\CLS_UserAccountVariable.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Classes\CLS_UserAccountVariable.cs" />
     <Compile Include="Classes\QUserActivity\cls_UserActivity.cs" />
     <Compile Include="Classes\03Security\cls_User_Entry_Trn.cs" />
     <Compile Include="Classes\03Security\cls_User_Preference_Mst_Tbl.cs" />
-    <Compile Include="Classes\cls_ValidateLicense.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Classes\cls_ValidateLicense.cs" />
     <Compile Include="Classes\04VendorManagement\cls_VendorDetails.cs" />
     <Compile Include="Classes\04VendorManagement\cls_VendorListing.cs" />
     <Compile Include="Classes\01Setup\cls_Vessel_Voyage_Entry.cs" />
@@ -624,9 +620,7 @@
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\CommonFeatures.cs" />
     <Compile Include="Classes\CommonSearch.cs" />
-    <Compile Include="Classes\frmMSTLocation.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Classes\frmMSTLocation.cs" />
     <Compile Include="Classes\Mail\clsMail.cs" />
     <Compile Include="Classes\Documentation\cls_MAWBEntry.cs" />
     <Compile Include="Classes\07Reports\Cls_activate_deactivate custrpt.cs" />
@@ -660,6 +654,7 @@
     <Compile Include="Classes\07Reports\Cls_Transport_Note.cs" />
     <Compile Include="Classes\07Reports\cls_VenderAgeingReport.cs" />
     <Compile Include="Classes\07Reports\Cls_Workflow_Mgr_Report.cs" />
+    <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\WorkFlow.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
@@ -689,6 +684,7 @@
     <Compile Include="Models\Administration\DocWorkFlowRules.cs" />
     <Compile Include="Models\Administration\Commodity.cs" />
     <Compile Include="Models\Administration\WorkFlowRules.cs" />
+    <Compile Include="Models\Common\SessionValue.cs" />
     <Compile Include="Models\Credentials.cs" />
     <Compile Include="Models\CustomerProfileModel.cs" />
     <Compile Include="Models\Administration\Document.cs" />
@@ -707,6 +703,10 @@
     <Compile Include="Models\Security\UserAccess.cs" />
     <Compile Include="Models\Security\UserDefination.cs" />
     <Compile Include="Models\Security\UserRole.cs" />
+    <Compile Include="Models\Setup\AirFreightSlab.cs" />
+    <Compile Include="Models\Setup\AirlineSchedule.cs" />
+    <Compile Include="Models\Setup\JobCardSea.cs" />
+    <Compile Include="Models\Setup\MasterJobCardSea.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

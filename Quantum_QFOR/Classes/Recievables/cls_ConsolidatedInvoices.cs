@@ -19,6 +19,7 @@
 
 #endregion "Comments"
 
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System;
@@ -38,7 +39,7 @@ namespace Quantum_QFOR
     {
 
         #region "Fetch surcharge"
-        public DataSet Fetch_Surcharge_assign(DataSet dsGrid, string Int_pk_List = "", string MAIN_TABLE = "", string TRN_TABLE = "", string MAIN_TABLE_PK = "", string PK_OUT = "", string TRN_TABLE_PK = "", Int16 FreightCol = 0, int POL_PK = 0, int POD_PK = 0)
+        public string Fetch_Surcharge_assign(DataSet dsGrid, string Int_pk_List = "", string MAIN_TABLE = "", string TRN_TABLE = "", string MAIN_TABLE_PK = "", string PK_OUT = "", string TRN_TABLE_PK = "", Int16 FreightCol = 0, int POL_PK = 0, int POD_PK = 0)
         {
             int Rcnt = 0;
             int Rcnt1 = 0;
@@ -101,7 +102,7 @@ namespace Quantum_QFOR
 
                 }
 
-                return (dsGrid);
+                return JsonConvert.SerializeObject(dsGrid, Formatting.Indented);
             }
             catch (OracleException OraExp)
             {

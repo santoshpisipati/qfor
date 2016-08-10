@@ -10287,6 +10287,6 @@ namespace Quantum_QFOR
 
         //    ///'Replace this <<....>> value to invoice date,invoice no etc... 
 
-        //#endregion Added New On 08-08-2016
+        #endregion Added New On 08-08-2016
     }
 }
